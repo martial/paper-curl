@@ -1081,6 +1081,10 @@ The example coastal photograph was generated for this project.
 The optional Vue example loads a remote photograph from Unsplash.
 That remote photograph is not part of the Apache-licensed library files.
 
+The development CSS property catalog is derived from MDN data (CC0-1.0):
+https://github.com/mdn/data/tree/635d63e0c4b4a0a4216aa9ee1cbdaed0c5111065
+Its source revision and license are recorded in tests/browser/css-catalog.json.
+
 -->
 </head>
   <body>
@@ -2280,7 +2284,15 @@ That remote photograph is not part of the Apache-licensed library files.
               "PaperCurl: asset could not be loaded: " + absolute,
             );
           const blob = await response.blob();
-          return this._encode("asset", blob);
+          const encoded = await this._encode("asset", blob);
+          // CSS images (including border-image) must finish their first decode
+          // before the isolated SVG paints, especially on a cold Firefox load.
+          if (blob.type.startsWith("image/")) {
+            const image = new Image();
+            image.src = encoded;
+            await image.decode();
+          }
+          return encoded;
         })();
         this.assets.set(absolute, job);
         job.catch(() => {
@@ -2595,8 +2607,9 @@ That remote photograph is not part of the Apache-licensed library files.
                     get("src"),
                     descriptors,
                   ).load();
-                  rule.style.setProperty("font-display", "block");
-                  return rule.cssText;
+                  // Firefox can reject CSSOM descriptor writes. Append the
+                  // override as text; the last font-display descriptor wins.
+                  return `@font-face{${rule.style.cssText};font-display:block;}`;
                 },
               );
               this.fontCache.set(key, job);
@@ -2732,8 +2745,13 @@ That remote photograph is not part of the Apache-licensed library files.
                 node.removeAttribute("crossorigin");
                 const source = original.currentSrc || original.src;
                 if (source) {
-                  node.src = await this._asset(source);
-                  await node.decode();
+                  const embedded = await this._asset(source);
+                  // A cloned picture can cancel decode as its sources detach.
+                  // Prime a standalone image, then give the clone that same URL.
+                  const image = new Image();
+                  image.src = embedded;
+                  await image.decode();
+                  node.src = embedded;
                 }
               }
               if (

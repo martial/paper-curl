@@ -82,6 +82,13 @@ footer {
   color: #66736b;
   font-size: 12px;
 }
+.browser-picker {
+  max-width: 320px;
+  margin: 18px 0;
+}
+#visual-result {
+  color: #5f6d65;
+}
 #summary {
   display: flex;
   flex-wrap: wrap;

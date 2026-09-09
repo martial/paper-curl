@@ -4,11 +4,13 @@ A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet 
 
 **Fixed in v0.4.2:** broader CSS capture, gradient/image borders, masks, and `::before`/`::after` decorations. Styles retain their original selector context. [CSS capture →](#css-strokes-and-outlines)
 
+**Fixed in v0.4.3:** Firefox font embedding and first-load image preparation. The [compatibility reports](docs/CSS_SUPPORT.md) now record each tested browser separately, including remaining failures and unmeasured browsers.
+
 **CSS compatibility:** [support and known limits](docs/CSS_SUPPORT.md), [every property and its measured result](docs/CSS_PROPERTIES.md), and a [searchable online benchmark](https://paper-curl-vue.martialou543257.chatgpt.site/css.html). The report separates preserved values, mismatches, unsupported properties, frozen behavior, and unverified cases. Selected visual tests check actual rendered pixels separately.
 
 **Since v0.4.0:** optional encoding workers and loading progress for `prepare()`, automatic preloading, and page turns. [JavaScript and Vue usage →](#preparation-workers-and-loading-progress)
 
-Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 66 KB of formatted, readable source, or 18 KB gzipped. Photographs and example layouts are separate from the library.
+Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 67 KB of formatted, readable source, or 18 KB gzipped. Photographs and example layouts are separate from the library.
 
 ## Start here
 
@@ -71,7 +73,7 @@ With `showCover: true`, the first page is a centered front cover. Use an even nu
 Install from this GitHub repository (this project has not been published to npm):
 
 ```sh
-npm install github:martial/paper-curl#v0.4.2
+npm install github:martial/paper-curl#v0.4.3
 ```
 
 Vue is an optional peer dependency; use this component in a Vue 3.3+ app:

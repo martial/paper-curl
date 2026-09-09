@@ -921,7 +921,15 @@
               "PaperCurl: asset could not be loaded: " + absolute,
             );
           const blob = await response.blob();
-          return this._encode("asset", blob);
+          const encoded = await this._encode("asset", blob);
+          // CSS images (including border-image) must finish their first decode
+          // before the isolated SVG paints, especially on a cold Firefox load.
+          if (blob.type.startsWith("image/")) {
+            const image = new Image();
+            image.src = encoded;
+            await image.decode();
+          }
+          return encoded;
         })();
         this.assets.set(absolute, job);
         job.catch(() => {
@@ -1236,8 +1244,9 @@
                     get("src"),
                     descriptors,
                   ).load();
-                  rule.style.setProperty("font-display", "block");
-                  return rule.cssText;
+                  // Firefox can reject CSSOM descriptor writes. Append the
+                  // override as text; the last font-display descriptor wins.
+                  return `@font-face{${rule.style.cssText};font-display:block;}`;
                 },
               );
               this.fontCache.set(key, job);
@@ -1373,8 +1382,13 @@
                 node.removeAttribute("crossorigin");
                 const source = original.currentSrc || original.src;
                 if (source) {
-                  node.src = await this._asset(source);
-                  await node.decode();
+                  const embedded = await this._asset(source);
+                  // A cloned picture can cancel decode as its sources detach.
+                  // Prime a standalone image, then give the clone that same URL.
+                  const image = new Image();
+                  image.src = embedded;
+                  await image.decode();
+                  node.src = embedded;
                 }
               }
               if (

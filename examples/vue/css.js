@@ -4,11 +4,46 @@ import "paper-curl/paper-curl.css";
 import "./css.css";
 import catalog from "../../tests/browser/css-catalog.json";
 import pkg from "../../package.json";
-const saved = import.meta.glob("../../docs/css-report.json", {
-  eager: true,
-  import: "default",
-});
-let report = Object.values(saved)[0] || null,
+const saved = import.meta.glob(
+  "../../docs/css-reports/{chromium,firefox,opera,safari}.json",
+  {
+    eager: true,
+    import: "default",
+  },
+);
+const reports = Object.fromEntries(
+  Object.entries(saved).map(([path, value]) => [
+    path.split("/").pop().replace(".json", ""),
+    value,
+  ]),
+);
+const browserNames = {
+  chromium: "Chromium",
+  firefox: "Firefox",
+  opera: "Opera",
+  safari: "Safari",
+};
+const identify = (ua) =>
+  /OPR\//.test(ua)
+    ? "opera"
+    : /Firefox\//.test(ua)
+      ? "firefox"
+      : /Chrom(?:e|ium)\//.test(ua)
+        ? "chromium"
+        : "safari";
+const browserVersion = (ua) =>
+  (identify(ua) === "opera"
+    ? ua.match(/OPR\/([\d.]+)/)
+    : identify(ua) === "firefox"
+      ? ua.match(/Firefox\/([\d.]+)/)
+      : identify(ua) === "chromium"
+        ? ua.match(/Chrom(?:e|ium)\/([\d.]+)/)
+        : ua.match(/Version\/([\d.]+)/))?.[1];
+let report =
+    reports[identify(navigator.userAgent)] ||
+    reports.chromium ||
+    Object.values(reports)[0] ||
+    null,
   cancelled = false;
 const $ = (id) => document.getElementById(id);
 const labels = {
@@ -135,9 +170,17 @@ function make(tag, text) {
   return node;
 }
 function render() {
+  $("report-json").textContent = JSON.stringify(report);
+  $("download").disabled = !report?.rows?.length;
   if (!report) {
     $("progress").textContent =
-      "Run the benchmark to generate results for this browser.";
+      "No measured report is recorded for this browser yet. Run the benchmark in that browser to add evidence.";
+    $("environment").textContent = "";
+    $("summary").replaceChildren();
+    $("rows").replaceChildren();
+    $("visual-result").textContent =
+      "Not measured. No result from a different browser is substituted.";
+    $("count").textContent = "";
     return;
   }
   const totals = {};
@@ -152,6 +195,9 @@ function render() {
   );
   $("environment").textContent =
     `PaperCurl ${report.libraryVersion} · ${report.browser} · ${report.completedAt || report.startedAt} · ${report.complete ? "Complete run" : "Partial run"}`;
+  $("visual-result").textContent = report.visual
+    ? `Recorded visual/browser suite: ${report.visual.passed} passed, ${report.visual.failed} failed. See the documentation and JSON for individual cases.`
+    : "Visual/browser checks are separate; this report records property values only.";
   const query = $("search").value.trim().toLowerCase(),
     filter = $("filter").value;
   const rows = report.rows.filter(
@@ -201,6 +247,24 @@ function render() {
   $("rows").replaceChildren(fragment);
   $("download").disabled = !report.rows.length;
 }
+for (const [key, name] of Object.entries(browserNames)) {
+  const option = make(
+    "option",
+    reports[key]
+      ? `${name} ${reports[key].browserIdentity?.version || browserVersion(reports[key].browser)}`
+      : `${name} — not measured`,
+  );
+  option.value = key;
+  $("browser-report").append(option);
+  if (reports[key] === report) $("browser-report").value = key;
+}
+$("browser-report").onchange = () => {
+  report = reports[$("browser-report").value] || null;
+  render();
+  if (report)
+    $("progress").textContent =
+      `Recorded ${report.rows.length}-property run. Re-run to measure your browser.`;
+};
 $("search").oninput = render;
 $("filter").onchange = render;
 $("cancel").onclick = () => {
@@ -213,13 +277,14 @@ $("download").onclick = () => {
     url = URL.createObjectURL(blob),
     a = make("a");
   a.href = url;
-  a.download = "paper-curl-css-report.json";
+  a.download = `paper-curl-${identify(report.browser)}-css-report.json`;
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 $("run").onclick = async () => {
   cancelled = false;
   $("run").disabled = true;
+  $("browser-report").disabled = true;
   $("cancel").hidden = false;
   $("meter").hidden = false;
   $("meter").value = 0;
@@ -265,6 +330,10 @@ $("run").onclick = async () => {
     schemaVersion: 1,
     libraryVersion: pkg.version,
     browser: navigator.userAgent,
+    browserIdentity: {
+      name: identify(navigator.userAgent),
+      version: browserVersion(navigator.userAgent),
+    },
     viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio },
     startedAt: new Date().toISOString(),
     catalog: {
@@ -380,7 +449,19 @@ $("run").onclick = async () => {
     host.remove();
     mirror.remove();
     $("run").disabled = false;
+    $("browser-report").disabled = false;
     $("cancel").hidden = true;
+    reports.current = report;
+    if (
+      ![...$("browser-report").options].some(
+        (option) => option.value === "current",
+      )
+    ) {
+      const option = make("option", "Current browser run");
+      option.value = "current";
+      $("browser-report").append(option);
+    }
+    $("browser-report").value = "current";
     render();
   }
 };
