@@ -127,3 +127,10 @@
     transition: none;
   }
 }
+
+/* Vue slot roots fill their stable page target. */
+.pc-vue-page > * {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}

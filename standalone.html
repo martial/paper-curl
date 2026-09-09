@@ -135,6 +135,13 @@
   }
 }
 
+/* Vue slot roots fill their stable page target. */
+.pc-vue-page > * {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
 </style>
     <style>
 /* Demo theme and page layouts. Change these styles freely; the library is separate. */
@@ -1071,6 +1078,9 @@ Copyright 2026 Martial Geoffre-Rouland
 Licensed under the Apache License, Version 2.0.
 The example coastal photograph was generated for this project.
 
+The optional Vue example loads a remote photograph from Unsplash.
+That remote photograph is not part of the Apache-licensed library files.
+
 -->
 </head>
   <body>
@@ -1347,7 +1357,7 @@ The example coastal photograph was generated for this project.
       </div>
     </dialog>
     <script>
-/*! PaperCurl v0.1.0 | SPDX-License-Identifier: Apache-2.0
+/*! PaperCurl v0.2.0 | SPDX-License-Identifier: Apache-2.0
  * Copyright 2026 Martial Geoffre-Rouland
  * A small editable HTML page-curl library. No build step or dependencies.
  * Public API and usage: see README.md.
@@ -1707,6 +1717,7 @@ The example coastal photograph was generated for this project.
       textureScale: 2,
       keyboard: true,
       preload: true,
+      fontCSS: "",
       onChange: null,
       onError: null,
     };
@@ -1732,6 +1743,7 @@ The example coastal photograph was generated for this project.
       this.abort = new AbortController();
       this.cache = new Map();
       this.assets = new Map();
+      this.fontCache = new Map();
       this.epoch = 0;
       this.current = 0;
       this.desired = 0;
@@ -1898,6 +1910,7 @@ The example coastal photograph was generated for this project.
       this.desired = this.current;
       this.cache.clear();
       this.assets.clear();
+      this.fontCache.clear();
       this._rest();
       if (this.options.preload && this.renderer && !this.reduced.matches)
         this._preload();
@@ -1924,6 +1937,7 @@ The example coastal photograph was generated for this project.
       }
       this.cache.clear();
       this.assets.clear();
+      this.fontCache.clear();
     }
     _size() {
       const bounds = this.element.getBoundingClientRect(),
@@ -1992,23 +2006,160 @@ The example coastal photograph was generated for this project.
     }
     async _asset(url) {
       if (url.startsWith("data:")) return url;
-      if (!this.assets.has(url))
-        this.assets.set(
-          url,
-          (async () => {
-            const response = await fetch(new URL(url, document.baseURI));
+      const absolute = new URL(url, document.baseURI).href;
+      if (!this.assets.has(absolute)) {
+        const job = (async () => {
+          let response;
+          try {
+            response = await fetch(absolute);
+          } catch {
+            throw new Error(
+              "PaperCurl: cannot capture " +
+                absolute +
+                ". The server must allow CORS, or use a same-origin/data URL.",
+            );
+          }
+          if (!response.ok)
+            throw new Error(
+              "PaperCurl: asset could not be loaded: " + absolute,
+            );
+          const blob = await response.blob();
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        })();
+        this.assets.set(absolute, job);
+        job.catch(() => {
+          if (this.assets.get(absolute) === job) this.assets.delete(absolute);
+        });
+      }
+      return this.assets.get(absolute);
+    }
+    async _embedURLs(value, base = document.baseURI) {
+      const urls = [
+        ...value.matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*?))\s*\)/g),
+      ];
+      for (const match of urls) {
+        const url = (match[1] ?? match[2] ?? match[3]).trim();
+        if (url && !url.startsWith("#"))
+          value = value.replace(
+            match[0],
+            `url("${await this._asset(new URL(url, base).href)}")`,
+          );
+      }
+      return value;
+    }
+    async _fontStyles(families) {
+      const normalize = (name) =>
+        name
+          .trim()
+          .replace(/^["']|["']$/g, "")
+          .toLowerCase();
+      const used = new Set(
+        families.flatMap((value) => value.split(",").map(normalize)),
+      );
+      const names = new Set(
+        [...(document.fonts || [])]
+          .map((font) => normalize(font.family))
+          .filter((name) => used.has(name)),
+      );
+      const key = [...used].sort().join(",");
+      if (this.fontCache.has(key)) return this.fontCache.get(key);
+      const job = (async () => {
+        const faces = [],
+          inaccessible = [],
+          visited = new Set();
+        const collect = (rules, base) => {
+          for (const rule of rules) {
+            if (
+              rule.type === 5 &&
+              used.has(normalize(rule.style.getPropertyValue("font-family")))
+            )
+              faces.push({
+                css: rule.cssText,
+                base,
+                family: normalize(rule.style.getPropertyValue("font-family")),
+              });
+            else if (rule.type === 3 && rule.styleSheet) visit(rule.styleSheet);
+            else if (rule.cssRules) collect(rule.cssRules, base);
+          }
+        };
+        const visit = (sheet) => {
+          if (visited.has(sheet)) return;
+          visited.add(sheet);
+          try {
+            collect(sheet.cssRules, sheet.href || document.baseURI);
+          } catch {
+            if (sheet.href) inaccessible.push(sheet.href);
+          }
+        };
+        const parse = (css, base) => {
+          const sheet = new CSSStyleSheet();
+          sheet.replaceSync(css);
+          collect(sheet.cssRules, base);
+        };
+        [
+          ...document.styleSheets,
+          ...(document.adoptedStyleSheets || []),
+        ].forEach(visit);
+        if (this.options.fontCSS) parse(this.options.fontCSS, document.baseURI);
+        // Cross-origin stylesheets (including Google Fonts) are readable via CORS
+        // fetch even when CSSOM access to cssRules is prohibited.
+        if (
+          [...names].some((name) => !faces.some((face) => face.family === name))
+        ) {
+          const seenURLs = new Set();
+          const load = async (url) => {
+            if (seenURLs.has(url)) return;
+            seenURLs.add(url);
+            const response = await fetch(url);
             if (!response.ok)
-              throw new Error("PaperCurl: image could not be loaded: " + url);
-            const blob = await response.blob();
-            return new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = () => resolve(reader.result);
-              reader.onerror = reject;
-              reader.readAsDataURL(blob);
-            });
-          })(),
+              throw new Error("Font stylesheet could not be loaded: " + url);
+            const css = await response.text();
+            // Resolve @import before parsing: constructable stylesheets omit imports.
+            for (const match of css.matchAll(
+              /@import\s+(?:url\(\s*)?["']([^"']+)["']/g,
+            ))
+              await load(new URL(match[1], url).href);
+            parse(css.replace(/@import[^;]+;/g, ""), url);
+          };
+          for (const url of inaccessible) {
+            try {
+              await load(url);
+            } catch {
+              /* Report only if a used font remains missing. */
+            }
+          }
+        }
+        const missing = [...names].filter(
+          (name) => !faces.some((face) => face.family === name),
         );
-      return this.assets.get(url);
+        if (missing.length)
+          throw new Error(
+            "PaperCurl: cannot embed font " +
+              missing.join(", ") +
+              ". Supply its @font-face rules with the fontCSS option.",
+          );
+        return (
+          await Promise.all(
+            faces.map(async (face) => {
+              // Force the embedded source, rather than a possibly unavailable local face.
+              const css = face.css.includes("url(")
+                ? face.css.replace(/local\([^)]*\)\s*,?\s*/g, "")
+                : face.css;
+              return this._embedURLs(css, face.base);
+            }),
+          )
+        ).join("\n");
+      })();
+      this.fontCache.set(key, job);
+      job.catch(() => {
+        if (this.fontCache.get(key) === job) this.fontCache.delete(key);
+      });
+      return job;
     }
     async _snapshot(index) {
       if (this.cache.has(index)) return this.cache.get(index);
@@ -2023,10 +2174,50 @@ The example coastal photograph was generated for this project.
         stage.append(clone);
         this.rig.append(stage);
         try {
+          const originals = [
+            this.pages[index],
+            ...this.pages[index].querySelectorAll("*"),
+          ];
+          const cloned = [clone, ...clone.querySelectorAll("*")];
+          // Select the already-displayed responsive image, before detaching picture
+          // sources or srcset. Lazy images must be decoded before SVG rasterization.
+          for (let i = 0; i < cloned.length; i++) {
+            const node = cloned[i],
+              original = originals[i];
+            if (node.tagName === "SOURCE") node.remove();
+            if (node.tagName === "IMG") {
+              node.removeAttribute("srcset");
+              node.removeAttribute("sizes");
+              node.removeAttribute("loading");
+              node.removeAttribute("crossorigin");
+              const source = original.currentSrc || original.src;
+              if (source) {
+                node.src = await this._asset(source);
+                await node.decode();
+              }
+            }
+            if (
+              node.namespaceURI === "http://www.w3.org/2000/svg" &&
+              node.localName === "image"
+            ) {
+              const source =
+                original.getAttribute("href") ||
+                original.getAttributeNS("http://www.w3.org/1999/xlink", "href");
+              if (source) {
+                node.removeAttributeNS("http://www.w3.org/1999/xlink", "href");
+                node.setAttribute("href", await this._asset(source));
+              }
+            }
+            if (node.tagName === "INPUT")
+              node.setAttribute("value", original.value);
+            if (node.tagName === "TEXTAREA") node.textContent = original.value;
+          }
+          stage.getBoundingClientRect(); // Start layout-dependent font loads before awaiting readiness.
+          await document.fonts.ready;
           const nodes = [stage, ...stage.querySelectorAll("*")];
           // Only visual computed properties: no inherited custom-property payloads or dependencies.
           const properties =
-            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
+            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background background-image background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
               " ",
             );
           const styles = nodes.map((node) => {
@@ -2036,29 +2227,24 @@ The example coastal photograph was generated for this project.
               computed.getPropertyValue(property),
             ]);
           });
+          const fonts = await this._fontStyles(
+            nodes.map((node) => getComputedStyle(node).fontFamily),
+          );
           for (let n = 0; n < nodes.length; n++) {
             const node = nodes[n];
             node.removeAttribute("id");
             for (const [property, raw] of styles[n]) {
               let value = raw;
-              if (value.includes("url(")) {
-                const urls = [...value.matchAll(/url\(["']?(.*?)["']?\)/g)];
-                for (const match of urls)
-                  if (!match[1].startsWith("#"))
-                    value = value.replace(
-                      match[0],
-                      `url("${await this._asset(match[1])}")`,
-                    );
-              }
+              if (value.includes("url(")) value = await this._embedURLs(value);
               node.style.setProperty(property, value);
-            }
-            if (node.tagName === "IMG") {
-              node.src = await this._asset(node.currentSrc || node.src);
-              node.removeAttribute("srcset");
-              node.removeAttribute("loading");
             }
             if (["SCRIPT", "IFRAME", "VIDEO", "AUDIO"].includes(node.tagName))
               node.remove();
+          }
+          if (fonts) {
+            const style = document.createElement("style");
+            style.textContent = fonts;
+            stage.prepend(style);
           }
           stage.remove();
           stage.style.position = "relative";
@@ -2086,7 +2272,9 @@ The example coastal photograph was generated for this project.
         }
       })();
       this.cache.set(index, job);
-      job.catch(() => this.cache.delete(index));
+      job.catch(() => {
+        if (this.cache.get(index) === job) this.cache.delete(index);
+      });
       return job;
     }
     async _preload() {

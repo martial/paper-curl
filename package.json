@@ -1,6 +1,6 @@
 {
   "name": "paper-curl",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A small, editable HTML page-curl library with no runtime dependencies.",
   "license": "Apache-2.0",
   "author": "Martial Geoffre-Rouland",
@@ -11,7 +11,10 @@
     "paper-curl.css",
     "LICENSE",
     "NOTICE",
-    "README.md"
+    "README.md",
+    "paper-curl.mjs",
+    "vue",
+    "scripts/build-module.mjs"
   ],
   "repository": {
     "type": "git",
@@ -22,16 +25,50 @@
     "page-flip",
     "magazine",
     "webgl",
-    "vanilla-js"
+    "vanilla-js",
+    "vue",
+    "vue3"
   ],
   "scripts": {
     "test": "node --test tests/*.test.cjs",
-    "build": "node scripts/build.mjs"
+    "build": "npm run build:module && node scripts/build.mjs",
+    "build:module": "node scripts/build-module.mjs",
+    "dev:vue": "vite --config examples/vue/vite.config.mjs",
+    "build:vue": "vite build --config examples/vue/vite.config.mjs",
+    "test:fixtures": "node scripts/browser-fixtures.mjs",
+    "test:types": "tsc --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 tests/vue-types.mts"
   },
   "devDependencies": {
-    "happy-dom": "20.14.0"
+    "@vitejs/plugin-vue": "^6.0.8",
+    "happy-dom": "20.14.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2",
+    "vue": "^3.5.42"
   },
   "engines": {
     "node": ">=20"
+  },
+  "module": "paper-curl.mjs",
+  "exports": {
+    ".": {
+      "import": "./paper-curl.mjs",
+      "require": "./paper-curl.js"
+    },
+    "./vue": {
+      "types": "./vue/index.d.mts",
+      "import": "./vue/index.mjs",
+      "default": "./vue/index.mjs"
+    },
+    "./paper-curl.css": "./paper-curl.css",
+    "./paper-curl.js": "./paper-curl.js",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
   }
 }

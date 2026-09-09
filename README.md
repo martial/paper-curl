@@ -1,8 +1,8 @@
 # PaperCurl
 
-A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet bends during a turn; native HTML returns when the page lands. No runtime dependencies, framework, or build step.
+A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet bends during a turn; native HTML returns when the page lands. The plain JavaScript core has no runtime dependencies or required build step. An optional **Vue 3 component** keeps your page content reactive.
 
-Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 39 KB of formatted, readable source, or 11 KB gzipped. Photographs and example layouts are separate from the library.
+Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 46 KB of formatted, readable source, or 13 KB gzipped. Photographs and example layouts are separate from the library.
 
 ## Start here
 
@@ -60,6 +60,91 @@ Each direct child is one page. Write page content in HTML and style it with your
 
 With `showCover: true`, the first page is a centered front cover. Use an even number of pages to end with a centered back cover. `showCover: false` starts with a normal two-page spread.
 
+## Vue 3
+
+Install from this GitHub repository (this project has not been published to npm):
+
+```sh
+npm install github:martial/paper-curl#v0.2.0
+```
+
+Vue is an optional peer dependency; use this component in a Vue 3.3+ app:
+
+```vue
+<script setup>
+import { ref } from "vue";
+import PaperCurl from "paper-curl/vue";
+import "paper-curl/paper-curl.css";
+
+const book = ref(null);
+const page = ref(0);
+const title = ref("My journal");
+const chapters = ref([
+  { id: "one", title: "First chapter" },
+  { id: "two", title: "Another page" },
+]);
+</script>
+
+<template>
+  <input v-model="title" aria-label="Journal title" />
+  <PaperCurl
+    ref="book"
+    v-model="page"
+    class="journal"
+    :width="420"
+    :height="594"
+    :duration="1200"
+    :curl="1.8"
+  >
+    <article class="page">
+      <h1>{{ title }}</h1>
+    </article>
+    <article v-for="chapter in chapters" :key="chapter.id" class="page">
+      <h2>{{ chapter.title }}</h2>
+    </article>
+    <article class="page"><h1>Until next time</h1></article>
+  </PaperCurl>
+  <button @click="book?.prev()">Previous</button>
+  <span>Page {{ page + 1 }}</span>
+  <button @click="book?.next()">Next</button>
+</template>
+
+<style scoped>
+.journal {
+  height: 70vh;
+}
+.page {
+  padding: 40px;
+  background: #faf9f2;
+}
+</style>
+```
+
+Each direct slot element or component is one page. Use a stable, unique `:key` for each `v-for` page. Nested template fragments are flattened; whitespace and comments are ignored. Scoped styles, child component state, Vue events, and `provide`/`inject` continue working. Vue owns the content inside stable page targets; the renderer arranges those targets without moving Vue's own child nodes.
+
+Reactive text, images, and DOM updates invalidate the next turn's textures automatically. Pages can be added, removed, reordered, or initially empty. Structural changes rebuild the book and preserve the visible page where possible. Editing content during a turn cancels that turn safely. Call `book.refresh()` after CSS-only changes or form properties that do not create a DOM mutation.
+
+Props have the same names/defaults as the core options below, using kebab-case in templates (`:show-cover="false"`). `duration`, `curl`, and `shadows` update live; layout props rebuild the renderer. `start-page` sets the initial page. Optional `v-model` tracks the first visible page index, starting at zero; assign a page index to navigate. An index on the right of an open spread selects that spread.
+
+Events:
+
+- `@change="state => …"` — initial state and changed page/spread/count.
+- `@ready="book => …"` — mounted or rebuilt, with the exposed navigation API.
+- `@error="error => …"` — image/font capture or WebGL failure; native navigation remains available.
+
+The component ref exposes `next()`, `prev()`, `first()`, `last()`, `goTo(index)`, `goToSpread(index)`, `refresh()`, and the core's read-only state getters. Use `@change` or `v-model` for reactive state in templates. Unmounting cleans up the observer, listeners, capture work, and GPU resources. ESM imports are safe during SSR; the book renders an empty shell on the server and initializes after mounting in the browser.
+
+Try the editable **[Vue demo](examples/vue/App.vue)**:
+
+```sh
+git clone https://github.com/martial/paper-curl.git
+cd paper-curl
+npm install
+npm run dev:vue
+```
+
+Open the local URL printed by Vite. The demo includes Google Fonts, remote photographs, editable content, page insertion/removal, and mount/unmount controls. `npm run build:vue` builds it into `dist/vue`. Vue and Vite are only used by the optional integration/example.
+
 ## Adjust the feel
 
 ```js
@@ -79,6 +164,7 @@ The constructor also accepts:
 - `textureScale: 2` — resolution of page snapshots during turns.
 - `keyboard: true` — arrow keys, Home, and End while the book has focus.
 - `preload: true` — prepare page textures sequentially after initialization. Use `false` for long documents to prepare pages on demand.
+- `fontCSS: ""` — optional `@font-face` rules for fonts created through the `FontFace` API or stylesheets that cannot be read/fetched. Use absolute font URLs or data URLs. Normal stylesheets, including Google Fonts, are embedded automatically.
 - `onChange(state)` — called at initialization and after a completed or cancelled turn.
 - `onError(error)` — called if the browser cannot prepare or render a page.
 
@@ -122,9 +208,11 @@ To add, remove, or reorder pages after initialization, call `book.destroy()`, ed
 
 ## Images and browser support
 
-The example uses native browser HTML-to-SVG rasterization to prepare textures. For served pages, image URLs must be same-origin or permit CORS. For a file you want to open directly without a server, embed images as data URLs; the standalone example does this automatically.
+Page textures use native browser HTML-to-SVG rasterization. Remote `<img>`, responsive `srcset`/`<picture>` sources, lazy images, CSS backgrounds, and SVG `<image>` assets are embedded before a turn. Image servers must allow CORS for capture. An image being visible in HTML does not imply its server permits canvas capture. If a server blocks access, the library emits an actionable error and completes navigation using native pages, with no blank curl layer. Serve such assets from your own origin or use embedded data URLs.
 
-Page snapshots support ordinary text, images, and CSS layouts. Generated pseudo-element content, live video/canvas, and custom web fonts are not captured comprehensively. Keep these out of turning-page artwork or use system fonts and ordinary HTML elements. Interactive elements remain native at rest; snapshots are refreshed explicitly after content changes.
+Google Fonts and other accessible `@font-face` stylesheets are embedded into the page texture, preserving the font during a turn. Wait for asynchronously inserted font stylesheets to load before creating the book, or call `refresh()` afterward. For fonts loaded programmatically, provide their original `@font-face` rules through `fontCSS`; browsers do not expose the font bytes from a `FontFace` object. System fonts need no extra setup.
+
+For an HTML file opened directly without a server, use system fonts and embed images as data URLs; the standalone example does this automatically. Snapshots support ordinary text, images, and CSS layouts. Generated pseudo-element content and live video/canvas are not captured comprehensively. Keep those out of turning-page artwork. Interactive elements remain native at rest.
 
 The curved renderer requires WebGL and SVG `foreignObject` rasterization. If rendering is unavailable, navigation falls back to immediate native page changes. Reduced-motion preferences are respected. Chromium has been checked locally; this initial version has not yet been validated across every browser and device.
 
@@ -136,16 +224,31 @@ npm test
 npm run build
 ```
 
-There are no production dependencies. The optional build script creates `standalone.html` from the editable magazine example. It does not bundle or minify the library itself.
+There are no production dependencies. The optional build script creates `standalone.html` from the editable magazine example. It also generates `paper-curl.mjs` from the readable `paper-curl.js` source. The ESM entry has no global side effects; classic script and CommonJS usage remain supported.
 
 Files to edit:
 
 - `paper-curl.js` — rendering, interaction, and public API.
 - `paper-curl.css` — book mechanics and default shadows.
+- `vue/index.mjs` — Vue component and lifecycle integration.
+- `examples/vue/App.vue` — editable Vue demo.
 - `minimal.html` — quickest place to try your own content.
 - `index.html` — magazine pages.
 - `demo.css` — magazine typography and layout.
 - `demo.js` — example controls and initialization.
+
+## Browser regression checks
+
+`npm test` checks navigation races, cleanup, page geometry, reactive Vue updates, keyed page insertion/reordering, model synchronization, and SSR imports. `npm run build:vue` checks the production Vue bundle.
+
+For the actual image/font/WebGL pixel tests, run these in separate terminals:
+
+```sh
+npm run test:fixtures
+npm run dev:vue
+```
+
+Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite also fetches a real Google Font, compares captured glyphs with native canvas text, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. The font test needs internet access. Expected CORS failures belong to the blocked-image test.
 
 ## License
 
