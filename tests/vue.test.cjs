@@ -276,3 +276,18 @@ test("ESM and Vue exports import and server-render without browser globals", () 
     cwd: require("node:path").join(__dirname, ".."),
   });
 });
+
+test("a local child edit invalidates only its page and keeps shared assets", async () => {
+  const f = await fixture(),
+    instance = current;
+  const cached = Promise.resolve(document.createElement("canvas"));
+  for (let i = 0; i < 4; i++) instance.cache.set(i, cached);
+  instance.assets.set("photo", "bytes");
+  f.root.querySelector("article button:last-child").click();
+  await flush();
+  assert.equal(instance.cache.has(0), false);
+  for (let i = 1; i < 4; i++) assert.equal(instance.cache.get(i), cached);
+  assert.equal(instance.assets.get("photo"), "bytes");
+  assert.deepEqual(f.warnings, []);
+  await f.close();
+});

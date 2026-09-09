@@ -63,7 +63,6 @@ function removePage() {
           :height="594"
           :curl="curl"
           :duration="duration"
-          :preload="false"
           @error="error = $event.message"
         >
           <article

@@ -1357,7 +1357,7 @@ That remote photograph is not part of the Apache-licensed library files.
       </div>
     </dialog>
     <script>
-/*! PaperCurl v0.2.0 | SPDX-License-Identifier: Apache-2.0
+/*! PaperCurl v0.2.1 | SPDX-License-Identifier: Apache-2.0
  * Copyright 2026 Martial Geoffre-Rouland
  * A small editable HTML page-curl library. No build step or dependencies.
  * Public API and usage: see README.md.
@@ -1744,6 +1744,8 @@ That remote photograph is not part of the Apache-licensed library files.
       this.cache = new Map();
       this.assets = new Map();
       this.fontCache = new Map();
+      this.styleSheets = new Map();
+      this.preloadTimer = 0;
       this.epoch = 0;
       this.current = 0;
       this.desired = 0;
@@ -1805,8 +1807,6 @@ That remote photograph is not part of the Apache-licensed library files.
         }
       });
       this.observer.observe(this.element);
-      if (this.options.preload && this.renderer && !this.reduced.matches)
-        this._preload();
     }
     _node(name) {
       const element = document.createElement("div");
@@ -1900,25 +1900,34 @@ That remote photograph is not part of the Apache-licensed library files.
       if (this.active) this._draw(this.active.progress);
       return this;
     }
-    refresh() {
-      // Call after editing page HTML/styles. Updates the next turn's cached page images.
+    refresh(pageIndices) {
+      // A targeted content edit keeps other textures and already downloaded assets.
+      // Omit indices to explicitly reload every page, stylesheet, image and font.
       if (this.destroyed) return this;
       this.epoch++;
       this.loading = false;
       this.drag = null;
       if (this.active) this.current = this.active.from;
       this.desired = this.current;
-      this.cache.clear();
-      this.assets.clear();
-      this.fontCache.clear();
+      if (pageIndices === undefined) {
+        this.cache.clear();
+        this.assets.clear();
+        this.fontCache.clear();
+        this.styleSheets.clear();
+      } else {
+        for (const index of Array.isArray(pageIndices)
+          ? pageIndices
+          : [pageIndices])
+          this.cache.delete(index);
+      }
       this._rest();
-      if (this.options.preload && this.renderer && !this.reduced.matches)
-        this._preload();
+
       return this;
     }
     destroy() {
       if (this.destroyed) return;
       this.destroyed = true;
+      clearTimeout(this.preloadTimer);
       this.epoch++;
       this.abort.abort();
       this.observer.disconnect();
@@ -1938,6 +1947,7 @@ That remote photograph is not part of the Apache-licensed library files.
       this.cache.clear();
       this.assets.clear();
       this.fontCache.clear();
+      this.styleSheets.clear();
     }
     _size() {
       const bounds = this.element.getBoundingClientRect(),
@@ -1997,6 +2007,7 @@ That remote photograph is not part of the Apache-licensed library files.
       this.element.dispatchEvent(
         new CustomEvent("pagechange", { detail: this.state }),
       );
+      this._schedulePreload();
     }
     _error(error) {
       this.options.onError?.(error);
@@ -2042,17 +2053,20 @@ That remote photograph is not part of the Apache-licensed library files.
       const urls = [
         ...value.matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*?))\s*\)/g),
       ];
-      for (const match of urls) {
-        const url = (match[1] ?? match[2] ?? match[3]).trim();
-        if (url && !url.startsWith("#"))
-          value = value.replace(
-            match[0],
-            `url("${await this._asset(new URL(url, base).href)}")`,
-          );
-      }
+      const embedded = await Promise.all(
+        urls.map(async (match) => {
+          const url = (match[1] ?? match[2] ?? match[3]).trim();
+          return url && !url.startsWith("#")
+            ? `url("${await this._asset(new URL(url, base).href)}")`
+            : match[0];
+        }),
+      );
+      urls.forEach((match, i) => {
+        value = value.replace(match[0], embedded[i]);
+      });
       return value;
     }
-    async _fontStyles(families) {
+    async _fontStyles(families, text = "") {
       const normalize = (name) =>
         name
           .trim()
@@ -2066,7 +2080,8 @@ That remote photograph is not part of the Apache-licensed library files.
           .map((font) => normalize(font.family))
           .filter((name) => used.has(name)),
       );
-      const key = [...used].sort().join(",");
+      const characters = [...new Set([...text])];
+      const key = [...used].sort().join(",") + ":" + characters.sort().join("");
       if (this.fontCache.has(key)) return this.fontCache.get(key);
       const job = (async () => {
         const faces = [],
@@ -2082,6 +2097,7 @@ That remote photograph is not part of the Apache-licensed library files.
                 css: rule.cssText,
                 base,
                 family: normalize(rule.style.getPropertyValue("font-family")),
+                range: rule.style.getPropertyValue("unicode-range"),
               });
             else if (rule.type === 3 && rule.styleSheet) visit(rule.styleSheet);
             else if (rule.cssRules) collect(rule.cssRules, base);
@@ -2115,10 +2131,21 @@ That remote photograph is not part of the Apache-licensed library files.
           const load = async (url) => {
             if (seenURLs.has(url)) return;
             seenURLs.add(url);
-            const response = await fetch(url);
-            if (!response.ok)
-              throw new Error("Font stylesheet could not be loaded: " + url);
-            const css = await response.text();
+            if (!this.styleSheets.has(url)) {
+              const job = fetch(url).then((response) => {
+                if (!response.ok)
+                  throw new Error(
+                    "Font stylesheet could not be loaded: " + url,
+                  );
+                return response.text();
+              });
+              this.styleSheets.set(url, job);
+              job.catch(() => {
+                if (this.styleSheets.get(url) === job)
+                  this.styleSheets.delete(url);
+              });
+            }
+            const css = await this.styleSheets.get(url);
             // Resolve @import before parsing: constructable stylesheets omit imports.
             for (const match of css.matchAll(
               /@import\s+(?:url\(\s*)?["']([^"']+)["']/g,
@@ -2145,13 +2172,15 @@ That remote photograph is not part of the Apache-licensed library files.
           );
         return (
           await Promise.all(
-            faces.map(async (face) => {
-              // Force the embedded source, rather than a possibly unavailable local face.
-              const css = face.css.includes("url(")
-                ? face.css.replace(/local\([^)]*\)\s*,?\s*/g, "")
-                : face.css;
-              return this._embedURLs(css, face.base);
-            }),
+            faces
+              .filter((face) => this._fontRangeUsed(face.range, characters))
+              .map(async (face) => {
+                // Force the embedded source, rather than a possibly unavailable local face.
+                const css = face.css.includes("url(")
+                  ? face.css.replace(/local\([^)]*\)\s*,?\s*/g, "")
+                  : face.css;
+                return this._embedURLs(css, face.base);
+              }),
           )
         ).join("\n");
       })();
@@ -2160,6 +2189,22 @@ That remote photograph is not part of the Apache-licensed library files.
         if (this.fontCache.get(key) === job) this.fontCache.delete(key);
       });
       return job;
+    }
+    _fontRangeUsed(range, characters) {
+      // A Google Fonts stylesheet contains several script subsets. Embed only
+      // those needed by this page, preserving extended Latin and non-Latin text.
+      if (!range || !characters.length) return true;
+      const intervals = [
+        ...range.matchAll(/U\+([0-9A-F?]+)(?:-([0-9A-F]+))?/gi),
+      ].map((match) => [
+        parseInt(match[1].replace(/\?/g, "0"), 16),
+        parseInt(match[2] || match[1].replace(/\?/g, "F"), 16),
+      ]);
+      if (!intervals.length) return true;
+      return characters.some((character) => {
+        const code = character.codePointAt(0);
+        return intervals.some(([start, end]) => code >= start && code <= end);
+      });
     }
     async _snapshot(index) {
       if (this.cache.has(index)) return this.cache.get(index);
@@ -2181,43 +2226,51 @@ That remote photograph is not part of the Apache-licensed library files.
           const cloned = [clone, ...clone.querySelectorAll("*")];
           // Select the already-displayed responsive image, before detaching picture
           // sources or srcset. Lazy images must be decoded before SVG rasterization.
-          for (let i = 0; i < cloned.length; i++) {
-            const node = cloned[i],
-              original = originals[i];
-            if (node.tagName === "SOURCE") node.remove();
-            if (node.tagName === "IMG") {
-              node.removeAttribute("srcset");
-              node.removeAttribute("sizes");
-              node.removeAttribute("loading");
-              node.removeAttribute("crossorigin");
-              const source = original.currentSrc || original.src;
-              if (source) {
-                node.src = await this._asset(source);
-                await node.decode();
+          await Promise.all(
+            cloned.map(async (node, i) => {
+              const original = originals[i];
+              if (node.tagName === "SOURCE") node.remove();
+              if (node.tagName === "IMG") {
+                node.removeAttribute("srcset");
+                node.removeAttribute("sizes");
+                node.removeAttribute("loading");
+                node.removeAttribute("crossorigin");
+                const source = original.currentSrc || original.src;
+                if (source) {
+                  node.src = await this._asset(source);
+                  await node.decode();
+                }
               }
-            }
-            if (
-              node.namespaceURI === "http://www.w3.org/2000/svg" &&
-              node.localName === "image"
-            ) {
-              const source =
-                original.getAttribute("href") ||
-                original.getAttributeNS("http://www.w3.org/1999/xlink", "href");
-              if (source) {
-                node.removeAttributeNS("http://www.w3.org/1999/xlink", "href");
-                node.setAttribute("href", await this._asset(source));
+              if (
+                node.namespaceURI === "http://www.w3.org/2000/svg" &&
+                node.localName === "image"
+              ) {
+                const source =
+                  original.getAttribute("href") ||
+                  original.getAttributeNS(
+                    "http://www.w3.org/1999/xlink",
+                    "href",
+                  );
+                if (source) {
+                  node.removeAttributeNS(
+                    "http://www.w3.org/1999/xlink",
+                    "href",
+                  );
+                  node.setAttribute("href", await this._asset(source));
+                }
               }
-            }
-            if (node.tagName === "INPUT")
-              node.setAttribute("value", original.value);
-            if (node.tagName === "TEXTAREA") node.textContent = original.value;
-          }
+              if (node.tagName === "INPUT")
+                node.setAttribute("value", original.value);
+              if (node.tagName === "TEXTAREA")
+                node.textContent = original.value;
+            }),
+          );
           stage.getBoundingClientRect(); // Start layout-dependent font loads before awaiting readiness.
           await document.fonts.ready;
           const nodes = [stage, ...stage.querySelectorAll("*")];
           // Only visual computed properties: no inherited custom-property payloads or dependencies.
           const properties =
-            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background background-image background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
+            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background-color background-image background-attachment background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
               " ",
             );
           const styles = nodes.map((node) => {
@@ -2229,6 +2282,7 @@ That remote photograph is not part of the Apache-licensed library files.
           });
           const fonts = await this._fontStyles(
             nodes.map((node) => getComputedStyle(node).fontFamily),
+            clone.textContent,
           );
           for (let n = 0; n < nodes.length; n++) {
             const node = nodes[n];
@@ -2277,12 +2331,44 @@ That remote photograph is not part of the Apache-licensed library files.
       });
       return job;
     }
+    _turnPages(from, to) {
+      return to > from
+        ? [this.pairs[from][1], this.pairs[to][0]]
+        : [this.pairs[to][1], this.pairs[from][0]];
+    }
+    _schedulePreload() {
+      clearTimeout(this.preloadTimer);
+      if (
+        !this.options.preload ||
+        !this.renderer ||
+        this.reduced.matches ||
+        this.destroyed
+      )
+        return;
+      // Coalesce reactive edits and give the browser time to paint the live page.
+      this.preloadTimer = setTimeout(() => {
+        this.preloadTimer = 0;
+        this._preload();
+      }, 40);
+    }
     async _preload() {
-      const epoch = this.epoch;
-      for (let i = 0; i < this.pages.length; i++) {
-        if (this.destroyed || epoch !== this.epoch) return;
+      const epoch = this.epoch,
+        from = this.current;
+      // Prepare the next turn first, then the previous turn; never scan an entire
+      // book at startup. The clicked turn shares any already pending snapshots.
+      for (const to of [from + 1, from - 1]) {
+        if (to < 0 || to >= this.pairs.length) continue;
+        if (
+          this.destroyed ||
+          epoch !== this.epoch ||
+          from !== this.current ||
+          this.isAnimating
+        )
+          return;
         try {
-          await this._snapshot(i);
+          await Promise.all(
+            this._turnPages(from, to).map((index) => this._snapshot(index)),
+          );
         } catch {
           return;
         }
@@ -2297,8 +2383,7 @@ That remote photograph is not part of the Apache-licensed library files.
       this.loading = true;
       this.element.setAttribute("aria-busy", "true");
       try {
-        const front = direction > 0 ? this.pairs[from][1] : this.pairs[to][1],
-          back = direction > 0 ? this.pairs[to][0] : this.pairs[from][0];
+        const [front, back] = this._turnPages(from, to);
         const textures = await Promise.all([
           this._snapshot(front),
           this._snapshot(back),

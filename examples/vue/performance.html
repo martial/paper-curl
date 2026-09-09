@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PaperCurl turn latency</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+    />
+    <style>
+      body {
+        font:
+          15px "DM Sans",
+          sans-serif;
+        padding: 24px;
+        background: #eae9e1;
+      }
+      button {
+        padding: 12px;
+        font: inherit;
+      }
+      pre {
+        white-space: pre-wrap;
+        line-height: 1.6;
+      }
+      .fixture {
+        height: 520px;
+        width: 900px;
+      }
+      .fixture article {
+        padding: 32px;
+        background: #faf8ee;
+        color: #273d39;
+        font:
+          16px/1.7 "DM Sans",
+          sans-serif;
+      }
+      .fixture h2 {
+        font:
+          42px/1.15 "Playfair Display",
+          serif;
+      }
+      .fixture img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Time from click to first curl frame</h1>
+    <button id="run">Measure turns</button>
+    <pre id="results" role="status">Ready.</pre>
+    <div id="fixture"></div>
+    <script type="module" src="./performance.js"></script>
+  </body>
+</html>

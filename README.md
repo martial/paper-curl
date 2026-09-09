@@ -2,7 +2,7 @@
 
 A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet bends during a turn; native HTML returns when the page lands. The plain JavaScript core has no runtime dependencies or required build step. An optional **Vue 3 component** keeps your page content reactive.
 
-Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 46 KB of formatted, readable source, or 13 KB gzipped. Photographs and example layouts are separate from the library.
+Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 49 KB of formatted, readable source, or 13 KB gzipped. Photographs and example layouts are separate from the library.
 
 ## Start here
 
@@ -65,7 +65,7 @@ With `showCover: true`, the first page is a centered front cover. Use an even nu
 Install from this GitHub repository (this project has not been published to npm):
 
 ```sh
-npm install github:martial/paper-curl#v0.2.0
+npm install github:martial/paper-curl#v0.2.1
 ```
 
 Vue is an optional peer dependency; use this component in a Vue 3.3+ app:
@@ -122,7 +122,7 @@ const chapters = ref([
 
 Each direct slot element or component is one page. Use a stable, unique `:key` for each `v-for` page. Nested template fragments are flattened; whitespace and comments are ignored. Scoped styles, child component state, Vue events, and `provide`/`inject` continue working. Vue owns the content inside stable page targets; the renderer arranges those targets without moving Vue's own child nodes.
 
-Reactive text, images, and DOM updates invalidate the next turn's textures automatically. Pages can be added, removed, reordered, or initially empty. Structural changes rebuild the book and preserve the visible page where possible. Editing content during a turn cancels that turn safely. Call `book.refresh()` after CSS-only changes or form properties that do not create a DOM mutation.
+Reactive text, images, and DOM updates invalidate only the changed pages automatically. Unaffected page textures and downloaded image/font assets stay cached. Pages can be added, removed, reordered, or initially empty. Structural changes rebuild the book and preserve the visible page where possible. Editing content during a turn cancels that turn safely. Call `book.refresh()` after CSS-only changes or form properties that do not create a DOM mutation.
 
 Props have the same names/defaults as the core options below, using kebab-case in templates (`:show-cover="false"`). `duration`, `curl`, and `shadows` update live; layout props rebuild the renderer. `start-page` sets the initial page. Optional `v-model` tracks the first visible page index, starting at zero; assign a page index to navigate. An index on the right of an open spread selects that spread.
 
@@ -163,7 +163,7 @@ The constructor also accepts:
 - `maxScale: 1` — maximum scale relative to the design dimensions.
 - `textureScale: 2` — resolution of page snapshots during turns.
 - `keyboard: true` — arrow keys, Home, and End while the book has focus.
-- `preload: true` — prepare page textures sequentially after initialization. Use `false` for long documents to prepare pages on demand.
+- `preload: true` — prepare the next and previous turning sheets shortly after mounting and after each completed turn. Preparation is bounded to nearby pages, including in long documents. Use `false` to prepare pages only on demand.
 - `fontCSS: ""` — optional `@font-face` rules for fonts created through the `FontFace` API or stylesheets that cannot be read/fetched. Use absolute font URLs or data URLs. Normal stylesheets, including Google Fonts, are embedded automatically.
 - `onChange(state)` — called at initialization and after a completed or cancelled turn.
 - `onError(error)` — called if the browser cannot prepare or render a page.
@@ -201,10 +201,22 @@ Keep references to your page elements, edit their HTML or styles, then refresh t
 ```js
 const page = document.querySelector("#chapter-one");
 page.querySelector("h2").textContent = "A new title";
-book.refresh();
+book.refresh([1]); // refresh the chapter page; retain other pages and downloaded assets
 ```
 
+`refresh()` without arguments explicitly clears every page texture and the image/font/stylesheet caches. `refresh(index)` or `refresh([indices])` invalidates just those page textures, retaining shared assets.
+
 To add, remove, or reorder pages after initialization, call `book.destroy()`, edit the original container, and create a new instance. `destroy()` restores the original page elements and removes listeners, animation frames, and GPU resources.
+
+## Keep turns responsive
+
+Leave `preload` enabled so image/font preparation happens while the user reads. The next sheet is prepared first, followed by the previous sheet; mounting a long book does not capture every page. Pending captures are reused if a click arrives before preparation finishes.
+
+For content edits, prefer `refresh([pageIndex])` over a full `refresh()`; the Vue component does this automatically. Google Fonts stylesheets and downloaded font/image bytes are shared between page captures, and only the Unicode subsets needed by a page are embedded. Multiple images are fetched and decoded concurrently. A first click before remote assets have loaded can still wait on the network.
+
+`duration` controls how long the animation lasts; reducing it does not shorten page preparation. `textureScale` controls snapshot resolution and memory use; lowering it to `1` reduces capture work at the cost of sharpness on high-density displays.
+
+The repeatable [performance benchmark](tests/browser/PERFORMANCE.md) separates time before the first curl frame from JavaScript drawing time. Workers with OffscreenCanvas are a possible future option for measured animation jank. They cannot read DOM layout/computed styles, and WASM does not eliminate font/image download waits.
 
 ## Images and browser support
 

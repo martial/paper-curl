@@ -121,8 +121,20 @@ export const PaperCurl = defineComponent({
             onError: (error) => emit("error", error),
           });
           // Observe page content only, never the renderer's animated DOM or clones.
-          observer = new MutationObserver(() => {
-            if (!disposed) book?.refresh();
+          observer = new MutationObserver((mutations) => {
+            if (disposed || !book) return;
+            const dirty = new Set();
+            for (const mutation of mutations) {
+              const element =
+                mutation.target.nodeType === 1
+                  ? mutation.target
+                  : mutation.target.parentElement;
+              const index = book.pages.indexOf(
+                element?.closest(".pc-vue-page"),
+              );
+              if (index >= 0) dirty.add(index);
+            }
+            if (dirty.size) book.refresh([...dirty]);
           });
           pages.forEach((page) =>
             observer.observe(page, {
@@ -154,7 +166,7 @@ export const PaperCurl = defineComponent({
       last: () => book?.last(),
       goTo: (page) => book?.goTo(page),
       goToSpread: (spread) => book?.goToSpread(spread),
-      refresh: () => book?.refresh(),
+      refresh: (pages) => book?.refresh(pages),
       get page() {
         return book?.page ?? 0;
       },

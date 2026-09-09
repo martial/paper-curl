@@ -189,6 +189,54 @@ document.querySelector("#run").onclick = async () => {
       }
     },
   );
+  await check("extended Latin glyphs survive font subsetting", async () => {
+    const text = "ĀęĐ";
+    await document.fonts.load("80px Bungee", text);
+    const f = await fixture([
+      `<div style="font:80px/120px Bungee,serif;color:black;white-space:nowrap">${text}</div>`,
+    ]);
+    try {
+      const captured = await f.book._snapshot(0);
+      const reference = document.createElement("canvas");
+      reference.width = reference.height = 400;
+      const context = reference.getContext("2d");
+      context.fillStyle = "white";
+      context.fillRect(0, 0, 400, 400);
+      context.fillStyle = "black";
+      context.font = "80px Bungee";
+      context.fillText(text, 0, 100);
+      assert(
+        Math.abs(inkWidth(captured) - inkWidth(reference)) < 4,
+        "needed font subset missing",
+      );
+    } finally {
+      f.close();
+    }
+  });
+  await check(
+    "nearby preloaded pages need no new capture when clicked",
+    async () => {
+      const f = await fixture(
+        Array.from({ length: 8 }, (_, i) =>
+          img(origin + (i % 2 ? "/blue.svg" : "/red.svg")),
+        ),
+      );
+      try {
+        await f.book._preload();
+        assert(f.book.cache.size === 2, "startup prepared distant pages");
+        let misses = 0;
+        const snapshot = f.book._snapshot.bind(f.book);
+        f.book._snapshot = (index) => {
+          if (!f.book.cache.has(index)) misses++;
+          return snapshot(index);
+        };
+        assert(await f.book._prepare(1), "warm turn failed");
+        assert(misses === 0, "clicked turn recaptured ready pages");
+      } finally {
+        f.close();
+      }
+    },
+  );
   await check(
     "both faces upload to WebGL and remain visible through the curl",
     async () => {

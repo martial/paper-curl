@@ -299,3 +299,70 @@ test("page geometry is finite, continuous at the spine, and flat at both endpoin
         }
     }
 });
+
+test("targeted refresh preserves unaffected textures and downloaded assets", async () => {
+  const f = await fixture();
+  const cached = Promise.resolve(f.window.document.createElement("canvas"));
+  f.book.cache.set(0, cached);
+  f.book.cache.set(1, cached);
+  f.book.assets.set("image", "bytes");
+  f.book.fontCache.set("face", "css");
+  f.book.styleSheets.set("sheet", "rules");
+  f.book.refresh([0]);
+  assert.equal(f.book.cache.has(0), false);
+  assert.equal(f.book.cache.get(1), cached);
+  assert.equal(f.book.assets.get("image"), "bytes");
+  assert.equal(f.book.fontCache.get("face"), "css");
+  assert.equal(f.book.styleSheets.get("sheet"), "rules");
+  f.book.refresh();
+  assert.equal(f.book.cache.size, 0);
+  assert.equal(f.book.assets.size, 0);
+  assert.equal(f.book.fontCache.size, 0);
+  assert.equal(f.book.styleSheets.size, 0);
+  f.close();
+});
+
+test("preloading prioritizes only the next and previous sheets near the current spread", async () => {
+  const f = await fixture({ startPage: 5 });
+  const pages = [];
+  f.book._snapshot = async (index) => {
+    pages.push(index);
+    return f.window.document.createElement("canvas");
+  };
+  await f.book._preload();
+  assert.deepEqual(pages, [6, 7, 4, 5]);
+  f.close();
+});
+
+test("destroy interrupts a click during background preparation", async () => {
+  const f = await fixture();
+  let resolve;
+  const pending = new Promise((done) => {
+    resolve = done;
+  });
+  const seen = [];
+  f.book._snapshot = (index) => {
+    seen.push(index);
+    return pending;
+  };
+  const warm = f.book._preload();
+  f.book.next();
+  f.book.destroy();
+  resolve(f.window.document.createElement("canvas"));
+  await warm;
+  await new Promise((done) => setImmediate(done));
+  assert.equal(f.renderer.uploads, 0);
+  assert.equal(f.root.querySelector(".pc-curl"), null);
+  assert.deepEqual(seen, [0, 1, 0, 1]);
+  f.window.happyDOM.abort();
+});
+
+test("font subset matching keeps needed Unicode ranges and skips unrelated scripts", async () => {
+  const f = await fixture();
+  assert.equal(f.book._fontRangeUsed("U+0400-04FF", [..."Hello"]), false);
+  assert.equal(f.book._fontRangeUsed("U+0400-04FF", [..."Привет"]), true);
+  assert.equal(f.book._fontRangeUsed("U+0100-02FF", [..."Āę"]), true);
+  assert.equal(f.book._fontRangeUsed("U+4??", [..."Ж"]), true);
+  assert.equal(f.book._fontRangeUsed("U+1F600-1F64F", [..."😀"]), true);
+  f.close();
+});
