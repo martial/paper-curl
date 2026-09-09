@@ -1,0 +1,129 @@
+/* SPDX-License-Identifier: Apache-2.0 | Copyright 2026 Martial Geoffre-Rouland */
+/* PaperCurl — mechanics only. Style the contents of your pages however you like. */
+.pc-host {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  min-height: 260px;
+  touch-action: pan-y;
+}
+.pc-host * {
+  box-sizing: border-box;
+}
+.pc-host [hidden] {
+  display: none !important;
+}
+.pc-rig {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.pc-center,
+.pc-book {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.pc-page {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--pc-paper, #f6f5ee);
+}
+.pc-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--pc-width);
+  height: var(--pc-height);
+  transform: scale(var(--pc-scale));
+  transform-origin: 0 0;
+  overflow: hidden;
+}
+.pc-content > *,
+.pc-capture > * {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+.pc-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.pc-page.pc-left::after {
+  background: linear-gradient(
+    90deg,
+    transparent 86%,
+    #10253503 93%,
+    #10253512 99%,
+    #10253528
+  );
+}
+.pc-page.pc-right::after {
+  background: linear-gradient(90deg, #fff2, #10253510 1%, transparent 12%);
+}
+.pc-ground {
+  position: absolute;
+  top: 3px;
+  bottom: 0;
+  width: 50%;
+  pointer-events: none;
+  box-shadow:
+    0 2px 2px #233d4a20,
+    0 10px 14px -4px #233d4a33,
+    0 28px 36px -10px #233d4a38,
+    0 42px 65px -20px #233d4a26;
+  transition: opacity 0.45s;
+}
+.pc-ground.pc-left {
+  left: 0;
+}
+.pc-ground.pc-right {
+  right: 0;
+}
+.pc-curl {
+  position: absolute;
+  left: -25%;
+  top: -50%;
+  width: 150%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 4;
+}
+.pc-capture {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: var(--pc-width);
+  height: var(--pc-height);
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--pc-paper, #f6f5ee);
+}
+.pc-dragging {
+  cursor: grabbing;
+  touch-action: none;
+}
+.pc-host[aria-busy="true"] {
+  cursor: progress;
+}
+.pc-no-shadows .pc-page::after,
+.pc-no-shadows .pc-ground {
+  visibility: hidden;
+}
+.pc-host:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-ground {
+    transition: none;
+  }
+}

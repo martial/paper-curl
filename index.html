@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Outside — PaperCurl example</title>
+    <link rel="stylesheet" href="paper-curl.css" />
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="masthead">
+        <div class="brand">
+          <div class="wordmark">outside.</div>
+          <div class="brand-note">A journal<br />of elsewhere</div>
+        </div>
+        <div class="top-actions">
+          <span class="issue">Issue 01 &nbsp; / &nbsp; The coast</span
+          ><button
+            class="text-button"
+            id="readButton"
+            title="Read the current pages as text"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v15c-3-1-6-1-9 1-3-2-6-2-9-1zM12 6v15"
+              ></path></svg
+            >Read</button
+          ><button
+            class="text-button"
+            id="fullscreenButton"
+            aria-label="Enter fullscreen"
+            title="Fullscreen"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+      <main
+        id="book"
+        class="workspace"
+        aria-label="Outside magazine. Use arrow keys or drag a page edge."
+      >
+        <!-- Front cover. Edit the HTML below. -->
+        <article class="page" data-page="0">
+          <div class="spread cover" style="left: -450px">
+            <div class="cover-page">
+              <div
+                class="cover-photo"
+                role="img"
+                aria-label="Sunlit Mediterranean coastline and a winding cliff road"
+              ></div>
+              <h1 class="cover-brand">outside.</h1>
+              <div class="cover-meta">
+                <span>A journal of elsewhere</span
+                ><span>Issue 01 / Summer 2026</span>
+              </div>
+              <h2 class="cover-title">Somewhere<br />along<br />the coast.</h2>
+              <div class="cover-bottom">
+                <div>
+                  <strong>Take the long way home.</strong>Slow days on the
+                  Mediterranean
+                </div>
+                <div class="cover-ring" aria-hidden="true">↗</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Page 2 — panorama, left. Edit the HTML below. -->
+        <article class="page" data-page="1">
+          <div class="spread opening" style="left: 0px">
+            <div
+              class="panorama"
+              role="img"
+              aria-label="A continuous photograph of the Mediterranean coast across both pages"
+            ></div>
+            <div class="topline"><span>Outside / The coast issue</span></div>
+            <h2 class="opening-title">Somewhere<br />slow.</h2>
+            <span class="folio left">02</span
+            ><span class="folio middle-left">The Mediterranean</span>
+          </div>
+        </article>
+
+        <!-- Page 3 — panorama, right. Edit the HTML below. -->
+        <article class="page" data-page="2">
+          <div class="spread opening" style="left: -450px">
+            <div
+              class="panorama"
+              role="img"
+              aria-label="A continuous photograph of the Mediterranean coast across both pages"
+            ></div>
+            <div class="topline" style="justify-content: flex-end">
+              <span>A little further, a little slower.</span>
+            </div>
+            <div class="opening-copy">
+              <p><em>There is another way to get there.</em></p>
+              <p>
+                Past the last town, the road folds into the hillside. The sea
+                takes over. For once, there is nothing to do but follow the
+                curve.
+              </p>
+            </div>
+            <span class="folio right">03</span>
+          </div>
+        </article>
+
+        <!-- Page 4 — essay title. Edit the HTML below. -->
+        <article class="page" data-page="3">
+          <div class="spread essay" style="left: 0px">
+            <div class="essay-left">
+              <p class="essay-kicker">On the pleasure of a detour</p>
+              <h2 class="essay-title">
+                Take<br />the long<br />way<br />home.
+              </h2>
+              <p class="essay-deck">
+                A few thoughts on getting lost,<br />looking closer, and
+                leaving<br />a little room for nothing.
+              </p>
+            </div>
+            <span class="folio left">04</span>
+          </div>
+        </article>
+
+        <!-- Page 5 — essay text. Edit the HTML below. -->
+        <article class="page" data-page="4">
+          <div class="spread essay" style="left: -450px">
+            <div class="essay-right">
+              <p class="essay-kicker">An unhurried kind of day</p>
+              <h3>The distance<br />between two places.</h3>
+              <p class="dropcap">
+                We had no destination. Just a road beside the water, a folded
+                map on the dashboard, and an entire afternoon ahead of us.
+              </p>
+              <p>
+                Shutters were half closed. A chair stood in a square of shade.
+                Lunch was still happening behind an open window.
+              </p>
+              <p>
+                We stopped for a view. For a coffee. For no reason we could
+                name. With every pause, the day grew a little wider.
+              </p>
+              <p>
+                Perhaps taking the long way gives the things in between a chance
+                to become the things you remember.
+              </p>
+              <p class="byline">From the Outside travel notebook</p>
+            </div>
+            <span class="folio right">05</span>
+          </div>
+        </article>
+
+        <!-- Page 6 — photograph. Edit the HTML below. -->
+        <article class="page" data-page="5">
+          <div class="spread notes" style="left: 0px">
+            <div
+              class="detail-photo"
+              role="img"
+              aria-label="Pale cliffs, cypress trees, and a coastal road"
+            ></div>
+            <p class="photo-caption">
+              The best part<br />was never on the map.
+            </p>
+            <span class="folio left">06</span>
+          </div>
+        </article>
+
+        <!-- Page 7 — field notes. Edit the HTML below. -->
+        <article class="page" data-page="6">
+          <div class="spread notes" style="left: -450px">
+            <div class="notes-right">
+              <p class="essay-kicker">Things to take with you</p>
+              <h2>Field notes<br />for slow days.</h2>
+              <div class="note">
+                <span class="note-num">1.</span>
+                <div>
+                  <h3>Leave the morning open.</h3>
+                  <p>
+                    One good coffee. A walk without a route. Let the day tell
+                    you where to go.
+                  </p>
+                </div>
+              </div>
+              <div class="note">
+                <span class="note-num">2.</span>
+                <div>
+                  <h3>Stop when you notice something.</h3>
+                  <p>
+                    A patch of light, a quiet cove, the smell of bread. Small
+                    things make a place.
+                  </p>
+                </div>
+              </div>
+              <div class="note">
+                <span class="note-num">3.</span>
+                <div>
+                  <h3>Bring back a feeling.</h3>
+                  <p>
+                    You do not have to photograph everything. Some moments can
+                    stay yours.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <span class="folio right">07</span>
+          </div>
+        </article>
+
+        <!-- Back cover. Edit the HTML below. -->
+        <article class="page" data-page="7">
+          <div class="spread back-cover" style="left: 0px">
+            <div class="back-page">
+              <div class="back-wordmark">outside.</div>
+              <p class="back-quote">Less itinerary.<br />More possibility.</p>
+              <div class="back-bottom">
+                <span>A journal of elsewhere<br />The coast issue / 01</span
+                ><span>Until next time.<br />Summer 2026</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+      <footer class="controls">
+        <div class="pager">
+          <button class="arrow-button" id="prev" aria-label="Previous spread">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m14 6-6 6 6 6M8 12h12"></path>
+            </svg>
+          </button>
+          <div class="page-label" aria-live="polite" aria-atomic="true">
+            <strong id="pageTitle">The coast issue</strong
+            ><span id="pageNumber">Front cover</span>
+          </div>
+          <button class="arrow-button" id="next" aria-label="Next spread">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m10 6 6 6-6 6M4 12h12"></path>
+            </svg>
+          </button>
+        </div>
+        <nav class="index" aria-label="Jump to a spread">
+          <button data-index="0" aria-current="page">Cover</button
+          ><button data-index="1">Somewhere slow</button
+          ><button data-index="2">The long way</button
+          ><button data-index="3">Field notes</button
+          ><button data-index="4">Back cover</button>
+        </nav>
+        <div class="bottom-row">
+          <p class="hint">
+            Drag an outer corner, click an arrow, or use <kbd>←</kbd>
+            <kbd>→</kbd>
+          </p>
+          <div class="settings">
+            <label><input type="checkbox" id="slow" />Slow motion</label
+            ><label
+              ><input type="checkbox" id="paper" checked="" />Paper &amp;
+              light</label
+            ><button class="text-button" id="play" aria-pressed="false">
+              Play through <span aria-hidden="true">▷</span>
+            </button>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <dialog id="readingDialog" aria-labelledby="readingTitle">
+      <div class="dialog-header">
+        <h2 id="readingTitle">The coast issue</h2>
+        <button
+          class="dialog-close"
+          id="closeReading"
+          aria-label="Close reading view"
+        >
+          ×
+        </button>
+      </div>
+      <div id="readingText"></div>
+      <div class="reading-footer">
+        <button id="readPrev">Previous</button
+        ><button id="readNext">Next</button>
+      </div>
+    </dialog>
+    <script src="paper-curl.js"></script>
+    <script src="demo.js"></script>
+  </body>
+</html>

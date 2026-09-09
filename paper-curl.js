@@ -1,0 +1,1001 @@
+/*! PaperCurl v0.1.0 | SPDX-License-Identifier: Apache-2.0
+ * Copyright 2026 Martial Geoffre-Rouland
+ * A small editable HTML page-curl library. No build step or dependencies.
+ * Public API and usage: see README.md.
+ */
+(function (global) {
+  "use strict";
+  /* A welded, continuously curved sheet. Native HTML remains the resting surface. */
+  class SheetRenderer {
+    constructor(host, options) {
+      this.designWidth = options.width;
+      this.designHeight = options.height;
+      this.curl = options.curl;
+      this.canvas = document.createElement("canvas");
+      this.canvas.className = "pc-curl";
+      this.canvas.hidden = true;
+      this.canvas.setAttribute("aria-hidden", "true");
+      host.append(this.canvas);
+      const gl = (this.gl = this.canvas.getContext("webgl", {
+        alpha: true,
+        antialias: true,
+        premultipliedAlpha: true,
+        powerPreference: "high-performance",
+      }));
+      if (!gl) throw new Error("WebGL is unavailable");
+      this.cols = 112;
+      this.rows = 32;
+      this.vertices = new Float32Array((this.cols + 1) * (this.rows + 1) * 8);
+      const indices = [];
+      for (let r = 0; r < this.rows; r++)
+        for (let c = 0; c < this.cols; c++) {
+          const a = r * (this.cols + 1) + c,
+            b = a + this.cols + 1;
+          indices.push(a, b, a + 1, a + 1, b, b + 1);
+        }
+      this.count = indices.length;
+      this.buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, this.vertices.byteLength, gl.DYNAMIC_DRAW);
+      this.indices = gl.createBuffer();
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indices);
+      gl.bufferData(
+        gl.ELEMENT_ARRAY_BUFFER,
+        new Uint16Array(indices),
+        gl.STATIC_DRAW,
+      );
+      this.sheet = this.program(
+        `
+   attribute vec3 aPosition;attribute vec3 aNormal;attribute vec2 aUV;
+   uniform float uShadow;uniform vec2 uView;uniform float uPageWidth;varying vec2 vUV;varying vec3 vNormal;varying float vHeight;
+   void main(){
+    vec3 p=aPosition;
+    if(uShadow>0.5){p.xy+=vec2(.16,.18)*p.z;p.z=0.;}
+    else {p.x*=1.+p.z/(uPageWidth*7.78);p.y-=p.z*.055;}
+    gl_Position=vec4(p.x/uView.x,-p.y/uView.y,-p.z/(uPageWidth*2.22),1.);
+    vUV=aUV;vNormal=aNormal;vHeight=aPosition.z;
+   }`,
+        `
+   precision highp float;
+   uniform sampler2D uFront;uniform sampler2D uBack;
+   uniform float uShadow;uniform float uPageWidth;uniform float uLift;uniform float uDetails;
+   varying vec2 vUV;varying vec3 vNormal;varying float vHeight;
+   void main(){
+    if(uShadow>.5){gl_FragColor=vec4(0.,0.,0.,.22-clamp(vHeight/uPageWidth,0.,1.)*.12);return;}
+    vec3 normal=normalize(vNormal)*(gl_FrontFacing?1.:-1.);
+    vec3 ink=gl_FrontFacing?texture2D(uFront,vUV).rgb:texture2D(uBack,vec2(1.-vUV.x,vUV.y)).rgb;
+    vec3 light=normalize(vec3(-.35,-.45,1.));
+    float lambert=max(0.,dot(normal,light));
+    float shade=(.66+.34*lambert)/(.66+.34*light.z);
+    float satin=pow(max(0.,dot(normal,normalize(light+vec3(0.,0.,1.)))),24.)*.065;
+    vec3 color=ink*mix(1.,shade,uDetails*uLift)+satin*uDetails*uLift;
+    color*=1.-uDetails*.055*exp(-vUV.x*vUV.x*500.);
+    gl_FragColor=vec4(color,1.);
+   }`,
+      );
+      this.blur = this.program(
+        `
+   attribute vec2 aPoint;varying vec2 vUV;
+   void main(){vUV=aPoint*.5+.5;gl_Position=vec4(aPoint,0.,1.);}
+  `,
+        `
+   precision highp float;uniform sampler2D uImage;uniform vec2 uStep;varying vec2 vUV;
+   void main(){
+    vec4 color=texture2D(uImage,vUV)*.227027;
+    color+=texture2D(uImage,vUV+uStep*1.384615)*.316216;
+    color+=texture2D(uImage,vUV-uStep*1.384615)*.316216;
+    color+=texture2D(uImage,vUV+uStep*3.230769)*.070270;
+    color+=texture2D(uImage,vUV-uStep*3.230769)*.070270;
+    gl_FragColor=color;
+   }`,
+      );
+      this.quad = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.quad);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+        gl.STATIC_DRAW,
+      );
+      this.targets = [this.target(), this.target()];
+      this.textures = [];
+      gl.clearColor(0, 0, 0, 0);
+      gl.disable(gl.CULL_FACE);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    }
+    program(vs, fs) {
+      const gl = this.gl,
+        program = gl.createProgram();
+      for (const [type, source] of [
+        [gl.VERTEX_SHADER, vs],
+        [gl.FRAGMENT_SHADER, fs],
+      ]) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+          throw new Error(gl.getShaderInfoLog(shader));
+        gl.attachShader(program, shader);
+        gl.deleteShader(shader);
+      }
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+        throw new Error(gl.getProgramInfoLog(program));
+      const uniforms = {};
+      for (
+        let i = 0;
+        i < gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+        i++
+      ) {
+        const name = gl.getActiveUniform(program, i).name;
+        uniforms[name] = gl.getUniformLocation(program, name);
+      }
+      return { program, uniforms };
+    }
+    texture(source = null) {
+      const gl = this.gl,
+        t = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      if (source)
+        gl.texImage2D(
+          gl.TEXTURE_2D,
+          0,
+          gl.RGBA,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          source,
+        );
+      return t;
+    }
+    target() {
+      const gl = this.gl,
+        texture = this.texture();
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        512,
+        512,
+        0,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        null,
+      );
+      const framebuffer = gl.createFramebuffer();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+      gl.framebufferTexture2D(
+        gl.FRAMEBUFFER,
+        gl.COLOR_ATTACHMENT0,
+        gl.TEXTURE_2D,
+        texture,
+        0,
+      );
+      return { texture, framebuffer };
+    }
+    setPages(front, back, width, height) {
+      const gl = this.gl;
+      this.clear();
+      this.textures = [this.texture(front), this.texture(back)];
+      const dpr = Math.min(devicePixelRatio || 1, 1.8);
+      this.canvas.width = Math.round(width * 3 * dpr);
+      this.canvas.height = Math.round(height * 2 * dpr);
+      this.canvas.hidden = false;
+    }
+    geometry(progress, corner) {
+      const cols = this.cols,
+        rows = this.rows,
+        data = this.vertices,
+        lift = Math.sin(Math.PI * progress),
+        curl = this.curl * lift;
+      for (let r = 0; r <= rows; r++) {
+        const v = r / rows,
+          bend = curl * (1 + corner * 0.28 * (v - 0.5));
+        const base =
+          Math.PI * progress -
+          curl * (0.38 + 0.08 * progress) +
+          corner * 0.09 * lift * (v - 0.5);
+        for (let c = 0; c <= cols; c++) {
+          const u = c / cols,
+            angle = base + bend * u,
+            index = (r * (cols + 1) + c) * 8;
+          data[index] =
+            this.designWidth *
+            (bend < 0.0001
+              ? u * Math.cos(base)
+              : (Math.sin(angle) - Math.sin(base)) / bend);
+          data[index + 1] = (v - 0.5) * this.designHeight;
+          data[index + 2] = Math.max(
+            0,
+            this.designWidth *
+              (bend < 0.0001
+                ? u * Math.sin(base)
+                : (Math.cos(base) - Math.cos(angle)) / bend),
+          );
+          data[index + 6] = u;
+          data[index + 7] = v;
+        }
+      }
+      for (let r = 0; r <= rows; r++)
+        for (let c = 0; c <= cols; c++) {
+          const i = (r * (cols + 1) + c) * 8,
+            prev = (r * (cols + 1) + Math.max(0, c - 1)) * 8,
+            next = (r * (cols + 1) + Math.min(cols, c + 1)) * 8;
+          const top = (Math.max(0, r - 1) * (cols + 1) + c) * 8,
+            bottom = (Math.min(rows, r + 1) * (cols + 1) + c) * 8;
+          const ux = data[next] - data[prev],
+            uz = data[next + 2] - data[prev + 2];
+          const vx = data[bottom] - data[top],
+            vy = data[bottom + 1] - data[top + 1],
+            vz = data[bottom + 2] - data[top + 2];
+          const nx = -uz * vy,
+            ny = uz * vx - ux * vz,
+            nz = ux * vy,
+            len = Math.hypot(nx, ny, nz) || 1;
+          data[i + 3] = nx / len;
+          data[i + 4] = ny / len;
+          data[i + 5] = nz / len;
+        }
+      const gl = this.gl;
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, data);
+    }
+    attributes(program, quad = false) {
+      const gl = this.gl;
+      for (let i = 0; i < 4; i++) gl.disableVertexAttribArray(i);
+      gl.bindBuffer(gl.ARRAY_BUFFER, quad ? this.quad : this.buffer);
+      if (quad) {
+        const loc = gl.getAttribLocation(program, "aPoint");
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      } else
+        for (const [name, size, offset] of [
+          ["aPosition", 3, 0],
+          ["aNormal", 3, 12],
+          ["aUV", 2, 24],
+        ]) {
+          const loc = gl.getAttribLocation(program, name);
+          if (loc < 0) continue;
+          gl.enableVertexAttribArray(loc);
+          gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 32, offset);
+        }
+    }
+    draw(progress, corner, details) {
+      const gl = this.gl;
+      if (!this.textures.length) return;
+      this.geometry(progress, corner);
+      const lift = Math.sin(Math.PI * progress);
+      gl.useProgram(this.sheet.program);
+      this.attributes(this.sheet.program);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indices);
+      gl.uniform2f(
+        this.sheet.uniforms.uView,
+        this.designWidth * 1.5,
+        this.designHeight,
+      );
+      gl.uniform1f(this.sheet.uniforms.uPageWidth, this.designWidth);
+      gl.uniform1f(this.sheet.uniforms.uShadow, 1);
+      gl.disable(gl.DEPTH_TEST);
+      gl.disable(gl.BLEND);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.targets[0].framebuffer);
+      gl.viewport(0, 0, 512, 512);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      if (details)
+        gl.drawElements(gl.TRIANGLES, this.count, gl.UNSIGNED_SHORT, 0);
+      gl.useProgram(this.blur.program);
+      this.attributes(this.blur.program, true);
+      gl.uniform1i(this.blur.uniforms.uImage, 0);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, this.targets[0].texture);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.targets[1].framebuffer);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(this.blur.uniforms.uStep, (1.2 + lift * 3.7) / 512, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.bindTexture(gl.TEXTURE_2D, this.targets[1].texture);
+      gl.uniform2f(this.blur.uniforms.uStep, 0, (1.2 + lift * 3.7) / 512);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      gl.enable(gl.DEPTH_TEST);
+      gl.enable(gl.BLEND);
+      gl.useProgram(this.sheet.program);
+      this.attributes(this.sheet.program);
+      gl.uniform1f(this.sheet.uniforms.uShadow, 0);
+      gl.uniform1f(this.sheet.uniforms.uLift, lift);
+      gl.uniform1f(this.sheet.uniforms.uDetails, details ? 1 : 0);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, this.textures[0]);
+      gl.uniform1i(this.sheet.uniforms.uFront, 0);
+      gl.activeTexture(gl.TEXTURE1);
+      gl.bindTexture(gl.TEXTURE_2D, this.textures[1]);
+      gl.uniform1i(this.sheet.uniforms.uBack, 1);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indices);
+      gl.drawElements(gl.TRIANGLES, this.count, gl.UNSIGNED_SHORT, 0);
+    }
+    clear() {
+      const gl = this.gl;
+      this.canvas.hidden = true;
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      for (const texture of this.textures || []) gl.deleteTexture(texture);
+      this.textures = [];
+    }
+    dispose() {
+      this.clear();
+      const gl = this.gl;
+      for (const target of this.targets) {
+        gl.deleteTexture(target.texture);
+        gl.deleteFramebuffer(target.framebuffer);
+      }
+      for (const buffer of [this.buffer, this.indices, this.quad])
+        gl.deleteBuffer(buffer);
+      gl.deleteProgram(this.sheet.program);
+      gl.deleteProgram(this.blur.program);
+      this.canvas.remove();
+    }
+  }
+
+  /**
+   * PaperCurl — a small, dependency-free book for ordinary HTML pages.
+   * new PaperCurl('#book', { width: 450, height: 636, duration: 1150 });
+   * next(), prev(), first(), last(), goTo(page), goToSpread(spread), refresh(), destroy().
+   * See README.md for the options, events, and content-editing examples.
+   */
+  class PaperCurl {
+    static defaults = {
+      width: 450,
+      height: 636,
+      duration: 1150,
+      curl: 1.72,
+      showCover: true,
+      startPage: 0,
+      shadows: true,
+      padding: 52,
+      maxScale: 1,
+      textureScale: 2,
+      keyboard: true,
+      preload: true,
+      onChange: null,
+      onError: null,
+    };
+    constructor(element, options = {}) {
+      this.element =
+        typeof element === "string" ? document.querySelector(element) : element;
+      if (!this.element) throw new Error("PaperCurl: book element not found.");
+      this.options = { ...PaperCurl.defaults, ...options };
+      if (!(
+        this.options.width > 0 &&
+        this.options.height > 0 &&
+        this.options.duration >= 0
+      ))
+        throw new Error(
+          "PaperCurl: width and height must be positive; duration must be nonnegative.",
+        );
+      this.originalNodes = [...this.element.childNodes];
+      this.originalTab = this.element.getAttribute("tabindex");
+      this.originalRole = this.element.getAttribute("role");
+      this.pages = [...this.element.children];
+      if (!this.pages.length)
+        throw new Error("PaperCurl: add at least one HTML page.");
+      this.abort = new AbortController();
+      this.cache = new Map();
+      this.assets = new Map();
+      this.epoch = 0;
+      this.current = 0;
+      this.desired = 0;
+      this.active = null;
+      this.drag = null;
+      this.loading = false;
+      this.destroyed = false;
+      this.raf = 0;
+      this.dragRAF = 0;
+      this.reduced = matchMedia("(prefers-reduced-motion: reduce)");
+      this.pairs = [];
+      let start = 0;
+      if (this.options.showCover) {
+        this.pairs.push([null, 0]);
+        start = 1;
+      }
+      for (let i = start; i < this.pages.length; i += 2)
+        this.pairs.push([i, i + 1 < this.pages.length ? i + 1 : null]);
+      this.rig = this._node("pc-rig");
+      this.center = this._node("pc-center");
+      this.book = this._node("pc-book");
+      this.shadows = [
+        this._node("pc-ground pc-left"),
+        this._node("pc-ground pc-right"),
+      ];
+      this.center.append(...this.shadows, this.book);
+      this.rig.append(this.center);
+      this.wrappers = this.pages.map((page) => {
+        const wrapper = this._node("pc-page"),
+          content = this._node("pc-content");
+        content.append(page);
+        wrapper.append(content);
+        this.book.append(wrapper);
+        return wrapper;
+      });
+      this.element.append(this.rig);
+      this.element.classList.add("pc-host");
+      this.rig.style.setProperty("--pc-width", this.options.width + "px");
+      this.rig.style.setProperty("--pc-height", this.options.height + "px");
+      if (this.originalTab === null) this.element.tabIndex = 0;
+      if (this.originalRole === null)
+        this.element.setAttribute("role", "group");
+      this.element.classList.toggle("pc-no-shadows", !this.options.shadows);
+      this._size();
+      this.current = this.desired = this._spreadFor(this.options.startPage);
+      try {
+        this.renderer = new SheetRenderer(this.center, this.options);
+      } catch (error) {
+        this.renderer = null;
+        this.center.querySelector(".pc-curl")?.remove();
+        this._error(error);
+      }
+      this._bind();
+      this._rest();
+      this.observer = new ResizeObserver(() => {
+        if (!this.active && !this.loading && !this.drag) {
+          this._size();
+          this._center();
+        }
+      });
+      this.observer.observe(this.element);
+      if (this.options.preload && this.renderer && !this.reduced.matches)
+        this._preload();
+    }
+    _node(name) {
+      const element = document.createElement("div");
+      element.className = name;
+      return element;
+    }
+    _clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+    _spreadFor(page) {
+      return Math.max(
+        0,
+        this.pairs.findIndex((pair) =>
+          pair.includes(
+            this._clamp(Math.trunc(page) || 0, 0, this.pages.length - 1),
+          ),
+        ),
+      );
+    }
+    get page() {
+      return this.pairs[this.current].find((index) => index !== null);
+    }
+    get spread() {
+      return this.current;
+    }
+    get pageCount() {
+      return this.pages.length;
+    }
+    get spreadCount() {
+      return this.pairs.length;
+    }
+    get isAnimating() {
+      return !!(this.active || this.loading || this.drag);
+    }
+    get state() {
+      return {
+        page: this.page,
+        spread: this.spread,
+        pages: this.pairs[this.current].filter((p) => p !== null),
+        pageCount: this.pageCount,
+        spreadCount: this.spreadCount,
+      };
+    }
+    next() {
+      return this.goToSpread(this.desired + 1);
+    }
+    prev() {
+      return this.goToSpread(this.desired - 1);
+    }
+    first() {
+      return this.goToSpread(0);
+    }
+    last() {
+      return this.goToSpread(this.pairs.length - 1);
+    }
+    goTo(page) {
+      return this.goToSpread(this._spreadFor(page));
+    }
+    goToSpread(spread) {
+      if (this.destroyed) return this;
+      this.desired = this._clamp(
+        Math.trunc(spread) || 0,
+        0,
+        this.pairs.length - 1,
+      );
+      if (this.drag) {
+        this.drag.ended = true;
+        this.drag.overridden = true;
+        const id = this.drag.id;
+        this.drag = null;
+        try {
+          this.book.releasePointerCapture(id);
+        } catch {}
+      }
+      if (this.active) this._animate(this.desired === this.current ? 0 : 1);
+      else this._pump();
+      return this;
+    }
+    setOptions(options = {}) {
+      // Layout dimensions are fixed at construction; motion and lighting are live-editable.
+      for (const key of ["duration", "curl", "shadows"])
+        if (key in options) this.options[key] = options[key];
+      this.options.duration = Math.max(0, Number(this.options.duration) || 0);
+      this.options.curl = this._clamp(
+        Number(this.options.curl) || 1.72,
+        0.2,
+        2.5,
+      );
+      if (this.renderer) this.renderer.curl = this.options.curl;
+      this.element.classList.toggle("pc-no-shadows", !this.options.shadows);
+      if (this.active) this._draw(this.active.progress);
+      return this;
+    }
+    refresh() {
+      // Call after editing page HTML/styles. Updates the next turn's cached page images.
+      if (this.destroyed) return this;
+      this.epoch++;
+      this.loading = false;
+      this.drag = null;
+      if (this.active) this.current = this.active.from;
+      this.desired = this.current;
+      this.cache.clear();
+      this.assets.clear();
+      this._rest();
+      if (this.options.preload && this.renderer && !this.reduced.matches)
+        this._preload();
+      return this;
+    }
+    destroy() {
+      if (this.destroyed) return;
+      this.destroyed = true;
+      this.epoch++;
+      this.abort.abort();
+      this.observer.disconnect();
+      cancelAnimationFrame(this.raf);
+      cancelAnimationFrame(this.dragRAF);
+      this.renderer?.dispose();
+      this.element.replaceChildren(...this.originalNodes);
+      this.element.classList.remove("pc-host", "pc-dragging", "pc-no-shadows");
+      this.element.removeAttribute("aria-busy");
+      for (const [name, value] of [
+        ["tabindex", this.originalTab],
+        ["role", this.originalRole],
+      ]) {
+        if (value === null) this.element.removeAttribute(name);
+        else this.element.setAttribute(name, value);
+      }
+      this.cache.clear();
+      this.assets.clear();
+    }
+    _size() {
+      const bounds = this.element.getBoundingClientRect(),
+        o = this.options,
+        pad = Math.min(o.padding, Math.max(12, bounds.width * 0.045));
+      const fit = Math.max(
+        0.08,
+        Math.min(
+          (bounds.width - pad * 2) / (o.width * 2),
+          (bounds.height - o.padding * 2) / o.height,
+          o.maxScale,
+        ),
+      );
+      this.width = Math.floor(o.width * fit);
+      this.height = (this.width * o.height) / o.width;
+      this.rig.style.width = this.width * 2 + "px";
+      this.rig.style.height = this.height + "px";
+      this.rig.style.setProperty("--pc-scale", this.width / o.width);
+    }
+    _offset(spread) {
+      const pair = this.pairs[spread];
+      return pair[0] === null
+        ? -this.width / 2
+        : pair[1] === null
+          ? this.width / 2
+          : 0;
+    }
+    _center() {
+      this.center.style.transform = `translateX(${this._offset(this.current)}px)`;
+    }
+    _show(left, right) {
+      this.wrappers.forEach((wrapper, i) => {
+        wrapper.hidden = i !== left && i !== right;
+        wrapper.inert = wrapper.hidden;
+        wrapper.classList.toggle("pc-left", i === left);
+        wrapper.classList.toggle("pc-right", i === right);
+        wrapper.style.left = i === right ? "50%" : "0";
+      });
+    }
+    _rest() {
+      cancelAnimationFrame(this.raf);
+      cancelAnimationFrame(this.dragRAF);
+      this.raf = this.dragRAF = 0;
+      this.active = null;
+      this.renderer?.clear();
+      this.book.classList.remove("pc-dragging");
+      this.element.removeAttribute("aria-busy");
+      this._size();
+      this._show(...this.pairs[this.current]);
+      this._center();
+      this.shadows.forEach(
+        (shadow, i) =>
+          (shadow.style.opacity =
+            this.pairs[this.current][i] === null ? "0" : "1"),
+      );
+      this.options.onChange?.(this.state);
+      this.element.dispatchEvent(
+        new CustomEvent("pagechange", { detail: this.state }),
+      );
+    }
+    _error(error) {
+      this.options.onError?.(error);
+      this.element.dispatchEvent(
+        new CustomEvent("curlerror", { detail: error }),
+      );
+    }
+    async _asset(url) {
+      if (url.startsWith("data:")) return url;
+      if (!this.assets.has(url))
+        this.assets.set(
+          url,
+          (async () => {
+            const response = await fetch(new URL(url, document.baseURI));
+            if (!response.ok)
+              throw new Error("PaperCurl: image could not be loaded: " + url);
+            const blob = await response.blob();
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+          })(),
+        );
+      return this.assets.get(url);
+    }
+    async _snapshot(index) {
+      if (this.cache.has(index)) return this.cache.get(index);
+      const job = (async () => {
+        await document.fonts.ready;
+        if (this.destroyed)
+          throw new Error("PaperCurl: destroyed during capture.");
+        const stage = this._node("pc-capture");
+        stage.inert = true;
+        stage.setAttribute("aria-hidden", "true");
+        const clone = this.pages[index].cloneNode(true);
+        stage.append(clone);
+        this.rig.append(stage);
+        try {
+          const nodes = [stage, ...stage.querySelectorAll("*")];
+          // Only visual computed properties: no inherited custom-property payloads or dependencies.
+          const properties =
+            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
+              " ",
+            );
+          const styles = nodes.map((node) => {
+            const computed = getComputedStyle(node);
+            return properties.map((property) => [
+              property,
+              computed.getPropertyValue(property),
+            ]);
+          });
+          for (let n = 0; n < nodes.length; n++) {
+            const node = nodes[n];
+            node.removeAttribute("id");
+            for (const [property, raw] of styles[n]) {
+              let value = raw;
+              if (value.includes("url(")) {
+                const urls = [...value.matchAll(/url\(["']?(.*?)["']?\)/g)];
+                for (const match of urls)
+                  if (!match[1].startsWith("#"))
+                    value = value.replace(
+                      match[0],
+                      `url("${await this._asset(match[1])}")`,
+                    );
+              }
+              node.style.setProperty(property, value);
+            }
+            if (node.tagName === "IMG") {
+              node.src = await this._asset(node.currentSrc || node.src);
+              node.removeAttribute("srcset");
+              node.removeAttribute("loading");
+            }
+            if (["SCRIPT", "IFRAME", "VIDEO", "AUDIO"].includes(node.tagName))
+              node.remove();
+          }
+          stage.remove();
+          stage.style.position = "relative";
+          stage.style.left = "0";
+          stage.style.top = "0";
+          stage.style.transform = "none";
+          const markup = new XMLSerializer().serializeToString(stage),
+            w = this.options.width,
+            h = this.options.height;
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><foreignObject width="100%" height="100%">${markup}</foreignObject></svg>`;
+          // Data URLs keep this rasterization origin-clean and allow the bundled demo to open offline.
+          const image = new Image();
+          image.src =
+            "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+          await image.decode();
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(w * this.options.textureScale);
+          canvas.height = Math.round(h * this.options.textureScale);
+          const context = canvas.getContext("2d");
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          context.getImageData(0, 0, 1, 1);
+          return canvas;
+        } finally {
+          stage.remove();
+        }
+      })();
+      this.cache.set(index, job);
+      job.catch(() => this.cache.delete(index));
+      return job;
+    }
+    async _preload() {
+      const epoch = this.epoch;
+      for (let i = 0; i < this.pages.length; i++) {
+        if (this.destroyed || epoch !== this.epoch) return;
+        try {
+          await this._snapshot(i);
+        } catch {
+          return;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 16));
+      }
+    }
+    async _prepare(to, corner = 1) {
+      if (this.active || this.loading || this.destroyed) return false;
+      const epoch = this.epoch,
+        from = this.current,
+        direction = Math.sign(to - from);
+      this.loading = true;
+      this.element.setAttribute("aria-busy", "true");
+      try {
+        const front = direction > 0 ? this.pairs[from][1] : this.pairs[to][1],
+          back = direction > 0 ? this.pairs[to][0] : this.pairs[from][0];
+        const textures = await Promise.all([
+          this._snapshot(front),
+          this._snapshot(back),
+        ]);
+        if (this.destroyed || epoch !== this.epoch) return false;
+        this.active = { from, to, direction, corner, progress: 0 };
+        this.renderer.setPages(...textures, this.width, this.height);
+        this._show(
+          direction > 0 ? this.pairs[from][0] : this.pairs[to][0],
+          direction > 0 ? this.pairs[to][1] : this.pairs[from][1],
+        );
+        this.shadows.forEach((shadow, i) => {
+          if (this.pairs[to][i] === null) shadow.style.opacity = "0";
+        });
+        this._draw(0);
+        return true;
+      } catch (error) {
+        if (!this.destroyed && epoch === this.epoch) {
+          this._error(error);
+          this.current = this.desired;
+          this._rest();
+        }
+        return false;
+      } finally {
+        if (epoch === this.epoch) {
+          this.loading = false;
+          this.element.removeAttribute("aria-busy");
+        }
+      }
+    }
+    _draw(progress) {
+      if (!this.active) return;
+      const a = this.active;
+      a.progress = progress;
+      this.renderer.draw(
+        a.direction > 0 ? progress : 1 - progress,
+        a.corner,
+        this.options.shadows,
+      );
+      const t =
+          progress *
+          progress *
+          progress *
+          (progress * (6 * progress - 15) + 10),
+        from = this._offset(a.from),
+        to = this._offset(a.to);
+      this.center.style.transform = `translateX(${from + (to - from) * t}px)`;
+    }
+    _finish(commit) {
+      if (!this.active) return;
+      if (commit) this.current = this.active.to;
+      else this.desired = this.current;
+      this._rest();
+      if (this.desired !== this.current) queueMicrotask(() => this._pump());
+    }
+    _animate(end) {
+      cancelAnimationFrame(this.raf);
+      cancelAnimationFrame(this.dragRAF);
+      if (!this.active) return;
+      if (this.reduced.matches || this.options.duration === 0) {
+        this._draw(end);
+        this._finish(end === 1);
+        return;
+      }
+      const start = this.active.progress,
+        duration = this.options.duration * Math.max(0.2, Math.abs(end - start));
+      let before = performance.now(),
+        elapsed = 0;
+      const tick = (now) => {
+        if (!this.active || this.destroyed) return;
+        elapsed +=
+          (now - before) *
+          (Math.abs(this.desired - this.active.to) > 1 ? 1.25 : 1);
+        before = now;
+        const t = this._clamp(elapsed / duration, 0, 1),
+          eased = t * t * t * (t * (6 * t - 15) + 10);
+        this._draw(start + (end - start) * eased);
+        if (t < 1) this.raf = requestAnimationFrame(tick);
+        else this._finish(end === 1);
+      };
+      this.raf = requestAnimationFrame(tick);
+    }
+    async _pump() {
+      if (
+        this.active ||
+        this.loading ||
+        this.drag ||
+        this.destroyed ||
+        this.current === this.desired
+      )
+        return;
+      if (this.reduced.matches || !this.renderer) {
+        this.current = this.desired;
+        this._rest();
+        return;
+      }
+      if (
+        await this._prepare(
+          this.current + Math.sign(this.desired - this.current),
+        )
+      )
+        this._animate(this.desired === this.current ? 0 : 1);
+    }
+    _bind() {
+      const on = (node, event, handler) =>
+        node.addEventListener(event, handler, { signal: this.abort.signal });
+      on(this.book, "pointerdown", async (event) => {
+        if (
+          event.button !== 0 ||
+          this.active ||
+          this.loading ||
+          event.target.closest(
+            "a,button,input,select,textarea,[contenteditable]",
+          )
+        )
+          return;
+        const bounds = this.book.getBoundingClientRect(),
+          x = event.clientX - bounds.left,
+          y = event.clientY - bounds.top,
+          edge = Math.max(30, this.width * 0.17),
+          direction = x > this.width * 2 - edge ? 1 : x < edge ? -1 : 0;
+        if (
+          !direction ||
+          y < 0 ||
+          y > this.height ||
+          this.current + direction < 0 ||
+          this.current + direction >= this.pairs.length
+        )
+          return;
+        this.desired = this.current;
+        const drag = {
+          id: event.pointerId,
+          direction,
+          start: event.clientX,
+          last: event.clientX,
+          time: performance.now(),
+          velocity: 0,
+          target: 0,
+          moved: false,
+          ended: false,
+        };
+        this.drag = drag;
+        this.book.setPointerCapture(event.pointerId);
+        this.book.classList.add("pc-dragging");
+        event.preventDefault();
+        if (this.reduced.matches || !this.renderer) return;
+        if (
+          await this._prepare(
+            this.current + direction,
+            y > this.height / 2 ? 1 : -1,
+          )
+        ) {
+          if (drag.ended) this._settle(drag);
+          else this._dragLoop();
+        } else this.drag = null;
+      });
+      on(this.book, "pointermove", (event) => {
+        if (!this.drag || this.drag.id !== event.pointerId) return;
+        const d = this.drag,
+          now = performance.now(),
+          travel = (d.start - event.clientX) * d.direction;
+        d.velocity =
+          ((d.last - event.clientX) * d.direction) / Math.max(1, now - d.time);
+        d.last = event.clientX;
+        d.time = now;
+        d.moved = d.moved || Math.abs(travel) > 6;
+        d.target = this._clamp(travel / (this.width * 1.8), 0, 1);
+      });
+      const release = (event, cancelled = false) => {
+        if (!this.drag || this.drag.id !== event.pointerId) return;
+        const d = this.drag;
+        d.ended = true;
+        d.cancelled = cancelled;
+        this.drag = null;
+        this.book.classList.remove("pc-dragging");
+        try {
+          this.book.releasePointerCapture(d.id);
+        } catch {}
+        if (!this.loading) this._settle(d);
+      };
+      on(this.book, "pointerup", (event) => release(event));
+      on(this.book, "pointercancel", (event) => release(event, true));
+      on(this.book, "lostpointercapture", (event) => release(event, true));
+      if (this.options.keyboard)
+        on(this.element, "keydown", (event) => {
+          if (
+            event.altKey ||
+            event.ctrlKey ||
+            event.metaKey ||
+            event.target.closest("input,select,textarea,[contenteditable]")
+          )
+            return;
+          const actions = {
+            ArrowRight: () => this.next(),
+            ArrowLeft: () => this.prev(),
+            Home: () => this.first(),
+            End: () => this.last(),
+          };
+          if (actions[event.key]) {
+            event.preventDefault();
+            actions[event.key]();
+          }
+        });
+      on(this.reduced, "change", () => {
+        if (this.reduced.matches && this.active) this._finish(true);
+      });
+    }
+    _dragLoop() {
+      if (!this.drag || !this.active) return;
+      const target = this.drag.target,
+        next = this.active.progress + (target - this.active.progress) * 0.38;
+      this._draw(Math.abs(target - next) < 0.0003 ? target : next);
+      this.dragRAF = requestAnimationFrame(() => this._dragLoop());
+    }
+    _settle(drag) {
+      cancelAnimationFrame(this.dragRAF);
+      if (drag.overridden) {
+        if (this.active) this._animate(this.desired === this.current ? 0 : 1);
+        return;
+      }
+      const commit =
+        !drag.cancelled &&
+        (!drag.moved ||
+          drag.target > 0.42 ||
+          (performance.now() - drag.time < 140 && drag.velocity > 0.45));
+      this.desired = commit ? this.current + drag.direction : this.current;
+      if (this.active) this._animate(commit ? 1 : 0);
+      else {
+        this.current = this.desired;
+        this._rest();
+      }
+    }
+  }
+  global.PaperCurl = PaperCurl;
+  if (typeof module !== "undefined" && module.exports)
+    module.exports = PaperCurl;
+})(typeof window !== "undefined" ? window : globalThis);

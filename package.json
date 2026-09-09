@@ -1,0 +1,37 @@
+{
+  "name": "paper-curl",
+  "version": "0.1.0",
+  "description": "A small, editable HTML page-curl library with no runtime dependencies.",
+  "license": "Apache-2.0",
+  "author": "Martial Geoffre-Rouland",
+  "main": "paper-curl.js",
+  "style": "paper-curl.css",
+  "files": [
+    "paper-curl.js",
+    "paper-curl.css",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martial/paper-curl.git"
+  },
+  "keywords": [
+    "page-curl",
+    "page-flip",
+    "magazine",
+    "webgl",
+    "vanilla-js"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "happy-dom": "20.14.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
