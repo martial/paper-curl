@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PaperCurl · CSS compatibility benchmark</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <a href="./">paper curl / css</a
+        ><a
+          href="https://github.com/martial/paper-curl/blob/main/docs/CSS_SUPPORT.md"
+          >Documentation ↗</a
+        >
+      </header>
+      <p class="eyebrow">REPEATABLE COMPATIBILITY CHECKS</p>
+      <h1>What survives the turn?</h1>
+      <p class="intro">
+        A property inventory and capture benchmark for your browser. Every MDN
+        catalog property is listed, plus properties exposed by the browser. A
+        preserved value is evidence for the tested declaration, not a guarantee
+        for every value, layout, or pixel.
+      </p>
+      <div class="actions">
+        <button id="run">Run property benchmark</button
+        ><button id="cancel" hidden>Cancel</button
+        ><button id="download" disabled>Download JSON</button>
+      </div>
+      <p id="progress" role="status">Loading the recorded report…</p>
+      <progress id="meter" hidden max="1"></progress>
+      <p id="environment"></p>
+      <div id="summary"></div>
+      <details>
+        <summary>What these results mean</summary>
+        <ul>
+          <li>
+            <strong>Value preserved:</strong> a non-default declaration was
+            captured and rasterized; its computed value matched after
+            serialization in visible and hidden-page fixtures. This does not
+            compare all rendered pixels.
+          </li>
+          <li>
+            <strong>Value mismatch:</strong> the recorded fixture changed its
+            computed value after capture; inspect the before/after values in
+            that row.
+          </li>
+          <li>
+            <strong>Browser unsupported:</strong> this browser rejects the
+            property. This is not a PaperCurl rendering failure.
+          </li>
+          <li>
+            <strong>Native / frozen:</strong> interaction and timeline
+            properties work on native pages; the turning texture is a still
+            image.
+          </li>
+          <li>
+            <strong>Needs fixture:</strong> no usable non-default value was
+            found automatically. This is unverified, not a pass.
+          </li>
+          <li>
+            The separate visual regression suite tests selected pixel regions,
+            fonts, borders, masks, modern syntax, navigation, and worker
+            behavior. Its recorded result is reported separately.
+          </li>
+        </ul>
+      </details>
+      <section class="filters">
+        <label
+          >Find a property<input
+            id="search"
+            type="search"
+            placeholder="border, mask, font…" /></label
+        ><label
+          >Result<select id="filter">
+            <option value="all">All properties</option>
+            <option value="preserved">Value preserved</option>
+            <option value="mismatch">Value mismatch</option>
+            <option value="unsupported">Browser unsupported</option>
+            <option value="native">Native / frozen</option>
+            <option value="untested">Needs fixture</option>
+            <option value="error">Capture error</option>
+          </select></label
+        ><span id="count"></span>
+      </section>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Tested declaration</th>
+              <th>Result</th>
+              <th>Capture time</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <footer>
+        Property catalog:
+        <a href="https://github.com/mdn/data">MDN data</a> (CC0). The benchmark
+        combines catalog discovery with the running browser; it cannot enumerate
+        infinite custom properties or all possible CSS value combinations.
+      </footer>
+    </main>
+    <div id="fixture" aria-hidden="true"></div>
+    <script type="module" src="./css.js"></script>
+  </body>
+</html>

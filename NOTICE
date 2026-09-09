@@ -6,3 +6,7 @@ The example coastal photograph was generated for this project.
 
 The optional Vue example loads a remote photograph from Unsplash.
 That remote photograph is not part of the Apache-licensed library files.
+
+The development CSS property catalog is derived from MDN data (CC0-1.0):
+https://github.com/mdn/data/tree/635d63e0c4b4a0a4216aa9ee1cbdaed0c5111065
+Its source revision and license are recorded in tests/browser/css-catalog.json.

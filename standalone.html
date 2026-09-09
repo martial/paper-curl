@@ -1703,6 +1703,7 @@ That remote photograph is not part of the Apache-licensed library files.
    * next(), prev(), first(), last(), goTo(page), goToSpread(spread), prepare(), refresh(), destroy().
    * See README.md for the options, events, and content-editing examples.
    */
+  const captureDefaults = new WeakMap();
   class PaperCurl {
     static defaults = {
       width: 450,
@@ -2336,7 +2337,8 @@ That remote photograph is not part of the Apache-licensed library files.
     async _pageFonts(nodes) {
       // Match actual text runs, not container families or the document-wide ready
       // promise. The browser handles variable ranges, nearest weights and synthesis.
-      const runs = new Map();
+      const runs = new Map(),
+        hidden = new Set();
       for (const node of nodes) {
         if (
           ["STYLE", "SCRIPT", "IFRAME", "VIDEO", "AUDIO"].includes(node.tagName)
@@ -2348,40 +2350,76 @@ That remote photograph is not part of the Apache-licensed library files.
           .join("");
         if (node.tagName === "INPUT" || node.tagName === "TEXTAREA")
           text += node.value || "";
-        if (!text.trim()) continue;
-        const style = getComputedStyle(node);
-        if (
-          style.display === "none" ||
-          (style.display !== "contents" && !node.getClientRects().length)
-        )
+        // Off-spread wrappers are hidden by the book. Ignore those ancestors,
+        // but skip display:none subtrees inside the page itself.
+        if (hidden.has(node.parentElement)) {
+          hidden.add(node);
           continue;
-        // Include case expansions such as ß → SS when choosing Unicode subsets.
-        const lang = node.closest("[lang]")?.lang;
-        try {
-          text +=
-            text.toLocaleUpperCase(lang || undefined) +
-            text.toLocaleLowerCase(lang || undefined);
-        } catch {
-          text += text.toUpperCase() + text.toLowerCase();
         }
-        const stretch =
-          {
-            "50%": "ultra-condensed",
-            "62.5%": "extra-condensed",
-            "75%": "condensed",
-            "87.5%": "semi-condensed",
-            "100%": "normal",
-            "112.5%": "semi-expanded",
-            "125%": "expanded",
-            "150%": "extra-expanded",
-            "200%": "ultra-expanded",
-          }[style.fontStretch] || style.fontStretch;
-        const font =
-          style.font ||
-          `${style.fontStyle} ${style.fontWeight} ${stretch} ${style.fontSize} ${style.fontFamily}`;
-        if (!runs.has(font))
-          runs.set(font, { family: style.fontFamily, characters: new Set() });
-        for (const character of text) runs.get(font).characters.add(character);
+        const native = getComputedStyle(node);
+        if (native.display === "none") {
+          hidden.add(node);
+          continue;
+        }
+        const textRuns = [[text, native]];
+        for (const pseudo of ["::before", "::after"]) {
+          const style = getComputedStyle(node, pseudo);
+          if (
+            style.display === "none" ||
+            ["none", "normal", ""].includes(style.content)
+          )
+            continue;
+          // Resolved attr() and CSS strings, including escaped font-icon glyphs.
+          const generated = [
+            ...style.content.matchAll(
+              /"((?:\\.|[^"\\])*)"|'((?:\\.|[^'\\])*)'/g,
+            ),
+          ]
+            .map((match) =>
+              (match[1] ?? match[2]).replace(
+                /\\([0-9a-f]{1,6})\s?|\\([^\n])/gi,
+                (_, hex, character) =>
+                  hex
+                    ? String.fromCodePoint(
+                        Math.min(parseInt(hex, 16) || 0xfffd, 0x10ffff),
+                      )
+                    : character,
+              ),
+            )
+            .join("");
+          textRuns.push([generated, style]);
+        }
+        for (let [text, style] of textRuns) {
+          if (!text.trim()) continue;
+          // Include case expansions such as ß → SS when choosing Unicode subsets.
+          const lang = node.closest("[lang]")?.lang;
+          try {
+            text +=
+              text.toLocaleUpperCase(lang || undefined) +
+              text.toLocaleLowerCase(lang || undefined);
+          } catch {
+            text += text.toUpperCase() + text.toLowerCase();
+          }
+          const stretch =
+            {
+              "50%": "ultra-condensed",
+              "62.5%": "extra-condensed",
+              "75%": "condensed",
+              "87.5%": "semi-condensed",
+              "100%": "normal",
+              "112.5%": "semi-expanded",
+              "125%": "expanded",
+              "150%": "extra-expanded",
+              "200%": "ultra-expanded",
+            }[style.fontStretch] || style.fontStretch;
+          const font =
+            style.font ||
+            `${style.fontStyle} ${style.fontWeight} ${stretch} ${style.fontSize} ${style.fontFamily}`;
+          if (!runs.has(font))
+            runs.set(font, { family: style.fontFamily, characters: new Set() });
+          for (const character of text)
+            runs.get(font).characters.add(character);
+        }
       }
       const matches = await Promise.all(
         [...runs].map(async ([font, run]) => {
@@ -2589,6 +2627,77 @@ That remote photograph is not part of the Apache-licensed library files.
         )
       );
     }
+    _withPageLayout(index, read) {
+      const wrapper = this.wrappers[index];
+      if (!wrapper.hidden) return read();
+      const original = wrapper.style.cssText;
+      // Container queries need layout even for sheets not currently displayed.
+      // Reads are synchronous; restore before yielding or allowing a paint.
+      wrapper.style.setProperty("display", "block", "important");
+      try {
+        return read();
+      } finally {
+        wrapper.style.cssText = original;
+      }
+    }
+    _captureStyle(computed) {
+      const doc = this.element.ownerDocument;
+      let defaults = captureDefaults.get(doc);
+      if (!defaults) {
+        // An isolated all:initial probe gives the browser's own defaults. Store
+        // only differences; otherwise hundreds of unused values bloat each node.
+        const host = doc.createElement("div");
+        host.style.cssText =
+          "position:fixed;left:-10000px;top:0;visibility:hidden";
+        const probe = doc.createElement("span");
+        probe.style.setProperty("all", "initial", "important");
+        host.attachShadow({ mode: "closed" }).append(probe);
+        doc.documentElement.append(host);
+        try {
+          const style = getComputedStyle(probe);
+          // The legacy WebKit border-image shorthand fills the center; use
+          // the standard longhands so ordinary gradient frames stay hollow.
+          defaults = new Map(
+            [...style]
+              .filter(
+                (property) =>
+                  !property.startsWith("--") &&
+                  property !== "-webkit-border-image" &&
+                  !/^(animation|transition)(-|$)/.test(property),
+              )
+              .map((property) => [property, style.getPropertyValue(property)]),
+          );
+          captureDefaults.set(doc, defaults);
+        } finally {
+          host.remove();
+        }
+      }
+      // Keep the reset and overrides as ordered text. Incremental CSSOM edits
+      // can expand all and discard unrelated longhands (columns, grid, masks).
+      const declarations = ["all:initial!important"];
+      let legacyMask = "";
+      for (const [property, initial] of defaults) {
+        const value = computed.getPropertyValue(property);
+        // all does not reset direction or unicode-bidi. Preserve font-size
+        // explicitly: initial (medium) can change size with a monospace family.
+        if (
+          value &&
+          (value !== initial ||
+            property === "font-size" ||
+            property === "direction" ||
+            property === "unicode-bidi")
+        ) {
+          // Chromium exposes legacy mask operators under the standard name,
+          // although only the prefixed declaration accepts values such as xor.
+          if (property === "mask-composite" && !CSS.supports(property, value))
+            legacyMask = `-webkit-mask-composite:${value}!important`;
+          else declarations.push(`${property}:${value}!important`);
+        }
+      }
+      // Apply the legacy operator after standard mask layers have been parsed.
+      if (legacyMask) declarations.push(legacyMask);
+      return declarations.join(";") + ";";
+    }
     async _snapshot(index) {
       if (this.cache.has(index)) return this.cache.get(index);
       const record = { phase: "queued" };
@@ -2601,8 +2710,9 @@ That remote photograph is not part of the Apache-licensed library files.
         stage.inert = true;
         stage.setAttribute("aria-hidden", "true");
         const clone = this.pages[index].cloneNode(true);
-        stage.append(clone);
-        this.rig.append(stage);
+        // Keep temporary clones isolated from app selectors and live IDs.
+        const surface = stage.attachShadow({ mode: "closed" });
+        surface.append(clone);
         try {
           const originals = [
             this.pages[index],
@@ -2650,58 +2760,57 @@ That remote photograph is not part of the Apache-licensed library files.
                 node.textContent = original.value;
             }),
           );
-          const nodes = [stage, ...stage.querySelectorAll("*")];
           const [fonts] = await Promise.all([
-            this._pageFonts(nodes).then((faces) => this._fontStyles(faces)),
+            this._withPageLayout(index, () => this._pageFonts(originals)).then(
+              (faces) => this._fontStyles(faces),
+            ),
             images,
           ]);
           if (this.destroyed)
             throw new Error("PaperCurl: destroyed during capture.");
           this._pageProgress(index, record, "layout");
-          // Only visual computed properties: no inherited custom-property payloads or dependencies.
-          const properties =
-            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border-top border-right border-bottom border-left border-radius outline outline-offset background-color background-image background-attachment background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow -webkit-text-stroke-width -webkit-text-stroke-color -webkit-text-fill-color paint-order white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
-              " ",
-            );
-          const svgProperties = (
-            "fill fill-opacity fill-rule stroke stroke-width stroke-opacity " +
-            "stroke-linecap stroke-linejoin stroke-miterlimit stroke-dasharray " +
-            "stroke-dashoffset vector-effect"
-          ).split(" ");
-          const styles = nodes.map((node) => {
-            const computed = getComputedStyle(node);
-            // Resolve inherited strokes and CSS variables while the clone is
-            // still in the document; its stylesheet rules will not travel with it.
-            const visualProperties =
-              node.namespaceURI === "http://www.w3.org/2000/svg"
-                ? properties.concat(svgProperties)
-                : properties;
-            return visualProperties.map((property) => [
-              property,
-              computed.getPropertyValue(property),
-            ]);
-          });
-          for (let n = 0; n < nodes.length; n++) {
-            const node = nodes[n];
-            node.removeAttribute("id");
-            for (const [property, raw] of styles[n]) {
-              let value = raw;
-              if (value.includes("url(")) value = await this._embedURLs(value);
-              node.style.setProperty(property, value);
+          // Read every source style before mutating clones. This preserves the
+          // original ancestors, inherited values, scoped CSS, and structural rules.
+          const styles = this._withPageLayout(index, () =>
+            originals.map((node) => ({
+              css: this._captureStyle(getComputedStyle(node)),
+              pseudo: ["::before", "::after"].flatMap((pseudo) => {
+                const computed = getComputedStyle(node, pseudo);
+                return computed.display !== "none" &&
+                  !["none", "normal", ""].includes(computed.content)
+                  ? [[pseudo, this._captureStyle(computed)]]
+                  : [];
+              }),
+            })),
+          );
+          this.rig.append(stage);
+          const paperColor = getComputedStyle(stage).backgroundColor;
+          const rules = [];
+          for (let n = 0; n < cloned.length; n++) {
+            const node = cloned[n];
+            node.setAttribute("style", await this._embedURLs(styles[n].css));
+            if (styles[n].pseudo.length) {
+              node.setAttribute("data-pc-pseudo", String(n));
+              for (const [pseudo, css] of styles[n].pseudo)
+                rules.push(
+                  `[data-pc-pseudo="${n}"]${pseudo}{${await this._embedURLs(css)}}`,
+                );
             }
-            if (["SCRIPT", "IFRAME", "VIDEO", "AUDIO"].includes(node.tagName))
+            if (
+              ["STYLE", "LINK", "SCRIPT", "IFRAME", "VIDEO", "AUDIO"].includes(
+                node.tagName,
+              )
+            )
               node.remove();
           }
-          if (fonts) {
-            const style = document.createElement("style");
-            style.textContent = fonts;
-            stage.prepend(style);
-          }
+          const style = document.createElement("style");
+          style.textContent = fonts + rules.join("\n");
+          surface.prepend(style);
+          // Keep real pseudo-elements for their layout/paint order; no extra
+          // spans that could change flex/grid children or structural selectors.
           stage.remove();
-          stage.style.position = "relative";
-          stage.style.left = "0";
-          stage.style.top = "0";
-          stage.style.transform = "none";
+          stage.append(...surface.childNodes);
+          stage.style.cssText = `display:block;position:relative;width:${this.options.width}px;height:${this.options.height}px;overflow:hidden;background-color:${paperColor}`;
           const markup = new XMLSerializer().serializeToString(stage),
             w = this.options.width,
             h = this.options.height;

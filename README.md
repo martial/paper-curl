@@ -2,11 +2,13 @@
 
 A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet bends during a turn; native HTML returns when the page lands. The plain JavaScript core has no runtime dependencies or required build step. An optional **Vue 3 component** keeps your page content reactive.
 
-**Fixed in v0.4.1:** CSS text outlines, SVG strokes, per-side borders and outlines now survive page turns. [Stroke styling →](#css-strokes-and-outlines)
+**Fixed in v0.4.2:** broader CSS capture, gradient/image borders, masks, and `::before`/`::after` decorations. Styles retain their original selector context. [CSS capture →](#css-strokes-and-outlines)
+
+**CSS compatibility:** [support and known limits](docs/CSS_SUPPORT.md), [every property and its measured result](docs/CSS_PROPERTIES.md), and a [searchable online benchmark](https://paper-curl-vue.martialou543257.chatgpt.site/css.html). The report separates preserved values, mismatches, unsupported properties, frozen behavior, and unverified cases. Selected visual tests check actual rendered pixels separately.
 
 **Since v0.4.0:** optional encoding workers and loading progress for `prepare()`, automatic preloading, and page turns. [JavaScript and Vue usage →](#preparation-workers-and-loading-progress)
 
-Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 63 KB of formatted, readable source, or 17 KB gzipped. Photographs and example layouts are separate from the library.
+Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 66 KB of formatted, readable source, or 18 KB gzipped. Photographs and example layouts are separate from the library.
 
 ## Start here
 
@@ -69,7 +71,7 @@ With `showCover: true`, the first page is a centered front cover. Use an even nu
 Install from this GitHub repository (this project has not been published to npm):
 
 ```sh
-npm install github:martial/paper-curl#v0.4.1
+npm install github:martial/paper-curl#v0.4.2
 ```
 
 Vue is an optional peer dependency; use this component in a Vue 3.3+ app:
@@ -224,7 +226,12 @@ To add, remove, or reorder pages after initialization, call `book.destroy()`, ed
 Use the four-page `#book` markup from [Start here](#start-here), add these status elements, and replace its initialization script with the JavaScript below (inside an async function or an ES module):
 
 ```html
-<progress id="preparation" max="1" value="0" aria-label="Pages prepared"></progress>
+<progress
+  id="preparation"
+  max="1"
+  value="0"
+  aria-label="Pages prepared"
+></progress>
 <p id="preparation-status" role="status"></p>
 ```
 
@@ -269,9 +276,12 @@ const error = ref("");
 
 function track(update) {
   // Ignore late completion from an older concurrent preparation request.
-  if (!progress.value || update.id >= progress.value.id) progress.value = update;
+  if (!progress.value || update.id >= progress.value.id)
+    progress.value = update;
 }
-function mounted() { progress.value = null; }
+function mounted() {
+  progress.value = null;
+}
 async function prepare() {
   try {
     await book.value.prepare([0, 1, 2, 3]);
@@ -282,21 +292,40 @@ async function prepare() {
 </script>
 
 <template>
-  <PaperCurl ref="book" class="journal" :worker="true" @ready="mounted" @progress="track">
+  <PaperCurl
+    ref="book"
+    class="journal"
+    :worker="true"
+    @ready="mounted"
+    @progress="track"
+  >
     <article>Cover</article>
     <article>First page</article>
     <article>Second page</article>
     <article>Back cover</article>
   </PaperCurl>
   <button @click="prepare">Prepare pages</button>
-  <progress v-if="progress" :value="progress.progress" max="1" aria-label="Pages prepared" />
-  <span v-if="progress" role="status">{{ progress.completed }}/{{ progress.total }} pages · {{ progress.status }}</span>
+  <progress
+    v-if="progress"
+    :value="progress.progress"
+    max="1"
+    aria-label="Pages prepared"
+  />
+  <span v-if="progress" role="status"
+    >{{ progress.completed }}/{{ progress.total }} pages ·
+    {{ progress.status }}</span
+  >
   <p v-if="error" role="alert">{{ error }}</p>
 </template>
 
 <style scoped>
-.journal { height: 70vh; }
-article { padding: 40px; background: #faf9f2; }
+.journal {
+  height: 70vh;
+}
+article {
+  padding: 40px;
+  background: #faf9f2;
+}
 </style>
 ```
 
@@ -333,9 +362,9 @@ For an explicit readiness signal, call `prepare()` on the core instance or Vue c
 
 ```js
 const ready = await book.prepare(); // prepare the next and previous turning sheets
-if (ready) book.next();            // reuse prepared textures
+if (ready) book.next(); // reuse prepared textures
 
-await book.prepare([0, 1, 2, 3]);  // optionally prepare specific pages ahead of time
+await book.prepare([0, 1, 2, 3]); // optionally prepare specific pages ahead of time
 ```
 
 The promise resolves to `true` when all requested textures are ready, or `false` if preparation was invalidated by refresh/destroy or WebGL is unavailable. Asset errors and invalid indices reject the promise; handle them in your app. Preparing pages does not navigate or change the visible content. At most two pages are captured concurrently. Preparing a whole long book retains more canvas memory; nearby preparation is the default.
@@ -348,6 +377,8 @@ The repeatable [performance benchmark](tests/browser/PERFORMANCE.md) separates t
 
 ## CSS strokes and outlines
 
+Page capture reads the browser's computed styles from the original page elements, including Vue scoped CSS and rules that depend on ancestors. It preserves the browser-supported computed properties instead of a fixed visual-property list, and stores differences from browser defaults to keep textures compact. Animations and transitions are frozen at capture time; CSS variables are resolved into their property values.
+
 CSS text strokes are captured with their computed width, color and fill, including inherited styles, `currentColor`, and CSS variables. `paint-order` is preserved so a stroke drawn behind the text stays behind it during a turn. This works in the plain JS and Vue versions, with or without the encoding worker.
 
 ```css
@@ -359,9 +390,25 @@ CSS text strokes are captured with their computed width, color and fill, includi
 }
 ```
 
-For filled lettering with an outline, set `-webkit-text-fill-color` to your fill color. Inline SVG shapes also retain CSS `fill`, `stroke`, stroke width/opacity, dash patterns and offsets, line caps/joins, and `vector-effect`. Borders keep each side's own style, and CSS `outline`/`outline-offset` are captured too. Use these on real page elements; generated `::before`/`::after` artwork remains a capture limitation.
+For filled lettering with an outline, set `-webkit-text-fill-color` to your fill color. Inline SVG shapes also retain CSS `fill`, `stroke`, stroke width/opacity, dash patterns and offsets, line caps/joins, and `vector-effect`. Borders keep each side's own style, and CSS `outline`/`outline-offset` are captured too. Gradient and image borders (`border-image`), logical and double borders, CSS masks, clipping, and individual transforms are captured. Remote border/mask images need the same CORS access as other images.
 
-The Vue demo includes an **Outlined headings** checkbox. When changing styles in plain JS after preparation, call `book.refresh([pageIndex])` to replace the cached texture. Vue observes class/style changes inside pages automatically; changes to an external stylesheet need an explicit refresh.
+Decorations and string/`attr()` labels from `::before` and `::after` are preserved as real pseudo-elements in the snapshot, including their borders and fonts. For example:
+
+```css
+.page {
+  position: relative;
+}
+.page::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 2px solid currentColor;
+  border-radius: 24px 4px;
+  pointer-events: none;
+}
+```
+
+The Vue demo includes **Outlined headings** and a **Page frame** selector with double, gradient, and rounded decorative borders. When changing styles in plain JS after preparation, call `book.refresh([pageIndex])` to replace the cached texture. Vue observes class/style changes inside pages automatically; changes to an external stylesheet need an explicit refresh.
 
 ## Images and browser support
 
@@ -369,7 +416,7 @@ Page textures use native browser HTML-to-SVG rasterization. Remote `<img>`, resp
 
 Google Fonts and other accessible `@font-face` stylesheets are embedded into the page texture, preserving the font during a turn. Wait for asynchronously inserted font stylesheets to load before creating the book, or call `refresh()` afterward. For fonts loaded programmatically, provide their original `@font-face` rules through `fontCSS`; browsers do not expose the font bytes from a `FontFace` object. System fonts need no extra setup.
 
-For an HTML file opened directly without a server, use system fonts and embed images as data URLs; the standalone example does this automatically. Snapshots support ordinary text, images, and CSS layouts. Generated pseudo-element content and live video/canvas are not captured comprehensively. Keep those out of turning-page artwork. Interactive elements remain native at rest.
+For an HTML file opened directly without a server, use system fonts and embed images as data URLs; the standalone example does this automatically. Snapshots support ordinary text, images, and CSS layouts. Only `::before` and `::after` are reconstructed; other custom pseudo-element styling, counters depending on content outside the page, shadow-root contents, and live video/canvas are not captured comprehensively. Effects that depend on content outside the page can also differ in the isolated snapshot. Interactive elements remain native at rest.
 
 The curved renderer requires WebGL and SVG `foreignObject` rasterization. If rendering is unavailable, navigation falls back to immediate native page changes. Reduced-motion preferences are respected. Chromium has been checked locally; this initial version has not yet been validated across every browser and device.
 
@@ -405,7 +452,7 @@ npm run test:fixtures
 npm run dev:vue
 ```
 
-Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite checks CSS text strokes, transparent/inherited text fills, paint order, SVG stroke dashes/caps/joins, different border sides, and offset outlines with workers enabled and disabled. It also checks a real worker, a deliberately CSP-blocked worker fallback, progress phases, pending-job cleanup, several Google Fonts, variable weights, italics, extended characters, programmatic fonts, and an intentionally stalled unrelated font. It compares captured glyphs with native canvas text, checks that text edits reuse embedded faces, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. Font tests need internet access. Expected CSP, CORS and slow-font 404 errors belong to deliberate failure fixtures.
+Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite checks gradient/remote image borders, composite masks, pseudo-element borders and Google Font labels, clipping/transforms, hidden content, ancestor selectors, logical/double borders, CSS text strokes, transparent/inherited text fills, paint order, SVG stroke dashes/caps/joins, different border sides, and offset outlines with workers enabled and disabled. It also checks a real worker, a deliberately CSP-blocked worker fallback, progress phases, pending-job cleanup, several Google Fonts, variable weights, italics, extended characters, programmatic fonts, and an intentionally stalled unrelated font. It compares captured glyphs with native canvas text, checks that text edits reuse embedded faces, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. Font tests need internet access. Expected CSP, CORS and slow-font 404 errors belong to deliberate failure fixtures.
 
 ## License
 

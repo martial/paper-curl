@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import Core from "../../paper-curl.mjs";
+import { cssRegressions } from "./css-regressions.js";
 const results = document.querySelector("#results"),
   fixtures = document.querySelector("#fixtures");
 const assert = (value, message) => {
@@ -95,6 +96,7 @@ document.querySelector("#run").onclick = async () => {
       results.textContent += `FAIL ${name}: ${e.message}\n`;
     }
   }
+  await cssRegressions({ check, fixture, pixel, red, blue, inkWidth });
   // Rules intentionally live outside the captured page. Inline declarations
   // alone would survive cloneNode and hide missing computed-style properties.
   const strokeStyles = document.createElement("style");
@@ -541,7 +543,7 @@ document.querySelector("#run").onclick = async () => {
     },
   );
   await check(
-    "a stalled unrelated font does not block page capture",
+    "stalled fonts outside the page or in hidden subtrees do not block capture",
     async () => {
       const slow = new FontFace(
         "Unrelated Slow Font",
@@ -550,7 +552,7 @@ document.querySelector("#run").onclick = async () => {
       document.fonts.add(slow);
       slow.load().catch(() => {});
       const f = await fixture([
-        `<div style="font:48px Bungee">Fast page</div>`,
+        `<div style="font:48px Bungee">Fast page</div><div hidden><span style="font-family:'Unrelated Slow Font'">Hidden text</span></div>`,
       ]);
       try {
         assert(slow.status === "loading", "slow font did not start");

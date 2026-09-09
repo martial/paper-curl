@@ -1,0 +1,3172 @@
+{
+  "source": "https://raw.githubusercontent.com/mdn/data/635d63e0c4b4a0a4216aa9ee1cbdaed0c5111065/css/properties.json",
+  "license": "CC0-1.0",
+  "revision": "635d63e0c4b4a0a4216aa9ee1cbdaed0c5111065",
+  "properties": {
+    "-ms-accelerator": {
+      "keywords": ["false", "true"],
+      "status": "nonstandard"
+    },
+    "-ms-block-progression": {
+      "keywords": ["tb", "rl", "bt", "lr"],
+      "status": "nonstandard"
+    },
+    "-ms-content-zoom-chaining": {
+      "keywords": ["none", "chained"],
+      "status": "nonstandard"
+    },
+    "-ms-content-zoom-limit": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-content-zoom-limit-max": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-content-zoom-limit-min": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-content-zoom-snap": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-content-zoom-snap-points": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-content-zoom-snap-type": {
+      "keywords": ["none", "proximity", "mandatory"],
+      "status": "nonstandard"
+    },
+    "-ms-content-zooming": {
+      "keywords": ["none", "zoom"],
+      "status": "nonstandard"
+    },
+    "-ms-filter": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-flow-from": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-ms-flow-into": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-ms-grid-columns": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-ms-grid-rows": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-ms-high-contrast-adjust": {
+      "keywords": ["auto", "none"],
+      "status": "nonstandard"
+    },
+    "-ms-hyphenate-limit-chars": {
+      "keywords": ["auto"],
+      "status": "nonstandard"
+    },
+    "-ms-hyphenate-limit-lines": {
+      "keywords": ["no-limit"],
+      "status": "nonstandard"
+    },
+    "-ms-hyphenate-limit-zone": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-ime-align": {
+      "keywords": ["auto", "after"],
+      "status": "nonstandard"
+    },
+    "-ms-overflow-style": {
+      "keywords": ["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-chaining": {
+      "keywords": ["chained", "none"],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-limit": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-limit-x-max": {
+      "keywords": ["auto"],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-limit-x-min": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-limit-y-max": {
+      "keywords": ["auto"],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-limit-y-min": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-rails": {
+      "keywords": ["none", "railed"],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-snap-points-x": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-snap-points-y": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-snap-type": {
+      "keywords": ["none", "proximity", "mandatory"],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-snap-x": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-snap-y": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scroll-translation": {
+      "keywords": ["none", "vertical-to-horizontal"],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-3dlight-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-arrow-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-base-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-darkshadow-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-face-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-highlight-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-shadow-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-scrollbar-track-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-text-autospace": {
+      "keywords": [
+        "none",
+        "ideograph-alpha",
+        "ideograph-numeric",
+        "ideograph-parenthesis",
+        "ideograph-space"
+      ],
+      "status": "nonstandard"
+    },
+    "-ms-touch-select": {
+      "keywords": ["grippers", "none"],
+      "status": "nonstandard"
+    },
+    "-ms-user-select": {
+      "keywords": ["none", "element", "text"],
+      "status": "nonstandard"
+    },
+    "-ms-wrap-flow": {
+      "keywords": ["auto", "both", "start", "end", "maximum", "clear"],
+      "status": "nonstandard"
+    },
+    "-ms-wrap-margin": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-ms-wrap-through": {
+      "keywords": ["wrap", "none"],
+      "status": "nonstandard"
+    },
+    "-moz-appearance": {
+      "keywords": [
+        "none",
+        "button",
+        "button-arrow-down",
+        "button-arrow-next",
+        "button-arrow-previous",
+        "button-arrow-up",
+        "button-bevel",
+        "button-focus",
+        "caret",
+        "checkbox",
+        "checkbox-container",
+        "checkbox-label",
+        "checkmenuitem",
+        "dualbutton",
+        "groupbox",
+        "listbox",
+        "listitem",
+        "menuarrow",
+        "menubar",
+        "menucheckbox",
+        "menuimage",
+        "menuitem",
+        "menuitemtext",
+        "menulist",
+        "menulist-button",
+        "menulist-text",
+        "menulist-textfield",
+        "menupopup",
+        "menuradio",
+        "menuseparator",
+        "meterbar",
+        "meterchunk",
+        "progressbar",
+        "progressbar-vertical",
+        "progresschunk",
+        "progresschunk-vertical",
+        "radio",
+        "radio-container",
+        "radio-label",
+        "radiomenuitem",
+        "range",
+        "range-thumb",
+        "resizer",
+        "resizerpanel",
+        "scale-horizontal",
+        "scalethumbend",
+        "scalethumb-horizontal",
+        "scalethumbstart",
+        "scalethumbtick",
+        "scalethumb-vertical",
+        "scale-vertical",
+        "scrollbarbutton-down",
+        "scrollbarbutton-left",
+        "scrollbarbutton-right",
+        "scrollbarbutton-up",
+        "scrollbarthumb-horizontal",
+        "scrollbarthumb-vertical",
+        "scrollbartrack-horizontal",
+        "scrollbartrack-vertical",
+        "searchfield",
+        "separator",
+        "sheet",
+        "spinner",
+        "spinner-downbutton",
+        "spinner-textfield",
+        "spinner-upbutton",
+        "splitter",
+        "statusbar",
+        "statusbarpanel",
+        "tab",
+        "tabpanel",
+        "tabpanels",
+        "tab-scroll-arrow-back",
+        "tab-scroll-arrow-forward",
+        "textfield",
+        "textfield-multiline",
+        "toolbar",
+        "toolbarbutton",
+        "toolbarbutton-dropdown",
+        "toolbargripper",
+        "toolbox",
+        "tooltip",
+        "treeheader",
+        "treeheadercell",
+        "treeheadersortarrow",
+        "treeitem",
+        "treeline",
+        "treetwisty",
+        "treetwistyopen",
+        "treeview",
+        "-moz-mac-unified-toolbar",
+        "-moz-win-borderless-glass",
+        "-moz-win-browsertabbar-toolbox",
+        "-moz-win-communicationstext",
+        "-moz-win-communications-toolbox",
+        "-moz-win-exclude-glass",
+        "-moz-win-glass",
+        "-moz-win-mediatext",
+        "-moz-win-media-toolbox",
+        "-moz-window-button-box",
+        "-moz-window-button-box-maximized",
+        "-moz-window-button-close",
+        "-moz-window-button-maximize",
+        "-moz-window-button-minimize",
+        "-moz-window-button-restore",
+        "-moz-window-frame-bottom",
+        "-moz-window-frame-left",
+        "-moz-window-frame-right",
+        "-moz-window-titlebar",
+        "-moz-window-titlebar-maximized"
+      ],
+      "status": "nonstandard"
+    },
+    "-moz-binding": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-moz-border-bottom-colors": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-moz-border-left-colors": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-moz-border-right-colors": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-moz-border-top-colors": {
+      "keywords": ["none"],
+      "status": "nonstandard"
+    },
+    "-moz-context-properties": {
+      "keywords": ["none", "fill", "fill-opacity", "stroke", "stroke-opacity"],
+      "status": "nonstandard"
+    },
+    "-moz-float-edge": {
+      "keywords": ["border-box", "content-box", "margin-box", "padding-box"],
+      "status": "nonstandard"
+    },
+    "-moz-force-broken-image-icon": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-moz-orient": {
+      "keywords": ["inline", "block", "horizontal", "vertical"],
+      "status": "nonstandard"
+    },
+    "-moz-outline-radius": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-moz-outline-radius-bottomleft": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-moz-outline-radius-bottomright": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-moz-outline-radius-topleft": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-moz-outline-radius-topright": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-moz-stack-sizing": {
+      "keywords": ["ignore", "stretch-to-fit"],
+      "status": "nonstandard"
+    },
+    "-moz-text-blink": {
+      "keywords": ["none", "blink"],
+      "status": "nonstandard"
+    },
+    "-moz-user-focus": {
+      "keywords": [
+        "ignore",
+        "normal",
+        "select-after",
+        "select-before",
+        "select-menu",
+        "select-same",
+        "select-all",
+        "none"
+      ],
+      "status": "nonstandard"
+    },
+    "-moz-user-input": {
+      "keywords": ["auto", "none", "enabled", "disabled"],
+      "status": "nonstandard"
+    },
+    "-moz-user-modify": {
+      "keywords": ["read-only", "read-write", "write-only"],
+      "status": "nonstandard"
+    },
+    "-moz-window-dragging": {
+      "keywords": ["drag", "no-drag"],
+      "status": "nonstandard"
+    },
+    "-moz-window-shadow": {
+      "keywords": ["default", "menu", "tooltip", "sheet", "none"],
+      "status": "nonstandard"
+    },
+    "-webkit-appearance": {
+      "keywords": [
+        "none",
+        "button",
+        "button-bevel",
+        "caret",
+        "checkbox",
+        "default-button",
+        "inner-spin-button",
+        "listbox",
+        "listitem",
+        "media-controls-background",
+        "media-controls-fullscreen-background",
+        "media-current-time-display",
+        "media-enter-fullscreen-button",
+        "media-exit-fullscreen-button",
+        "media-fullscreen-button",
+        "media-mute-button",
+        "media-overlay-play-button",
+        "media-play-button",
+        "media-seek-back-button",
+        "media-seek-forward-button",
+        "media-slider",
+        "media-sliderthumb",
+        "media-time-remaining-display",
+        "media-toggle-closed-captions-button",
+        "media-volume-slider",
+        "media-volume-slider-container",
+        "media-volume-sliderthumb",
+        "menulist",
+        "menulist-button",
+        "menulist-text",
+        "menulist-textfield",
+        "meter",
+        "progress-bar",
+        "progress-bar-value",
+        "push-button",
+        "radio",
+        "searchfield",
+        "searchfield-cancel-button",
+        "searchfield-decoration",
+        "searchfield-results-button",
+        "searchfield-results-decoration",
+        "slider-horizontal",
+        "slider-vertical",
+        "sliderthumb-horizontal",
+        "sliderthumb-vertical",
+        "square-button",
+        "textarea",
+        "textfield",
+        "-apple-pay-button"
+      ],
+      "status": "nonstandard"
+    },
+    "-webkit-border-after": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-after-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-after-style": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-after-width": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-before": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-before-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-before-style": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-before-width": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-end": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-end-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-end-style": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-end-width": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-start": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-start-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-start-style": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-border-start-width": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-box-reflect": {
+      "keywords": ["above", "below", "right", "left"],
+      "status": "nonstandard"
+    },
+    "-webkit-line-clamp": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "-webkit-mask": {
+      "keywords": ["border", "padding", "content", "text"],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-attachment": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-clip": {
+      "keywords": ["no-clip", "border", "padding", "content", "text"],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-composite": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-image": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-origin": {
+      "keywords": ["border", "padding", "content"],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-position": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-position-x": {
+      "keywords": ["left", "center", "right"],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-position-y": {
+      "keywords": ["top", "center", "bottom"],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-repeat": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-repeat-x": {
+      "keywords": ["repeat", "no-repeat", "space", "round"],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-repeat-y": {
+      "keywords": ["repeat", "no-repeat", "space", "round"],
+      "status": "nonstandard"
+    },
+    "-webkit-mask-size": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-overflow-scrolling": {
+      "keywords": ["auto", "touch"],
+      "status": "nonstandard"
+    },
+    "-webkit-tap-highlight-color": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "-webkit-text-fill-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "-webkit-text-stroke": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "-webkit-text-stroke-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "-webkit-text-stroke-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "-webkit-touch-callout": {
+      "keywords": ["default", "none"],
+      "status": "nonstandard"
+    },
+    "-webkit-user-modify": {
+      "keywords": ["read-only", "read-write", "read-write-plaintext-only"],
+      "status": "nonstandard"
+    },
+    "-webkit-user-select": {
+      "keywords": ["auto", "text", "none", "all"],
+      "status": "nonstandard"
+    },
+    "accent-color": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "align-content": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "align-items": {
+      "keywords": ["normal", "stretch", "anchor-center"],
+      "status": "standard"
+    },
+    "align-self": {
+      "keywords": ["auto", "normal", "stretch", "anchor-center"],
+      "status": "standard"
+    },
+    "align-tracks": {
+      "keywords": ["normal"],
+      "status": "nonstandard"
+    },
+    "alignment-baseline": {
+      "keywords": [
+        "baseline",
+        "alphabetic",
+        "ideographic",
+        "middle",
+        "central",
+        "mathematical",
+        "text-before-edge",
+        "text-after-edge"
+      ],
+      "status": "standard"
+    },
+    "all": {
+      "keywords": ["initial", "inherit", "unset", "revert", "revert-layer"],
+      "status": "standard"
+    },
+    "anchor-name": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "anchor-scope": {
+      "keywords": ["none", "all"],
+      "status": "experimental"
+    },
+    "animation": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-composition": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-delay": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-direction": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-duration": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "animation-fill-mode": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-iteration-count": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-name": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "animation-play-state": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-range": {
+      "keywords": [],
+      "status": "experimental"
+    },
+    "animation-range-end": {
+      "keywords": ["normal"],
+      "status": "experimental"
+    },
+    "animation-range-start": {
+      "keywords": ["normal"],
+      "status": "experimental"
+    },
+    "animation-timeline": {
+      "keywords": [],
+      "status": "experimental"
+    },
+    "animation-timing-function": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "animation-trigger": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "appearance": {
+      "keywords": ["none", "auto"],
+      "status": "standard"
+    },
+    "aspect-ratio": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "backdrop-filter": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "backface-visibility": {
+      "keywords": ["visible", "hidden"],
+      "status": "standard"
+    },
+    "background": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-attachment": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-blend-mode": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-clip": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-image": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-origin": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-position": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-position-x": {
+      "keywords": ["center", "left", "right", "x-start", "x-end"],
+      "status": "standard"
+    },
+    "background-position-y": {
+      "keywords": ["center", "top", "bottom", "y-start", "y-end"],
+      "status": "standard"
+    },
+    "background-repeat": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "background-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "baseline-shift": {
+      "keywords": ["sub", "super", "baseline"],
+      "status": "standard"
+    },
+    "baseline-source": {
+      "keywords": ["auto", "first", "last"],
+      "status": "standard"
+    },
+    "block-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-end-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-end-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-end-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-start-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-start-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-start-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-block-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-bottom": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-bottom-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-bottom-left-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-bottom-right-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-bottom-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-bottom-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-collapse": {
+      "keywords": ["separate", "collapse"],
+      "status": "standard"
+    },
+    "border-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-end-end-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-end-start-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-image": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-image-outset": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-image-repeat": {
+      "keywords": ["stretch", "repeat", "round", "space"],
+      "status": "standard"
+    },
+    "border-image-slice": {
+      "keywords": ["fill"],
+      "status": "standard"
+    },
+    "border-image-source": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "border-image-width": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "border-inline": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-end-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-end-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-end-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-start-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-start-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-start-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-inline-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-left": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-left-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-left-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-left-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-right": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-right-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-right-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-right-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-shape": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "border-spacing": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-start-end-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-start-start-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-top": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-top-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-top-left-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-top-right-radius": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-top-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-top-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "border-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "bottom": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "box-align": {
+      "keywords": ["start", "center", "end", "baseline", "stretch"],
+      "status": "nonstandard"
+    },
+    "box-decoration-break": {
+      "keywords": ["slice", "clone"],
+      "status": "standard"
+    },
+    "box-direction": {
+      "keywords": ["normal", "reverse", "inherit"],
+      "status": "nonstandard"
+    },
+    "box-flex": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "box-flex-group": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "box-lines": {
+      "keywords": ["single", "multiple"],
+      "status": "nonstandard"
+    },
+    "box-ordinal-group": {
+      "keywords": [],
+      "status": "nonstandard"
+    },
+    "box-orient": {
+      "keywords": [
+        "horizontal",
+        "vertical",
+        "inline-axis",
+        "block-axis",
+        "inherit"
+      ],
+      "status": "nonstandard"
+    },
+    "box-pack": {
+      "keywords": ["start", "center", "end", "justify"],
+      "status": "nonstandard"
+    },
+    "box-shadow": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "box-sizing": {
+      "keywords": ["content-box", "border-box"],
+      "status": "standard"
+    },
+    "break-after": {
+      "keywords": [
+        "auto",
+        "avoid",
+        "always",
+        "all",
+        "avoid-page",
+        "page",
+        "left",
+        "right",
+        "recto",
+        "verso",
+        "avoid-column",
+        "column",
+        "avoid-region",
+        "region"
+      ],
+      "status": "standard"
+    },
+    "break-before": {
+      "keywords": [
+        "auto",
+        "avoid",
+        "always",
+        "all",
+        "avoid-page",
+        "page",
+        "left",
+        "right",
+        "recto",
+        "verso",
+        "avoid-column",
+        "column",
+        "avoid-region",
+        "region"
+      ],
+      "status": "standard"
+    },
+    "break-inside": {
+      "keywords": [
+        "auto",
+        "avoid",
+        "avoid-page",
+        "avoid-column",
+        "avoid-region"
+      ],
+      "status": "standard"
+    },
+    "caption-side": {
+      "keywords": ["top", "bottom"],
+      "status": "standard"
+    },
+    "caret": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "caret-animation": {
+      "keywords": ["auto", "manual"],
+      "status": "standard"
+    },
+    "caret-color": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "caret-shape": {
+      "keywords": ["auto", "bar", "block", "underscore"],
+      "status": "standard"
+    },
+    "clear": {
+      "keywords": [
+        "none",
+        "left",
+        "right",
+        "both",
+        "inline-start",
+        "inline-end"
+      ],
+      "status": "standard"
+    },
+    "clip": {
+      "keywords": ["auto"],
+      "status": "obsolete"
+    },
+    "clip-path": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "clip-rule": {
+      "keywords": ["nonzero", "evenodd"],
+      "status": "standard"
+    },
+    "color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "color-interpolation-filters": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "color-scheme": {
+      "keywords": ["normal", "light", "dark", "only"],
+      "status": "standard"
+    },
+    "column-count": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "column-fill": {
+      "keywords": ["auto", "balance"],
+      "status": "standard"
+    },
+    "column-gap": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "column-height": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "column-rule": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "column-rule-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "column-rule-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "column-rule-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "column-span": {
+      "keywords": ["none", "all"],
+      "status": "standard"
+    },
+    "column-width": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "column-wrap": {
+      "keywords": ["auto", "nowrap", "wrap"],
+      "status": "standard"
+    },
+    "columns": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "contain": {
+      "keywords": [
+        "none",
+        "strict",
+        "content",
+        "size",
+        "inline-size",
+        "layout",
+        "style",
+        "paint"
+      ],
+      "status": "standard"
+    },
+    "contain-intrinsic-block-size": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "contain-intrinsic-height": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "contain-intrinsic-inline-size": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "contain-intrinsic-size": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "contain-intrinsic-width": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "container": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "container-name": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "container-type": {
+      "keywords": ["normal", "size", "inline-size", "scroll-state"],
+      "status": "standard"
+    },
+    "content": {
+      "keywords": ["normal", "none"],
+      "status": "standard"
+    },
+    "content-visibility": {
+      "keywords": ["visible", "auto", "hidden"],
+      "status": "standard"
+    },
+    "corner-block-end-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-block-start-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-bottom-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-bottom-left-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-bottom-right-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-end-end-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-end-start-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-inline-end-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-inline-start-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-left-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-right-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-start-start-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-start-end-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-top-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-top-left-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "corner-top-right-shape": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "counter-increment": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "counter-reset": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "counter-set": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "cursor": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "cx": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "cy": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "d": {
+      "keywords": ["none", "path"],
+      "status": "standard"
+    },
+    "direction": {
+      "keywords": ["ltr", "rtl"],
+      "status": "standard"
+    },
+    "display": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "dominant-baseline": {
+      "keywords": [
+        "auto",
+        "text-bottom",
+        "alphabetic",
+        "ideographic",
+        "middle",
+        "central",
+        "mathematical",
+        "hanging",
+        "text-top"
+      ],
+      "status": "standard"
+    },
+    "dynamic-range-limit": {
+      "keywords": ["standard", "no-limit", "constrained"],
+      "status": "standard"
+    },
+    "empty-cells": {
+      "keywords": ["show", "hide"],
+      "status": "standard"
+    },
+    "field-sizing": {
+      "keywords": ["content", "fixed"],
+      "status": "experimental"
+    },
+    "fill": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "fill-opacity": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "fill-rule": {
+      "keywords": ["nonzero", "evenodd"],
+      "status": "standard"
+    },
+    "filter": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "flex": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "flex-basis": {
+      "keywords": ["content"],
+      "status": "standard"
+    },
+    "flex-direction": {
+      "keywords": ["row", "row-reverse", "column", "column-reverse"],
+      "status": "standard"
+    },
+    "flex-flow": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "flex-grow": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "flex-line-count": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "flex-shrink": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "flex-wrap": {
+      "keywords": ["nowrap", "wrap", "wrap-reverse", "balance"],
+      "status": "standard"
+    },
+    "float": {
+      "keywords": ["left", "right", "none", "inline-start", "inline-end"],
+      "status": "standard"
+    },
+    "flood-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "flood-opacity": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "font": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "font-family": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "font-feature-settings": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "font-kerning": {
+      "keywords": ["auto", "normal", "none"],
+      "status": "standard"
+    },
+    "font-language-override": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "font-optical-sizing": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "font-palette": {
+      "keywords": ["normal", "light", "dark"],
+      "status": "standard"
+    },
+    "font-size": {
+      "keywords": ["math"],
+      "status": "standard"
+    },
+    "font-size-adjust": {
+      "keywords": [
+        "none",
+        "ex-height",
+        "cap-height",
+        "ch-width",
+        "ic-width",
+        "ic-height",
+        "from-font"
+      ],
+      "status": "standard"
+    },
+    "font-smooth": {
+      "keywords": ["auto", "never", "always"],
+      "status": "nonstandard"
+    },
+    "font-stretch": {
+      "keywords": [],
+      "status": "obsolete"
+    },
+    "font-style": {
+      "keywords": ["normal", "italic", "oblique"],
+      "status": "standard"
+    },
+    "font-synthesis": {
+      "keywords": ["none", "weight", "style", "small-caps", "position"],
+      "status": "standard"
+    },
+    "font-synthesis-position": {
+      "keywords": ["auto", "none"],
+      "status": "experimental"
+    },
+    "font-synthesis-small-caps": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "font-synthesis-style": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "font-synthesis-weight": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "font-variant": {
+      "keywords": [
+        "normal",
+        "none",
+        "stylistic",
+        "historical-forms",
+        "styleset",
+        "character-variant",
+        "swash",
+        "ornaments",
+        "annotation",
+        "small-caps",
+        "all-small-caps",
+        "petite-caps",
+        "all-petite-caps",
+        "unicase",
+        "titling-caps",
+        "ordinal",
+        "slashed-zero",
+        "ruby"
+      ],
+      "status": "standard"
+    },
+    "font-variant-alternates": {
+      "keywords": [
+        "normal",
+        "stylistic",
+        "historical-forms",
+        "styleset",
+        "character-variant",
+        "swash",
+        "ornaments",
+        "annotation"
+      ],
+      "status": "standard"
+    },
+    "font-variant-caps": {
+      "keywords": [
+        "normal",
+        "small-caps",
+        "all-small-caps",
+        "petite-caps",
+        "all-petite-caps",
+        "unicase",
+        "titling-caps"
+      ],
+      "status": "standard"
+    },
+    "font-variant-east-asian": {
+      "keywords": ["normal", "ruby"],
+      "status": "standard"
+    },
+    "font-variant-emoji": {
+      "keywords": ["normal", "text", "emoji", "unicode"],
+      "status": "standard"
+    },
+    "font-variant-ligatures": {
+      "keywords": ["normal", "none"],
+      "status": "standard"
+    },
+    "font-variant-numeric": {
+      "keywords": ["normal", "ordinal", "slashed-zero"],
+      "status": "standard"
+    },
+    "font-variant-position": {
+      "keywords": ["normal", "sub", "super"],
+      "status": "standard"
+    },
+    "font-variation-settings": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "font-weight": {
+      "keywords": ["bolder", "lighter"],
+      "status": "standard"
+    },
+    "font-width": {
+      "keywords": [
+        "normal",
+        "ultra-condensed",
+        "extra-condensed",
+        "condensed",
+        "semi-condensed",
+        "semi-expanded",
+        "expanded",
+        "extra-expanded",
+        "ultra-expanded"
+      ],
+      "status": "experimental"
+    },
+    "forced-color-adjust": {
+      "keywords": ["auto", "none", "preserve-parent-color"],
+      "status": "standard"
+    },
+    "frame-sizing": {
+      "keywords": [
+        "auto",
+        "content-width",
+        "content-height",
+        "content-block-size",
+        "content-inline-size"
+      ],
+      "status": "standard"
+    },
+    "gap": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid": {
+      "keywords": ["auto-flow", "dense"],
+      "status": "standard"
+    },
+    "grid-area": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-auto-columns": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-auto-flow": {
+      "keywords": ["row", "column", "dense"],
+      "status": "standard"
+    },
+    "grid-auto-rows": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-column": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-column-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-column-gap": {
+      "keywords": [],
+      "status": "obsolete"
+    },
+    "grid-column-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-gap": {
+      "keywords": [],
+      "status": "obsolete"
+    },
+    "grid-row": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-row-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-row-gap": {
+      "keywords": [],
+      "status": "obsolete"
+    },
+    "grid-row-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "grid-template": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "grid-template-areas": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "grid-template-columns": {
+      "keywords": ["none", "subgrid"],
+      "status": "standard"
+    },
+    "grid-template-rows": {
+      "keywords": ["none", "subgrid"],
+      "status": "standard"
+    },
+    "hanging-punctuation": {
+      "keywords": ["none", "first", "force-end", "allow-end", "last"],
+      "status": "standard"
+    },
+    "height": {
+      "keywords": ["auto", "min-content", "max-content", "fit-content"],
+      "status": "standard"
+    },
+    "hyphenate-character": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "hyphenate-limit-chars": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "hyphens": {
+      "keywords": ["none", "manual", "auto"],
+      "status": "standard"
+    },
+    "image-orientation": {
+      "keywords": ["from-image", "flip"],
+      "status": "standard"
+    },
+    "image-rendering": {
+      "keywords": ["auto", "crisp-edges", "pixelated", "smooth"],
+      "status": "standard"
+    },
+    "image-resolution": {
+      "keywords": ["from-image", "snap"],
+      "status": "experimental"
+    },
+    "ime-mode": {
+      "keywords": ["auto", "normal", "active", "inactive", "disabled"],
+      "status": "obsolete"
+    },
+    "initial-letter": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "initial-letter-align": {
+      "keywords": ["auto", "alphabetic", "hanging", "ideographic"],
+      "status": "experimental"
+    },
+    "inline-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "inset": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "inset-block": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "inset-block-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "inset-block-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "inset-inline": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "inset-inline-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "inset-inline-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "interpolate-size": {
+      "keywords": ["numeric-only", "allow-keywords"],
+      "status": "experimental"
+    },
+    "isolation": {
+      "keywords": ["auto", "isolate"],
+      "status": "standard"
+    },
+    "interactivity": {
+      "keywords": ["auto", "inert"],
+      "status": "standard"
+    },
+    "interest-delay": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "interest-delay-end": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "interest-delay-start": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "justify-content": {
+      "keywords": ["normal", "left", "right"],
+      "status": "standard"
+    },
+    "justify-items": {
+      "keywords": [
+        "normal",
+        "stretch",
+        "left",
+        "right",
+        "legacy",
+        "center",
+        "anchor-center"
+      ],
+      "status": "standard"
+    },
+    "justify-self": {
+      "keywords": [
+        "auto",
+        "normal",
+        "stretch",
+        "left",
+        "right",
+        "anchor-center"
+      ],
+      "status": "standard"
+    },
+    "justify-tracks": {
+      "keywords": ["normal", "left", "right"],
+      "status": "nonstandard"
+    },
+    "left": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "letter-spacing": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "lighting-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "line-break": {
+      "keywords": ["auto", "loose", "normal", "strict", "anywhere"],
+      "status": "standard"
+    },
+    "line-clamp": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "line-height": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "line-height-step": {
+      "keywords": [],
+      "status": "experimental"
+    },
+    "link-parameters": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "list-style": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "list-style-image": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "list-style-position": {
+      "keywords": ["inside", "outside"],
+      "status": "standard"
+    },
+    "list-style-type": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "margin": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "margin-block": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "margin-block-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "margin-block-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "margin-bottom": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "margin-inline": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "margin-inline-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "margin-inline-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "margin-left": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "margin-right": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "margin-top": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "margin-trim": {
+      "keywords": ["none", "in-flow", "all"],
+      "status": "experimental"
+    },
+    "marker": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "marker-end": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "marker-mid": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "marker-start": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "mask": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-border": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-border-mode": {
+      "keywords": ["luminance", "alpha"],
+      "status": "standard"
+    },
+    "mask-border-outset": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-border-repeat": {
+      "keywords": ["stretch", "repeat", "round", "space"],
+      "status": "standard"
+    },
+    "mask-border-slice": {
+      "keywords": ["fill"],
+      "status": "standard"
+    },
+    "mask-border-source": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "mask-border-width": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "mask-clip": {
+      "keywords": ["no-clip"],
+      "status": "standard"
+    },
+    "mask-composite": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-image": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-mode": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-origin": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-position": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-repeat": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "mask-type": {
+      "keywords": ["luminance", "alpha"],
+      "status": "standard"
+    },
+    "masonry-auto-flow": {
+      "keywords": ["pack", "next", "definite-first", "ordered"],
+      "status": "nonstandard"
+    },
+    "math-depth": {
+      "keywords": ["auto-add", "add"],
+      "status": "standard"
+    },
+    "math-shift": {
+      "keywords": ["normal", "compact"],
+      "status": "experimental"
+    },
+    "math-style": {
+      "keywords": ["normal", "compact"],
+      "status": "standard"
+    },
+    "max-block-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "max-height": {
+      "keywords": ["none", "min-content", "max-content", "fit-content"],
+      "status": "standard"
+    },
+    "max-inline-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "max-lines": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "max-width": {
+      "keywords": ["none", "min-content", "max-content", "fit-content"],
+      "status": "standard"
+    },
+    "min-block-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "min-height": {
+      "keywords": ["auto", "min-content", "max-content", "fit-content"],
+      "status": "standard"
+    },
+    "min-inline-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "min-width": {
+      "keywords": ["auto", "min-content", "max-content", "fit-content"],
+      "status": "standard"
+    },
+    "mix-blend-mode": {
+      "keywords": ["plus-darker", "plus-lighter"],
+      "status": "standard"
+    },
+    "object-fit": {
+      "keywords": ["fill", "contain", "cover", "none", "scale-down"],
+      "status": "standard"
+    },
+    "object-position": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "object-view-box": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "offset": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "offset-anchor": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "offset-distance": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "offset-path": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "offset-position": {
+      "keywords": ["normal", "auto"],
+      "status": "standard"
+    },
+    "offset-rotate": {
+      "keywords": ["auto", "reverse"],
+      "status": "standard"
+    },
+    "opacity": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "order": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "orphans": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "outline": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "outline-color": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "outline-offset": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "outline-style": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "outline-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "overflow": {
+      "keywords": ["visible", "hidden", "clip", "scroll", "auto"],
+      "status": "standard"
+    },
+    "overflow-anchor": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "overflow-block": {
+      "keywords": ["visible", "hidden", "clip", "scroll", "auto"],
+      "status": "standard"
+    },
+    "overflow-clip-box": {
+      "keywords": ["padding-box", "content-box"],
+      "status": "nonstandard"
+    },
+    "overflow-clip-margin": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "overflow-inline": {
+      "keywords": ["visible", "hidden", "clip", "scroll", "auto"],
+      "status": "standard"
+    },
+    "overflow-wrap": {
+      "keywords": ["normal", "break-word", "anywhere"],
+      "status": "standard"
+    },
+    "overflow-x": {
+      "keywords": ["visible", "hidden", "clip", "scroll", "auto"],
+      "status": "standard"
+    },
+    "overflow-y": {
+      "keywords": ["visible", "hidden", "clip", "scroll", "auto"],
+      "status": "standard"
+    },
+    "overlay": {
+      "keywords": ["none", "auto"],
+      "status": "experimental"
+    },
+    "overscroll-behavior": {
+      "keywords": ["contain", "none", "auto"],
+      "status": "standard"
+    },
+    "overscroll-behavior-block": {
+      "keywords": ["contain", "none", "auto"],
+      "status": "standard"
+    },
+    "overscroll-behavior-inline": {
+      "keywords": ["contain", "none", "auto"],
+      "status": "standard"
+    },
+    "overscroll-behavior-x": {
+      "keywords": ["contain", "none", "auto"],
+      "status": "standard"
+    },
+    "overscroll-behavior-y": {
+      "keywords": ["contain", "none", "auto"],
+      "status": "standard"
+    },
+    "padding": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-block": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-block-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-block-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-bottom": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-inline": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-inline-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-inline-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-left": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-right": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "padding-top": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "page": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "page-break-after": {
+      "keywords": [
+        "auto",
+        "always",
+        "avoid",
+        "left",
+        "right",
+        "recto",
+        "verso"
+      ],
+      "status": "obsolete"
+    },
+    "page-break-before": {
+      "keywords": [
+        "auto",
+        "always",
+        "avoid",
+        "left",
+        "right",
+        "recto",
+        "verso"
+      ],
+      "status": "obsolete"
+    },
+    "page-break-inside": {
+      "keywords": ["auto", "avoid"],
+      "status": "obsolete"
+    },
+    "paint-order": {
+      "keywords": ["normal", "fill", "stroke", "markers"],
+      "status": "standard"
+    },
+    "path-length": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "perspective": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "perspective-origin": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "place-content": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "place-items": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "place-self": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "pointer-events": {
+      "keywords": [
+        "auto",
+        "none",
+        "visible",
+        "painted",
+        "fill",
+        "stroke",
+        "all",
+        "inherit"
+      ],
+      "status": "standard"
+    },
+    "position": {
+      "keywords": ["static", "relative", "absolute", "sticky", "fixed"],
+      "status": "standard"
+    },
+    "position-anchor": {
+      "keywords": ["normal", "auto", "none", "match-parent"],
+      "status": "experimental"
+    },
+    "position-area": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "position-try": {
+      "keywords": [],
+      "status": "experimental"
+    },
+    "position-try-fallbacks": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "position-try-order": {
+      "keywords": ["normal"],
+      "status": "experimental"
+    },
+    "position-visibility": {
+      "keywords": ["always", "anchors-valid", "anchors-visible", "no-overflow"],
+      "status": "experimental"
+    },
+    "print-color-adjust": {
+      "keywords": ["economy", "exact"],
+      "status": "standard"
+    },
+    "quotes": {
+      "keywords": ["none", "auto"],
+      "status": "standard"
+    },
+    "r": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "reading-flow": {
+      "keywords": [
+        "normal",
+        "source-order",
+        "flex-visual",
+        "flex-flow",
+        "grid-rows",
+        "grid-columns",
+        "grid-order"
+      ],
+      "status": "standard"
+    },
+    "reading-order": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "resize": {
+      "keywords": ["none", "both", "horizontal", "vertical", "block", "inline"],
+      "status": "standard"
+    },
+    "right": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "rotate": {
+      "keywords": ["none", "x", "y", "z"],
+      "status": "standard"
+    },
+    "row-gap": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "ruby-align": {
+      "keywords": ["start", "center", "space-between", "space-around"],
+      "status": "standard"
+    },
+    "ruby-merge": {
+      "keywords": ["separate", "collapse", "auto"],
+      "status": "experimental"
+    },
+    "ruby-overhang": {
+      "keywords": ["auto", "none"],
+      "status": "standard"
+    },
+    "ruby-position": {
+      "keywords": ["alternate", "over", "under", "inter-character"],
+      "status": "standard"
+    },
+    "rx": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "ry": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scale": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "scroll-behavior": {
+      "keywords": ["auto", "smooth"],
+      "status": "standard"
+    },
+    "scroll-initial-target": {
+      "keywords": ["none", "nearest"],
+      "status": "experimental"
+    },
+    "scroll-margin": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-block": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-block-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-block-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-bottom": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-inline": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-inline-end": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-inline-start": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-left": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-right": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-margin-top": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "scroll-marker-group": {
+      "keywords": ["none", "before", "after"],
+      "status": "standard"
+    },
+    "scroll-padding": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-block": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-block-end": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-block-start": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-bottom": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-inline": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-inline-end": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-inline-start": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-left": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-right": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-padding-top": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scroll-snap-align": {
+      "keywords": ["none", "start", "end", "center"],
+      "status": "standard"
+    },
+    "scroll-snap-coordinate": {
+      "keywords": ["none"],
+      "status": "obsolete"
+    },
+    "scroll-snap-destination": {
+      "keywords": [],
+      "status": "obsolete"
+    },
+    "scroll-snap-points-x": {
+      "keywords": ["none", "repeat"],
+      "status": "obsolete"
+    },
+    "scroll-snap-points-y": {
+      "keywords": ["none", "repeat"],
+      "status": "obsolete"
+    },
+    "scroll-snap-stop": {
+      "keywords": ["normal", "always"],
+      "status": "standard"
+    },
+    "scroll-snap-type": {
+      "keywords": [
+        "none",
+        "x",
+        "y",
+        "block",
+        "inline",
+        "both",
+        "mandatory",
+        "proximity"
+      ],
+      "status": "standard"
+    },
+    "scroll-snap-type-x": {
+      "keywords": ["none", "mandatory", "proximity"],
+      "status": "obsolete"
+    },
+    "scroll-snap-type-y": {
+      "keywords": ["none", "mandatory", "proximity"],
+      "status": "obsolete"
+    },
+    "scroll-target-group": {
+      "keywords": ["none", "auto"],
+      "status": "standard"
+    },
+    "scroll-timeline": {
+      "keywords": [],
+      "status": "experimental"
+    },
+    "scroll-timeline-axis": {
+      "keywords": ["block", "inline", "x", "y"],
+      "status": "experimental"
+    },
+    "scroll-timeline-name": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "scrollbar-color": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "scrollbar-gutter": {
+      "keywords": ["auto", "stable", "both-edges"],
+      "status": "standard"
+    },
+    "scrollbar-width": {
+      "keywords": ["auto", "thin", "none"],
+      "status": "standard"
+    },
+    "shape-image-threshold": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "shape-margin": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "shape-outside": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "shape-rendering": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "speak-as": {
+      "keywords": [
+        "normal",
+        "spell-out",
+        "digits",
+        "literal-punctuation",
+        "no-punctuation"
+      ],
+      "status": "experimental"
+    },
+    "stop-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "stop-opacity": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "stroke": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "stroke-color": {
+      "keywords": [],
+      "status": "experimental"
+    },
+    "stroke-dasharray": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "stroke-dashoffset": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "stroke-linecap": {
+      "keywords": ["butt", "round", "square"],
+      "status": "standard"
+    },
+    "stroke-linejoin": {
+      "keywords": ["miter", "miter-clip", "round", "bevel", "arcs"],
+      "status": "standard"
+    },
+    "stroke-miterlimit": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "stroke-opacity": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "stroke-width": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "tab-size": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "table-layout": {
+      "keywords": ["auto", "fixed"],
+      "status": "standard"
+    },
+    "text-align": {
+      "keywords": [
+        "start",
+        "end",
+        "left",
+        "right",
+        "center",
+        "justify",
+        "match-parent"
+      ],
+      "status": "standard"
+    },
+    "text-align-last": {
+      "keywords": [
+        "auto",
+        "start",
+        "end",
+        "left",
+        "right",
+        "center",
+        "justify"
+      ],
+      "status": "standard"
+    },
+    "text-anchor": {
+      "keywords": ["start", "middle", "end"],
+      "status": "standard"
+    },
+    "text-autospace": {
+      "keywords": ["normal", "auto"],
+      "status": "standard"
+    },
+    "text-box": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "text-box-edge": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "text-box-trim": {
+      "keywords": ["none", "trim-start", "trim-end", "trim-both"],
+      "status": "standard"
+    },
+    "text-combine-upright": {
+      "keywords": ["none", "all", "digits"],
+      "status": "standard"
+    },
+    "text-decoration": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "text-decoration-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "text-decoration-inset": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "text-decoration-line": {
+      "keywords": [
+        "none",
+        "underline",
+        "overline",
+        "line-through",
+        "blink",
+        "spelling-error",
+        "grammar-error"
+      ],
+      "status": "standard"
+    },
+    "text-decoration-skip": {
+      "keywords": [
+        "none",
+        "objects",
+        "spaces",
+        "leading-spaces",
+        "trailing-spaces",
+        "edges",
+        "box-decoration"
+      ],
+      "status": "experimental"
+    },
+    "text-decoration-skip-ink": {
+      "keywords": ["auto", "all", "none"],
+      "status": "standard"
+    },
+    "text-decoration-style": {
+      "keywords": ["solid", "double", "dotted", "dashed", "wavy"],
+      "status": "standard"
+    },
+    "text-decoration-thickness": {
+      "keywords": ["auto", "from-font"],
+      "status": "standard"
+    },
+    "text-emphasis": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "text-emphasis-color": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "text-emphasis-position": {
+      "keywords": ["auto", "over", "under", "right", "left"],
+      "status": "standard"
+    },
+    "text-emphasis-style": {
+      "keywords": [
+        "none",
+        "filled",
+        "open",
+        "dot",
+        "circle",
+        "double-circle",
+        "triangle",
+        "sesame"
+      ],
+      "status": "standard"
+    },
+    "text-fit": {
+      "keywords": [
+        "none",
+        "grow",
+        "shrink",
+        "consistent",
+        "per-line",
+        "per-line-all"
+      ],
+      "status": "standard"
+    },
+    "text-indent": {
+      "keywords": ["hanging", "each-line"],
+      "status": "standard"
+    },
+    "text-justify": {
+      "keywords": ["auto", "inter-character", "inter-word", "none"],
+      "status": "standard"
+    },
+    "text-orientation": {
+      "keywords": ["mixed", "upright", "sideways"],
+      "status": "standard"
+    },
+    "text-overflow": {
+      "keywords": ["clip", "ellipsis"],
+      "status": "standard"
+    },
+    "text-rendering": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "text-shadow": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "text-size-adjust": {
+      "keywords": ["none", "auto"],
+      "status": "experimental"
+    },
+    "text-spacing-trim": {
+      "keywords": ["space-all", "normal", "space-first", "trim-start"],
+      "status": "experimental"
+    },
+    "text-transform": {
+      "keywords": [
+        "none",
+        "capitalize",
+        "uppercase",
+        "lowercase",
+        "full-width",
+        "full-size-kana",
+        "math-auto"
+      ],
+      "status": "standard"
+    },
+    "text-underline-offset": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "text-underline-position": {
+      "keywords": ["auto", "from-font", "under", "left", "right"],
+      "status": "standard"
+    },
+    "text-wrap": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "text-wrap-mode": {
+      "keywords": ["wrap", "nowrap"],
+      "status": "standard"
+    },
+    "text-wrap-style": {
+      "keywords": ["auto", "balance", "stable", "pretty"],
+      "status": "standard"
+    },
+    "timeline-scope": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "timeline-trigger": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "timeline-trigger-activation-range": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "timeline-trigger-activation-range-end": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "timeline-trigger-activation-range-start": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "timeline-trigger-active-range": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "timeline-trigger-active-range-end": {
+      "keywords": ["auto", "normal"],
+      "status": "standard"
+    },
+    "timeline-trigger-active-range-start": {
+      "keywords": ["auto", "normal"],
+      "status": "standard"
+    },
+    "timeline-trigger-name": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "timeline-trigger-source": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "top": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "touch-action": {
+      "keywords": [
+        "auto",
+        "none",
+        "pan-x",
+        "pan-left",
+        "pan-right",
+        "pan-y",
+        "pan-up",
+        "pan-down",
+        "pinch-zoom",
+        "manipulation"
+      ],
+      "status": "standard"
+    },
+    "transform": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "transform-box": {
+      "keywords": [
+        "content-box",
+        "border-box",
+        "fill-box",
+        "stroke-box",
+        "view-box"
+      ],
+      "status": "standard"
+    },
+    "transform-origin": {
+      "keywords": ["left", "center", "right", "top", "bottom"],
+      "status": "standard"
+    },
+    "transform-style": {
+      "keywords": ["flat", "preserve-3d"],
+      "status": "standard"
+    },
+    "transition": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "transition-behavior": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "transition-delay": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "transition-duration": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "transition-property": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "transition-timing-function": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "translate": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "trigger-scope": {
+      "keywords": ["none", "all"],
+      "status": "standard"
+    },
+    "unicode-bidi": {
+      "keywords": [
+        "normal",
+        "embed",
+        "isolate",
+        "bidi-override",
+        "isolate-override",
+        "plaintext"
+      ],
+      "status": "standard"
+    },
+    "user-select": {
+      "keywords": ["auto", "text", "none", "all"],
+      "status": "standard"
+    },
+    "vector-effect": {
+      "keywords": [
+        "none",
+        "non-scaling-stroke",
+        "non-scaling-size",
+        "non-rotation",
+        "fixed-position"
+      ],
+      "status": "standard"
+    },
+    "vertical-align": {
+      "keywords": [
+        "baseline",
+        "sub",
+        "super",
+        "text-top",
+        "text-bottom",
+        "middle",
+        "top",
+        "bottom"
+      ],
+      "status": "standard"
+    },
+    "view-timeline": {
+      "keywords": [],
+      "status": "experimental"
+    },
+    "view-timeline-axis": {
+      "keywords": ["block", "inline", "x", "y"],
+      "status": "experimental"
+    },
+    "view-timeline-inset": {
+      "keywords": ["auto"],
+      "status": "experimental"
+    },
+    "view-timeline-name": {
+      "keywords": ["none"],
+      "status": "experimental"
+    },
+    "view-transition-class": {
+      "keywords": ["none"],
+      "status": "standard"
+    },
+    "view-transition-name": {
+      "keywords": ["none", "match-element"],
+      "status": "standard"
+    },
+    "view-transition-scope": {
+      "keywords": ["none", "all"],
+      "status": "standard"
+    },
+    "visibility": {
+      "keywords": ["visible", "hidden", "collapse"],
+      "status": "standard"
+    },
+    "white-space": {
+      "keywords": ["normal", "pre", "pre-wrap", "pre-line"],
+      "status": "standard"
+    },
+    "white-space-collapse": {
+      "keywords": [
+        "collapse",
+        "preserve",
+        "preserve-breaks",
+        "preserve-spaces",
+        "break-spaces"
+      ],
+      "status": "standard"
+    },
+    "widows": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "width": {
+      "keywords": ["auto", "min-content", "max-content", "fit-content"],
+      "status": "standard"
+    },
+    "will-change": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "word-break": {
+      "keywords": [
+        "normal",
+        "break-all",
+        "keep-all",
+        "break-word",
+        "auto-phrase"
+      ],
+      "status": "standard"
+    },
+    "word-spacing": {
+      "keywords": ["normal"],
+      "status": "standard"
+    },
+    "word-wrap": {
+      "keywords": ["normal", "break-word"],
+      "status": "standard"
+    },
+    "writing-mode": {
+      "keywords": [
+        "horizontal-tb",
+        "vertical-rl",
+        "vertical-lr",
+        "sideways-rl",
+        "sideways-lr"
+      ],
+      "status": "standard"
+    },
+    "x": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "y": {
+      "keywords": [],
+      "status": "standard"
+    },
+    "z-index": {
+      "keywords": ["auto"],
+      "status": "standard"
+    },
+    "zoom": {
+      "keywords": ["normal", "reset"],
+      "status": "standard"
+    }
+  }
+}

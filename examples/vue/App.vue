@@ -8,6 +8,7 @@ const page = ref(0);
 const title = ref("A slower kind of story.");
 const typography = ref("Playfair Display");
 const outlined = ref(false);
+const frame = ref("none");
 const fontFamilies = [
   "Playfair Display",
   "Cormorant Garamond",
@@ -113,7 +114,7 @@ function removePage() {
             v-for="(sheet, index) in pages"
             :key="sheet.id"
             class="page"
-            :class="[sheet.type, { outlined }]"
+            :class="[sheet.type, `frame-${frame}`, { outlined }]"
             :style="{
               '--heading-font': `'${typography === 'Mixed' ? fontFamilies[index % fontFamilies.length] : typography}'`,
             }"
@@ -213,6 +214,15 @@ function removePage() {
         <label class="worker-toggle"
           ><input v-model="outlined" type="checkbox" /> Outlined headings</label
         >
+        <label
+          >Page frame
+          <select v-model="frame">
+            <option value="none">None</option>
+            <option value="border">Double border</option>
+            <option value="gradient">Gradient border</option>
+            <option value="decoration">Rounded decorative frame</option>
+          </select>
+        </label>
         <label>Cover title<input v-model="title" /></label
         ><label
           >Curl <span>{{ curl.toFixed(2) }}</span
@@ -292,6 +302,7 @@ function removePage() {
     </div>
     <footer>
       <span>SMALL LIBRARY. OPEN POSSIBILITIES.</span
+      ><a href="./css.html">CSS compatibility benchmark ↗</a
       ><a href="https://github.com/martial/paper-curl"
         >Source & documentation ↗</a
       >
@@ -300,6 +311,23 @@ function removePage() {
 </template>
 
 <style>
+.page.frame-border {
+  border: 8px double #b3935b;
+}
+.page.frame-gradient {
+  border: 8px solid transparent;
+  border-image: linear-gradient(145deg, #c59e57, #366960) 1;
+}
+.page.frame-decoration::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 2px solid currentColor;
+  border-radius: 24px 4px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.75;
+}
 .page.outlined h2 {
   -webkit-text-stroke: 1.25px currentColor;
   -webkit-text-fill-color: transparent;

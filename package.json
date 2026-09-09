@@ -1,6 +1,6 @@
 {
   "name": "paper-curl",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A small, editable HTML page-curl library with no runtime dependencies.",
   "license": "Apache-2.0",
   "author": "Martial Geoffre-Rouland",

@@ -2,8 +2,9 @@
 import Current from "paper-curl";
 import "paper-curl/paper-curl.css";
 const baseline = new URLSearchParams(location.search).has("baseline");
+const baselinePath = "./baseline.mjs";
 const Core = baseline
-  ? (await import(/* @vite-ignore */ "./baseline.mjs")).default
+  ? (await import(/* @vite-ignore */ baselinePath)).default
   : Current;
 const families = [
   "DM Sans",
@@ -83,7 +84,7 @@ document.querySelector("#run").onclick = async () => {
     }
     out.textContent = JSON.stringify(
       {
-        version: baseline ? "v0.2.1 baseline" : "current",
+        version: baseline ? "baseline" : "current",
         worker: book.options.worker,
         families,
         capturesMs: captures,
