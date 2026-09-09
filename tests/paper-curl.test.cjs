@@ -393,3 +393,109 @@ test("preparation reports invalidation and propagates capture failures", async (
   assert.equal(await f.book.prepare(), false);
   f.close();
 });
+
+test("preparation progress counts each page once and ends ready", async () => {
+  const all = [],
+    local = [],
+    events = [];
+  const f = await fixture({ onProgress: (p) => all.push(p) });
+  f.root.addEventListener("prepareprogress", (event) =>
+    events.push(event.detail),
+  );
+  const pending = new Map();
+  f.book._snapshot = (index) =>
+    new Promise((resolve) => pending.set(index, resolve));
+  const work = f.book.prepare([0, 0, 1], { onProgress: (p) => local.push(p) });
+  assert.equal(local[0].completed, 0);
+  assert.equal(local[0].total, 2);
+  pending.get(1)({});
+  await new Promise((r) => setImmediate(r));
+  assert.equal(local.at(-1).progress, 0.5);
+  pending.get(0)({});
+  assert.equal(await work, true);
+  assert.equal(local.at(-1).status, "ready");
+  assert.equal(local.at(-1).progress, 1);
+  assert.equal(local.at(-1).source, "manual");
+  assert.equal(all.length, local.length);
+  assert.equal(events.length, local.length);
+  assert.equal(new Set(local.map((p) => p.id)).size, 1);
+  f.close();
+});
+
+test("refresh cancels progress immediately even when a resource never resolves", async () => {
+  const updates = [];
+  const f = await fixture();
+  let finish;
+  f.book._snapshot = () =>
+    new Promise((resolve) => {
+      finish = resolve;
+    });
+  const work = f.book.prepare(0, { onProgress: (p) => updates.push(p) });
+  f.book.refresh(0);
+  assert.equal(await work, false);
+  assert.equal(updates.at(-1).status, "cancelled");
+  finish({});
+  await new Promise((r) => setImmediate(r));
+  assert.equal(updates.filter((p) => p.status === "ready").length, 0);
+  assert.equal(f.book.preparations.size, 0);
+  f.close();
+});
+
+test("failed preparation reports error without reaching ready and can retry", async () => {
+  const updates = [];
+  const f = await fixture();
+  f.book._snapshot = async () => {
+    throw Error("broken font");
+  };
+  await assert.rejects(
+    f.book.prepare(0, { onProgress: (p) => updates.push(p) }),
+    /broken font/,
+  );
+  assert.equal(updates.at(-1).status, "error");
+  assert.equal(
+    updates.some((p) => p.status === "ready"),
+    false,
+  );
+  const firstId = updates[0].id;
+  f.book._snapshot = async () => ({});
+  assert.equal(
+    await f.book.prepare(0, { onProgress: (p) => updates.push(p) }),
+    true,
+  );
+  assert.equal(updates.at(-1).status, "ready");
+  assert.ok(updates.at(-1).id > firstId);
+  f.close();
+});
+
+test("worker failure falls back and destroy rejects pending encoding", async () => {
+  const f = await fixture({ worker: true });
+  let terminated = 0;
+  const worker = {
+    postMessage() {
+      queueMicrotask(() => worker.onerror({ preventDefault() {} }));
+    },
+    terminate() {
+      terminated++;
+    },
+  };
+  f.window.URL.createObjectURL = () => "blob:test";
+  f.window.URL.revokeObjectURL = () => {};
+  f.window.Worker = function () {
+    return worker;
+  };
+  assert.equal(
+    await f.book._encode("svg", "<svg>é</svg>"),
+    "data:image/svg+xml;charset=utf-8," + encodeURIComponent("<svg>é</svg>"),
+  );
+  assert.equal(terminated, 1);
+  assert.equal(f.book.workerJobs.size, 0);
+  assert.equal(f.book.workerFailed, true);
+  f.book.workerFailed = false;
+  worker.postMessage = () => {};
+  const pending = f.book._encode("svg", "hello");
+  f.book.destroy();
+  await assert.rejects(pending, /destroyed during capture/);
+  assert.equal(f.book.workerJobs.size, 0);
+  assert.equal(terminated, 2);
+  f.close();
+});

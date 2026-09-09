@@ -26,3 +26,10 @@ Three consecutive local Chromium runs per version on September 9, 2026, with nor
 That is about 38% lower median preparation time, 59% less font CSS carried through rasterization, and 94% fewer embedding operations for this fixture. Font CSS size is the sum of in-memory embedded strings, not network transfer size. Resource counts include cached fetches, not necessarily network downloads. The first run in each group retains some first-use overhead. These are diagnostic observations on one machine, not cold-network or cross-device guarantees. Prepared-turn timings end at the first JavaScript renderer draw call and do not include compositor presentation.
 
 The browser regressions also hold an unrelated font request open for eight seconds and verify that a Bungee page captures while it is still loading. This guards against reintroducing a document-wide `document.fonts.ready` wait. Pixel comparisons cover mixed styles, variable fonts, synthesized weights and extended Latin characters.
+
+
+## Optional encoding worker (v0.4.0)
+
+Run the same multi-font fixture at `/fonts.html?worker=true` to opt into the worker. The plain `/fonts.html` uses the main-thread encoding path. Compare preparation separately from already prepared turns; worker startup and message copies can increase total time even while encoding moves off the UI thread. The v0.3.0 numbers above are historical measurements, not worker speedup claims.
+
+The worker handles image/font Blob-to-data-URL conversion and SVG URI encoding. It does not move DOM layout, font matching, SVG rasterization, or WebGL upload. The browser suite verifies real worker image/font pixel fidelity, reported preparation stages, worker termination with an in-flight job, and fallback in an actual `worker-src 'none'` iframe.

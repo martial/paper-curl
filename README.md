@@ -2,7 +2,9 @@
 
 A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet bends during a turn; native HTML returns when the page lands. The plain JavaScript core has no runtime dependencies or required build step. An optional **Vue 3 component** keeps your page content reactive.
 
-Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 55 KB of formatted, readable source, or 15 KB gzipped. Photographs and example layouts are separate from the library.
+**New in v0.4.0:** optional encoding workers and loading progress for `prepare()`, automatic preloading, and page turns. [JavaScript and Vue usage →](#preparation-workers-and-loading-progress)
+
+Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 62 KB of formatted, readable source, or 17 KB gzipped. Photographs and example layouts are separate from the library.
 
 ## Start here
 
@@ -65,7 +67,7 @@ With `showCover: true`, the first page is a centered front cover. Use an even nu
 Install from this GitHub repository (this project has not been published to npm):
 
 ```sh
-npm install github:martial/paper-curl#v0.3.0
+npm install github:martial/paper-curl#v0.4.0
 ```
 
 Vue is an optional peer dependency; use this component in a Vue 3.3+ app:
@@ -130,6 +132,7 @@ Events:
 
 - `@change="state => …"` — initial state and changed page/spread/count.
 - `@ready="book => …"` — mounted or rebuilt, with the exposed navigation API.
+- `@progress="update => …"` — page preparation counts and stages; see [preparation and workers](#preparation-workers-and-loading-progress).
 - `@error="error => …"` — image/font capture or WebGL failure; native navigation remains available.
 
 The component ref exposes `next()`, `prev()`, `first()`, `last()`, `goTo(index)`, `goToSpread(index)`, `prepare(indices?)`, `refresh()`, and the core's read-only state getters. Use `@change` or `v-model` for reactive state in templates. Unmounting cleans up the observer, listeners, capture work, and GPU resources. ESM imports are safe during SSR; the book renders an empty shell on the server and initializes after mounting in the browser.
@@ -164,6 +167,8 @@ The constructor also accepts:
 - `textureScale: 2` — resolution of page snapshots during turns.
 - `keyboard: true` — arrow keys, Home, and End while the book has focus.
 - `preload: true` — prepare the next and previous turning sheets shortly after mounting and after each completed turn. Preparation is bounded to nearby pages, including in long documents. Use `false` to prepare pages only on demand.
+- `worker: false` — opt into a reusable encoding worker, with automatic fallback.
+- `onProgress(update)` — progress from manual preparation, automatic preloading, and clicked turns.
 - `fontCSS: ""` — optional `@font-face` rules for fonts created through the `FontFace` API or stylesheets that cannot be read/fetched. Use absolute font URLs or data URLs. Normal stylesheets, including Google Fonts, are embedded automatically.
 - `onChange(state)` — called at initialization and after a completed or cancelled turn.
 - `onError(error)` — called if the browser cannot prepare or render a page.
@@ -208,6 +213,114 @@ book.refresh([1]); // refresh the chapter page; retain other pages and downloade
 
 To add, remove, or reorder pages after initialization, call `book.destroy()`, edit the original container, and create a new instance. `destroy()` restores the original page elements and removes listeners, animation frames, and GPU resources.
 
+## Preparation, workers and loading progress
+
+`prepare()` now has two arguments: `prepare(pageIndices?, options?)`. It returns a `Promise<boolean>`. The page indices are zero-based; omit them for the next and previous turning sheets. Use an explicit array to prepare more pages. The optional second argument accepts `onProgress` for that call.
+
+### Plain JavaScript
+
+Use the four-page `#book` markup from [Start here](#start-here), add these status elements, and replace its initialization script with the JavaScript below (inside an async function or an ES module):
+
+```html
+<progress id="preparation" max="1" value="0" aria-label="Pages prepared"></progress>
+<p id="preparation-status" role="status"></p>
+```
+
+```js
+const progressElement = document.querySelector("#preparation");
+const statusElement = document.querySelector("#preparation-status");
+const book = new PaperCurl("#book", {
+  worker: true, // optional; default false
+  onProgress(update) {
+    // Receives explicit preparation, background preloading, and clicked turns.
+    console.log(update.source, update.phase, update.completed, update.total);
+  },
+});
+
+try {
+  const ready = await book.prepare([0, 1, 2, 3], {
+    onProgress(update) {
+      // Receives only this prepare() request.
+      progressElement.value = update.progress;
+      statusElement.textContent = `${update.completed}/${update.total} pages · ${update.status}`;
+    },
+  });
+  if (ready) book.next();
+} catch (error) {
+  statusElement.textContent = error.message;
+}
+```
+
+You can also listen for `prepareprogress` on the book element. Its `event.detail` is the same progress object. Use a callback or the event according to your app; registering both observes the same updates twice.
+
+### Vue 3
+
+```vue
+<script setup>
+import { ref } from "vue";
+import PaperCurl from "paper-curl/vue";
+import "paper-curl/paper-curl.css";
+
+const book = ref(null);
+const progress = ref(null);
+const error = ref("");
+
+function track(update) {
+  // Ignore late completion from an older concurrent preparation request.
+  if (!progress.value || update.id >= progress.value.id) progress.value = update;
+}
+function mounted() { progress.value = null; }
+async function prepare() {
+  try {
+    await book.value.prepare([0, 1, 2, 3]);
+  } catch (e) {
+    error.value = e.message;
+  }
+}
+</script>
+
+<template>
+  <PaperCurl ref="book" class="journal" :worker="true" @ready="mounted" @progress="track">
+    <article>Cover</article>
+    <article>First page</article>
+    <article>Second page</article>
+    <article>Back cover</article>
+  </PaperCurl>
+  <button @click="prepare">Prepare pages</button>
+  <progress v-if="progress" :value="progress.progress" max="1" aria-label="Pages prepared" />
+  <span v-if="progress" role="status">{{ progress.completed }}/{{ progress.total }} pages · {{ progress.status }}</span>
+  <p v-if="error" role="alert">{{ error }}</p>
+</template>
+
+<style scoped>
+.journal { height: 70vh; }
+article { padding: 40px; background: #faf9f2; }
+</style>
+```
+
+The Vue ref also accepts `prepare(indices, { onProgress })`. `@progress` includes automatic preloading and clicked turns; the per-call callback includes only that call. `@ready` means the component instance mounted or rebuilt, and does **not** mean the page textures are prepared. Each new instance restarts progress IDs, so clear your displayed progress on `@ready`. Changing `worker` rebuilds the instance just like the other layout props.
+
+### Progress fields
+
+- `id`: preparation request ID, increasing within one book instance. Concurrent calls share captures but have separate progress reports.
+- `source`: `manual`, `preload`, or `turn`.
+- `status`: `preparing`, `ready`, `cancelled`, or `error`.
+- `phase`: `queued`, `assets`, `layout`, `encoding`, `rasterizing`, `ready`, or `error`.
+- `page`: page index associated with the latest update, or `null` for a request-wide update.
+- `pages`: the requested page indices.
+- `completed`, `total`: completed page textures and requested page count.
+- `progress`: `completed / total`, in the range 0–1; 1 for an empty request.
+
+Progress measures completed **pages**, not bytes downloaded or elapsed time. It can stay at zero while a large first page loads. Use `phase` for an indeterminate stage label alongside the page progress bar. A cached page completes immediately. Check `status === "ready"` for successful completion; failed or cancelled preparation never emits that terminal status. Refresh/destroy cancels active preparation requests, while underlying captures shared with other operations can finish independently. Asset failures reject `prepare()`; invalidated or unavailable preparation resolves to `false`.
+
+### What the worker does
+
+`worker: true` moves Blob-to-data-URL encoding for image/font assets and SVG URI encoding to one reusable Web Worker per book. The worker is embedded in the core JS file; there is no additional worker file or runtime dependency. The Vue prop is `:worker="true"`.
+
+DOM cloning, layout/computed styles, font matching, SVG rasterization, and WebGL upload remain on the main thread. Downloads are already asynchronous. A worker can move encoding work away from interaction, but startup, message copies, and scheduling have a cost; it is optional and is **not** a promise of lower total preparation time. Compare it on your content and devices.
+
+Unsupported or blocked workers fall back to the existing encoding path. Sites with a restrictive Content Security Policy need to allow a Blob worker (typically `worker-src 'self' blob:`) to use this option. `destroy()` terminates the worker and settles pending worker jobs.
+
 ## Keep turns responsive
 
 Leave `preload` enabled so image/font preparation happens while the user reads. The next sheet is prepared first, followed by the previous sheet; mounting a long book does not capture every page. Pending captures are reused if a click arrives before preparation finishes.
@@ -229,7 +342,7 @@ In Vue, `@ready` means the instance has mounted, not that its assets have finish
 
 `duration` controls how long the animation lasts; reducing it does not shorten page preparation. `textureScale` controls snapshot resolution and memory use; lowering it to `1` reduces capture work at the cost of sharpness on high-density displays.
 
-The repeatable [performance benchmark](tests/browser/PERFORMANCE.md) separates time before the first curl frame from JavaScript drawing time. Workers with OffscreenCanvas are a possible future option for measured animation jank. They cannot read DOM layout/computed styles, and WASM does not eliminate font/image download waits.
+The repeatable [performance benchmark](tests/browser/PERFORMANCE.md) separates time before the first curl frame from JavaScript drawing time. The optional encoding worker moves only the stages described above off the main thread; DOM layout and rasterization still need the browser document.
 
 ## Images and browser support
 
@@ -273,7 +386,7 @@ npm run test:fixtures
 npm run dev:vue
 ```
 
-Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite checks several Google Fonts, variable weights, italics, extended characters, programmatic fonts, and an intentionally stalled unrelated font. It compares captured glyphs with native canvas text, checks that text edits reuse embedded faces, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. Font tests need internet access. Expected CORS and slow-font 404 errors belong to deliberate failure fixtures.
+Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite checks a real worker, a deliberately CSP-blocked worker fallback, progress phases, pending-job cleanup, several Google Fonts, variable weights, italics, extended characters, programmatic fonts, and an intentionally stalled unrelated font. It compares captured glyphs with native canvas text, checks that text edits reuse embedded faces, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. Font tests need internet access. Expected CSP, CORS and slow-font 404 errors belong to deliberate failure fixtures.
 
 ## License
 

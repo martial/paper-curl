@@ -1718,6 +1718,8 @@ That remote photograph is not part of the Apache-licensed library files.
       keyboard: true,
       preload: true,
       fontCSS: "",
+      worker: false,
+      onProgress: null,
       onChange: null,
       onError: null,
     };
@@ -1748,6 +1750,13 @@ That remote photograph is not part of the Apache-licensed library files.
       this.fontCache = new Map();
       this.styleSheets = new Map();
       this.fontRules = null;
+      this.pageStatus = new Map();
+      this.preparations = new Set();
+      this.preparationId = 0;
+      this.assetWorker = null;
+      this.workerFailed = false;
+      this.workerJobs = new Map();
+      this.workerId = 0;
       this.preloadTimer = 0;
       this.epoch = 0;
       this.current = 0;
@@ -1903,10 +1912,9 @@ That remote photograph is not part of the Apache-licensed library files.
       if (this.active) this._draw(this.active.progress);
       return this;
     }
-    async prepare(pageIndices) {
+    async prepare(pageIndices, options = {}) {
       if (this.destroyed || !this.renderer) return false;
-      const from = this.current,
-        epoch = this.epoch;
+      const from = this.current;
       const indices =
         pageIndices === undefined
           ? [from + 1, from - 1]
@@ -1922,27 +1930,137 @@ That remote photograph is not part of the Apache-licensed library files.
         )
       )
         throw new RangeError("PaperCurl: prepare expects valid page indices.");
-      for (let i = 0; i < pages.length; i += 2) {
-        if (this.destroyed || epoch !== this.epoch) return false;
-        await Promise.all(
-          pages.slice(i, i + 2).map((index) => this._snapshot(index)),
-        );
-        if (i + 2 < pages.length)
-          await new Promise((resolve) => setTimeout(resolve, 0));
+      return (
+        (await this._loadPages(pages, { ...options, source: "manual" })) !==
+        false
+      );
+    }
+    _progress(job, status, page = null, phase = "queued") {
+      if (job.closed) return;
+      const detail = {
+        id: job.id,
+        source: job.source,
+        status,
+        page,
+        phase,
+        pages: [...job.pages],
+        completed: job.completed,
+        total: job.pages.length,
+        progress: job.pages.length ? job.completed / job.pages.length : 1,
+      };
+      if (status !== "preparing") {
+        job.closed = true;
+        this.preparations.delete(job);
       }
-      return !this.destroyed && epoch === this.epoch;
+      // Progress observers must not interrupt shared capture work if they throw.
+      for (const callback of [this.options.onProgress, job.onProgress]) {
+        try {
+          callback?.(detail);
+        } catch (error) {
+          setTimeout(() => {
+            throw error;
+          }, 0);
+        }
+      }
+      this.element.dispatchEvent(
+        new CustomEvent("prepareprogress", { detail }),
+      );
+    }
+    _pageProgress(index, record, phase) {
+      if (this.pageStatus.get(index) !== record || this.destroyed) return;
+      record.phase = phase;
+      for (const job of this.preparations)
+        if (job.pages.includes(index))
+          this._progress(job, "preparing", index, phase);
+    }
+    _cancelPreparations() {
+      for (const job of [...this.preparations]) job.cancel();
+    }
+    async _loadPages(
+      pages,
+      { source, onProgress, valid = () => true, pause = 0 } = {},
+    ) {
+      const epoch = this.epoch;
+      let cancel;
+      const cancelled = new Promise((resolve) => {
+        cancel = resolve;
+      });
+      const job = {
+        id: ++this.preparationId,
+        source,
+        onProgress,
+        pages,
+        completed: 0,
+        closed: false,
+        cancel: () => {
+          this._progress(job, "cancelled");
+          cancel(false);
+        },
+      };
+      this.preparations.add(job);
+      this._progress(job, "preparing");
+      const current = () =>
+        !job.closed && !this.destroyed && epoch === this.epoch && valid();
+      const captures = (async () => {
+        const textures = [];
+        try {
+          for (let i = 0; i < pages.length; i += 2) {
+            if (!current()) {
+              job.cancel();
+              return false;
+            }
+            const batch = await Promise.all(
+              pages.slice(i, i + 2).map(async (index) => {
+                this._progress(
+                  job,
+                  "preparing",
+                  index,
+                  this.pageStatus.get(index)?.phase || "queued",
+                );
+                const texture = await this._snapshot(index);
+                if (current()) {
+                  job.completed++;
+                  this._progress(job, "preparing", index, "ready");
+                }
+                return texture;
+              }),
+            );
+            textures.push(...batch);
+            if (i + 2 < pages.length)
+              await new Promise((resolve) => setTimeout(resolve, pause));
+          }
+          if (!current()) {
+            job.cancel();
+            return false;
+          }
+          this._progress(job, "ready", null, "ready");
+          return !this.destroyed && epoch === this.epoch && valid()
+            ? textures
+            : false;
+        } catch (error) {
+          if (!current()) {
+            job.cancel();
+            return false;
+          }
+          this._progress(job, "error", null, "error");
+          throw error;
+        }
+      })();
+      return Promise.race([captures, cancelled]);
     }
     refresh(pageIndices) {
       // A targeted content edit keeps other textures and already downloaded assets.
       // Omit indices to explicitly reload every page, stylesheet, image and font.
       if (this.destroyed) return this;
       this.epoch++;
+      this._cancelPreparations();
       this.loading = false;
       this.drag = null;
       if (this.active) this.current = this.active.from;
       this.desired = this.current;
       if (pageIndices === undefined) {
         this.cache.clear();
+        this.pageStatus.clear();
         this.assets.clear();
         this.fontCache.clear();
         this.styleSheets.clear();
@@ -1950,8 +2068,10 @@ That remote photograph is not part of the Apache-licensed library files.
       } else {
         for (const index of Array.isArray(pageIndices)
           ? pageIndices
-          : [pageIndices])
+          : [pageIndices]) {
           this.cache.delete(index);
+          this.pageStatus.delete(index);
+        }
       }
       this._rest();
 
@@ -1962,6 +2082,8 @@ That remote photograph is not part of the Apache-licensed library files.
       this.destroyed = true;
       clearTimeout(this.preloadTimer);
       this.epoch++;
+      this._cancelPreparations();
+      this._stopWorker();
       this.abort.abort();
       this.observer.disconnect();
       cancelAnimationFrame(this.raf);
@@ -1978,6 +2100,7 @@ That remote photograph is not part of the Apache-licensed library files.
         else this.element.setAttribute(name, value);
       }
       this.cache.clear();
+      this.pageStatus.clear();
       this.assets.clear();
       this.fontCache.clear();
       this.styleSheets.clear();
@@ -2049,6 +2172,93 @@ That remote photograph is not part of the Apache-licensed library files.
         new CustomEvent("curlerror", { detail: error }),
       );
     }
+    _stopWorker() {
+      this.assetWorker?.terminate();
+      this.assetWorker = null;
+      for (const job of this.workerJobs.values())
+        job.reject(new Error("PaperCurl: worker unavailable."));
+      this.workerJobs.clear();
+    }
+    _worker() {
+      if (!this.options.worker || this.workerFailed || this.destroyed)
+        return null;
+      if (this.assetWorker) return this.assetWorker;
+      let url;
+      try {
+        // The worker stays inside the single distributable JS file. No bundler or
+        // extra worker URL is required. CSP-blocked/unsupported workers fall back.
+        const source = `self.onmessage = (event) => {
+          const { id, type, value } = event.data;
+          try {
+            const result = type === "asset"
+              ? new FileReaderSync().readAsDataURL(value)
+              : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(value);
+            self.postMessage({ id, result });
+          } catch (error) { self.postMessage({ id, error: error.message }); }
+        };`;
+        url = URL.createObjectURL(
+          new Blob([source], { type: "text/javascript" }),
+        );
+        const worker = new Worker(url);
+        this.assetWorker = worker;
+        worker.onmessage = ({ data }) => {
+          const job = this.workerJobs.get(data.id);
+          if (!job) return;
+          this.workerJobs.delete(data.id);
+          data.error
+            ? job.reject(new Error(data.error))
+            : job.resolve(data.result);
+        };
+        worker.onerror = (event) => {
+          event.preventDefault();
+          this.workerFailed = true;
+          this._stopWorker();
+        };
+        worker.onmessageerror = () => {
+          this.workerFailed = true;
+          this._stopWorker();
+        };
+        return worker;
+      } catch {
+        this.workerFailed = true;
+        this._stopWorker();
+        return null;
+      } finally {
+        if (url) URL.revokeObjectURL(url);
+      }
+    }
+    async _encode(type, value) {
+      if (this.destroyed)
+        throw new Error("PaperCurl: destroyed during capture.");
+      const worker = this._worker();
+      if (worker) {
+        try {
+          return await new Promise((resolve, reject) => {
+            const id = ++this.workerId;
+            this.workerJobs.set(id, { resolve, reject });
+            try {
+              worker.postMessage({ id, type, value });
+            } catch (error) {
+              this.workerJobs.delete(id);
+              reject(error);
+            }
+          });
+        } catch {
+          this.workerFailed = true;
+          this._stopWorker();
+        }
+      }
+      if (this.destroyed)
+        throw new Error("PaperCurl: destroyed during capture.");
+      if (type === "svg")
+        return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(value);
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(value);
+      });
+    }
     async _asset(url) {
       if (url.startsWith("data:")) return url;
       const absolute = new URL(url, document.baseURI).href;
@@ -2069,12 +2279,7 @@ That remote photograph is not part of the Apache-licensed library files.
               "PaperCurl: asset could not be loaded: " + absolute,
             );
           const blob = await response.blob();
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          });
+          return this._encode("asset", blob);
         })();
         this.assets.set(absolute, job);
         job.catch(() => {
@@ -2386,7 +2591,10 @@ That remote photograph is not part of the Apache-licensed library files.
     }
     async _snapshot(index) {
       if (this.cache.has(index)) return this.cache.get(index);
-      const job = (async () => {
+      const record = { phase: "queued" };
+      this.pageStatus.set(index, record);
+      const job = Promise.resolve().then(async () => {
+        this._pageProgress(index, record, "assets");
         if (this.destroyed)
           throw new Error("PaperCurl: destroyed during capture.");
         const stage = this._node("pc-capture");
@@ -2449,6 +2657,7 @@ That remote photograph is not part of the Apache-licensed library files.
           ]);
           if (this.destroyed)
             throw new Error("PaperCurl: destroyed during capture.");
+          this._pageProgress(index, record, "layout");
           // Only visual computed properties: no inherited custom-property payloads or dependencies.
           const properties =
             "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background-color background-image background-attachment background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
@@ -2488,8 +2697,9 @@ That remote photograph is not part of the Apache-licensed library files.
           const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><foreignObject width="100%" height="100%">${markup}</foreignObject></svg>`;
           // Data URLs keep this rasterization origin-clean and allow the bundled demo to open offline.
           const image = new Image();
-          image.src =
-            "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+          this._pageProgress(index, record, "encoding");
+          image.src = await this._encode("svg", svg);
+          this._pageProgress(index, record, "rasterizing");
           await image.decode();
           const canvas = document.createElement("canvas");
           canvas.width = Math.round(w * this.options.textureScale);
@@ -2497,14 +2707,18 @@ That remote photograph is not part of the Apache-licensed library files.
           const context = canvas.getContext("2d");
           context.drawImage(image, 0, 0, canvas.width, canvas.height);
           context.getImageData(0, 0, 1, 1);
+          record.phase = "ready";
           return canvas;
         } finally {
           stage.remove();
         }
-      })();
+      });
       this.cache.set(index, job);
       job.catch(() => {
-        if (this.cache.get(index) === job) this.cache.delete(index);
+        if (this.cache.get(index) === job) {
+          this.cache.delete(index);
+          this.pageStatus.delete(index);
+        }
       });
       return job;
     }
@@ -2529,27 +2743,18 @@ That remote photograph is not part of the Apache-licensed library files.
       }, 40);
     }
     async _preload() {
-      const epoch = this.epoch,
-        from = this.current;
-      // Prepare the next turn first, then the previous turn; never scan an entire
-      // book at startup. The clicked turn shares any already pending snapshots.
-      for (const to of [from + 1, from - 1]) {
-        if (to < 0 || to >= this.pairs.length) continue;
-        if (
-          this.destroyed ||
-          epoch !== this.epoch ||
-          from !== this.current ||
-          this.isAnimating
-        )
-          return;
-        try {
-          await Promise.all(
-            this._turnPages(from, to).map((index) => this._snapshot(index)),
-          );
-        } catch {
-          return;
-        }
-        await new Promise((resolve) => setTimeout(resolve, 16));
+      const from = this.current;
+      const pages = [from + 1, from - 1]
+        .filter((to) => to >= 0 && to < this.pairs.length)
+        .flatMap((to) => this._turnPages(from, to));
+      try {
+        await this._loadPages(pages, {
+          source: "preload",
+          pause: 16,
+          valid: () => from === this.current && !this.isAnimating,
+        });
+      } catch {
+        /* On-demand navigation reports capture failures through onError. */
       }
     }
     async _prepare(to, corner = 1) {
@@ -2561,11 +2766,10 @@ That remote photograph is not part of the Apache-licensed library files.
       this.element.setAttribute("aria-busy", "true");
       try {
         const [front, back] = this._turnPages(from, to);
-        const textures = await Promise.all([
-          this._snapshot(front),
-          this._snapshot(back),
-        ]);
-        if (this.destroyed || epoch !== this.epoch) return false;
+        const textures = await this._loadPages([front, back], {
+          source: "turn",
+        });
+        if (!textures || this.destroyed || epoch !== this.epoch) return false;
         this.active = { from, to, direction, corner, progress: 0 };
         this.renderer.setPages(...textures, this.width, this.height);
         this._show(

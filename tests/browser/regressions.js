@@ -86,6 +86,98 @@ document.querySelector("#run").onclick = async () => {
       results.textContent += `FAIL ${name}: ${e.message}\n`;
     }
   }
+  await check(
+    "real worker encoding preserves font/image pixels and reports preparation stages",
+    async () => {
+      const f = await fixture(
+        [
+          img(origin + "/red.svg"),
+          `<div style="font:80px Bungee;color:black">iiiiii</div>`,
+        ],
+        { worker: true },
+      );
+      const updates = [];
+      try {
+        assert(
+          await f.book.prepare(undefined, {
+            onProgress: (p) => updates.push(p),
+          }),
+          "prepare failed",
+        );
+        assert(f.book.assetWorker instanceof Worker, "real worker not running");
+        assert(
+          red(pixel(await f.book._snapshot(0), 100, 100)),
+          "worker image encoding changed pixels",
+        );
+        const reference = document.createElement("canvas");
+        reference.width = reference.height = 400;
+        const c = reference.getContext("2d");
+        c.fillStyle = "white";
+        c.fillRect(0, 0, 400, 400);
+        c.fillStyle = "black";
+        c.font = "80px Bungee";
+        c.fillText("iiiiii", 0, 100);
+        assert(
+          Math.abs(inkWidth(await f.book._snapshot(1)) - inkWidth(reference)) <
+            4,
+          "worker font mismatch",
+        );
+        for (const phase of ["assets", "layout", "encoding", "rasterizing"])
+          assert(
+            updates.some((p) => p.phase === phase),
+            `missing ${phase} progress`,
+          );
+        assert(
+          updates.at(-1).status === "ready" && updates.at(-1).progress === 1,
+          "missing ready status",
+        );
+        assert(
+          updates.every((p, i) => !i || p.progress >= updates[i - 1].progress),
+          "progress went backwards",
+        );
+        assert(f.book.workerJobs.size === 0, "worker jobs leaked");
+        const slow = f.book._encode(
+          "svg",
+          "<svg>" + "x".repeat(500000) + "</svg>",
+        );
+        f.book.destroy();
+        let rejected = false;
+        try {
+          await slow;
+        } catch {
+          rejected = true;
+        }
+        assert(
+          rejected && !f.book.assetWorker && !f.book.workerJobs.size,
+          "worker destroy did not settle pending work",
+        );
+      } finally {
+        f.close();
+      }
+    },
+  );
+  await check(
+    "CSP-blocked worker falls back without breaking capture or progress",
+    async () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = "./worker-fallback.html";
+      fixtures.append(iframe);
+      try {
+        const deadline = performance.now() + 10000;
+        while (
+          !iframe.contentDocument?.querySelector("#result")?.dataset.status
+        ) {
+          if (performance.now() > deadline)
+            throw Error("worker fallback fixture timed out");
+          await sleep(20);
+        }
+        const result = iframe.contentDocument.querySelector("#result");
+        assert(result.dataset.status === "pass", result.textContent);
+      } finally {
+        iframe.remove();
+      }
+    },
+  );
   await check("remote CORS image survives the real page snapshot", async () => {
     const f = await fixture([
       img(origin + "/red.svg"),

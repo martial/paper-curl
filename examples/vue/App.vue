@@ -19,6 +19,38 @@ const duration = ref(1400);
 const likes = ref(0);
 const visible = ref(true);
 const error = ref("");
+const loadingProgress = ref(null);
+const warming = ref(false);
+const threaded = ref(true);
+const stages = {
+  queued: "Starting",
+  assets: "Loading fonts and images",
+  layout: "Capturing page layout",
+  encoding: "Encoding page",
+  rasterizing: "Rendering page",
+};
+function onProgress(progress) {
+  if (warming.value && progress.source !== "manual") return;
+  // The newest request owns the indicator; older shared jobs can finish later.
+  if (!loadingProgress.value || progress.id >= loadingProgress.value.id)
+    loadingProgress.value = progress;
+}
+function onReady() {
+  loadingProgress.value = null;
+}
+async function prepareBook() {
+  warming.value = true;
+  loadingProgress.value = null;
+  try {
+    await book.value?.prepare(
+      Array.from({ length: pages.value.length }, (_, i) => i),
+    );
+  } catch (e) {
+    error.value = e.message;
+  } finally {
+    warming.value = false;
+  }
+}
 const photo =
   "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1000&auto=format&fit=crop&q=85";
 let serial = 5;
@@ -71,6 +103,9 @@ function removePage() {
           :height="594"
           :curl="curl"
           :duration="duration"
+          :worker="threaded"
+          @ready="onReady"
+          @progress="onProgress"
           @error="error = $event.message"
         >
           <article
@@ -197,6 +232,43 @@ function removePage() {
           ><button @click="removePage" :disabled="pages.length <= 2">
             − Remove page
           </button>
+        </div>
+        <label class="worker-toggle"
+          ><input v-model="threaded" type="checkbox" /> Use background
+          worker</label
+        >
+        <button
+          class="toggle"
+          @click="prepareBook"
+          :disabled="!visible || warming"
+        >
+          {{ warming ? "Preparing…" : "Prepare all pages" }}
+        </button>
+        <div
+          v-if="visible && loadingProgress"
+          class="loading-status"
+          role="status"
+          aria-live="polite"
+        >
+          <progress
+            :value="loadingProgress.progress"
+            max="1"
+            aria-label="Pages prepared"
+          ></progress>
+          <span v-if="loadingProgress.status === 'preparing'"
+            >{{ stages[loadingProgress.phase] || "Preparing pages" }} ·
+            {{ loadingProgress.completed }}/{{
+              loadingProgress.total
+            }}
+            pages</span
+          >
+          <span v-else-if="loadingProgress.status === 'ready'"
+            >{{ loadingProgress.total }} pages ready to turn</span
+          >
+          <span v-else-if="loadingProgress.status === 'cancelled'"
+            >Preparation interrupted</span
+          >
+          <span v-else>Some pages could not be prepared</span>
         </div>
         <button
           class="toggle"
@@ -389,6 +461,27 @@ nav span {
 .toggle {
   width: 100%;
   margin-top: 10px;
+}
+.worker-toggle {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+.editor .worker-toggle input {
+  width: auto;
+  margin: 0;
+}
+.loading-status {
+  display: grid;
+  gap: 5px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #627064;
+}
+.loading-status progress {
+  width: 100%;
+  height: 6px;
+  accent-color: #305247;
 }
 .hint {
   font-size: 11px;

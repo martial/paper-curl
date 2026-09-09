@@ -35,6 +35,7 @@ document.querySelector("#run").onclick = async () => {
     textureScale: 1,
     duration: 80,
     preload: false,
+    worker: new URLSearchParams(location.search).get("worker") === "true",
     onError: (e) => errors.push(e.message),
   });
   let embeddedBytes = 0,
@@ -83,6 +84,7 @@ document.querySelector("#run").onclick = async () => {
     out.textContent = JSON.stringify(
       {
         version: baseline ? "v0.2.1 baseline" : "current",
+        worker: book.options.worker,
         families,
         capturesMs: captures,
         preparationMs,

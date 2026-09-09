@@ -7,6 +7,27 @@ export interface PaperCurlState {
   pageCount: number;
   spreadCount: number;
 }
+export interface PaperCurlProgress {
+  id: number;
+  source: "manual" | "preload" | "turn";
+  status: "preparing" | "ready" | "cancelled" | "error";
+  phase:
+    | "queued"
+    | "assets"
+    | "layout"
+    | "encoding"
+    | "rasterizing"
+    | "ready"
+    | "error";
+  page: number | null;
+  pages: number[];
+  completed: number;
+  total: number;
+  progress: number;
+}
+export interface PaperCurlPrepareOptions {
+  onProgress?: (progress: PaperCurlProgress) => void;
+}
 export interface PaperCurlProps {
   modelValue?: number;
   startPage?: number;
@@ -22,6 +43,7 @@ export interface PaperCurlProps {
   keyboard?: boolean;
   preload?: boolean;
   fontCSS?: string;
+  worker?: boolean;
 }
 export interface PaperCurlExposed {
   next(): void;
@@ -30,7 +52,10 @@ export interface PaperCurlExposed {
   last(): void;
   goTo(page: number): void;
   goToSpread(spread: number): void;
-  prepare(pages?: number | number[]): Promise<boolean>;
+  prepare(
+    pages?: number | number[],
+    options?: PaperCurlPrepareOptions,
+  ): Promise<boolean>;
   refresh(pages?: number | number[]): void;
   readonly page: number;
   readonly spread: number;
@@ -43,6 +68,7 @@ type Events = {
   "update:modelValue": (page: number) => void;
   change: (state: PaperCurlState) => void;
   ready: (book: PaperCurlExposed) => void;
+  progress: (progress: PaperCurlProgress) => void;
   error: (error: Error) => void;
 };
 export declare const PaperCurl: DefineComponent<

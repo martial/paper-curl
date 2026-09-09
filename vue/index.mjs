@@ -23,6 +23,7 @@ const layoutKeys = [
   "keyboard",
   "preload",
   "fontCSS",
+  "worker",
 ];
 const optionKeys = [...layoutKeys, "duration", "curl", "shadows"];
 
@@ -56,8 +57,9 @@ export const PaperCurl = defineComponent({
     keyboard: { type: Boolean, default: true },
     preload: { type: Boolean, default: true },
     fontCSS: { type: String, default: "" },
+    worker: { type: Boolean, default: false },
   },
-  emits: ["update:modelValue", "change", "ready", "error"],
+  emits: ["update:modelValue", "change", "ready", "progress", "error"],
   setup(props, { slots, attrs, emit, expose }) {
     const host = ref(null),
       mounted = ref(false);
@@ -118,6 +120,7 @@ export const PaperCurl = defineComponent({
             ...nextOptions,
             startPage: page,
             onChange: changed,
+            onProgress: (progress) => emit("progress", progress),
             onError: (error) => emit("error", error),
           });
           // Observe page content only, never the renderer's animated DOM or clones.
@@ -166,7 +169,8 @@ export const PaperCurl = defineComponent({
       last: () => book?.last(),
       goTo: (page) => book?.goTo(page),
       goToSpread: (spread) => book?.goToSpread(spread),
-      prepare: (pages) => book?.prepare(pages) ?? Promise.resolve(false),
+      prepare: (pages, options) =>
+        book?.prepare(pages, options) ?? Promise.resolve(false),
       refresh: (pages) => book?.refresh(pages),
       get page() {
         return book?.page ?? 0;

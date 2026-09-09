@@ -54,7 +54,7 @@ async function flush() {
   await new Promise((resolve) => setTimeout(resolve, 5));
   await Vue.nextTick();
 }
-async function fixture() {
+async function fixture(extraProps = {}) {
   const items = Vue.ref([0, 1, 2, 3]),
     title = Vue.ref("Original"),
     clicks = Vue.ref(0),
@@ -65,7 +65,8 @@ async function fixture() {
     reference = Vue.ref();
   const changes = [],
     errors = [],
-    warnings = [];
+    warnings = [],
+    progress = [];
   const Child = Vue.defineComponent({
     setup() {
       const count = Vue.ref(0);
@@ -93,6 +94,8 @@ async function fixture() {
                 "onUpdate:modelValue": (value) => (model.value = value),
                 onChange: (state) => changes.push(state),
                 onError: (error) => errors.push(error),
+                onProgress: (update) => progress.push(update),
+                ...extraProps,
               },
               {
                 default: () => [
@@ -136,6 +139,7 @@ async function fixture() {
     changes,
     errors,
     warnings,
+    progress,
     close: async () => {
       app.unmount();
       root.remove();
@@ -289,5 +293,23 @@ test("a local child edit invalidates only its page and keeps shared assets", asy
   for (let i = 1; i < 4; i++) assert.equal(instance.cache.get(i), cached);
   assert.equal(instance.assets.get("photo"), "bytes");
   assert.deepEqual(f.warnings, []);
+  await f.close();
+});
+
+test("Vue forwards worker options and request/global preparation progress", async () => {
+  const f = await fixture({ worker: true });
+  assert.equal(current.options.worker, true);
+  current.renderer = { clear() {}, dispose() {} };
+  current._snapshot = async () => window.document.createElement("canvas");
+  const local = [];
+  assert.equal(
+    await f.reference.value.prepare([0, 1], {
+      onProgress: (p) => local.push(p),
+    }),
+    true,
+  );
+  assert.equal(local.at(-1).status, "ready");
+  assert.equal(f.progress.at(-1).completed, 2);
+  assert.equal(f.progress.at(-1).id, local.at(-1).id);
   await f.close();
 });
