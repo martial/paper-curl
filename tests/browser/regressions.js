@@ -214,6 +214,151 @@ document.querySelector("#run").onclick = async () => {
     }
   });
   await check(
+    "mixed font styles and variable weights match native glyphs",
+    async () => {
+      for (const [family, weight, style] of [
+        ["Raleway", 350, "italic"],
+        ["Raleway", 650, "normal"],
+        ["DM Sans", 650, "normal"],
+        ["DM Sans", 350, "italic"],
+        ["Space Mono", 700, "italic"],
+        ["Bungee", 700, "normal"],
+      ]) {
+        const text = "Wmi ĀęĐ",
+          font = `${style} ${weight} 48px '${family}'`;
+        const f = await fixture([
+          `<div style="font:${font};font-feature-settings:'kern';line-height:80px;white-space:nowrap">${text}</div>`,
+        ]);
+        try {
+          const captured = await f.book._snapshot(0);
+          const reference = document.createElement("canvas");
+          reference.width = reference.height = 400;
+          const c = reference.getContext("2d");
+          c.fillStyle = "white";
+          c.fillRect(0, 0, 400, 400);
+          c.fillStyle = "black";
+          c.font = font;
+          c.fillText(text, 0, 70);
+          document.querySelector("#proof").append(captured, reference);
+          assert(
+            Math.abs(inkWidth(captured) - inkWidth(reference)) < 4,
+            `${family} ${weight} ${style}: captured ${inkWidth(captured)}px, native ${inkWidth(reference)}px`,
+          );
+          const used = [...f.book.fontCache.keys()].join("\n");
+          if (style === "normal")
+            assert(
+              !used.includes("font-style: italic"),
+              "unused italic face embedded",
+            );
+          if (family !== "DM Sans")
+            assert(
+              !used.includes('font-family: "DM Sans"'),
+              "container font embedded without text",
+            );
+        } finally {
+          f.close();
+        }
+      }
+    },
+  );
+  await check(
+    "explicit fontCSS handles programmatic fonts without fetching unrelated sheets",
+    async () => {
+      const source = await fetch(
+        "https://fonts.googleapis.com/css2?family=Bungee",
+      ).then((r) => r.text());
+      const rules = new CSSStyleSheet();
+      rules.replaceSync(source);
+      const rule = [...rules.cssRules].find((r) =>
+        r.style?.getPropertyValue("unicode-range").includes("U+0-FF"),
+      );
+      assert(rule, "Latin font rule missing");
+      const family = "Programmatic Display";
+      const face = new FontFace(family, rule.style.getPropertyValue("src"), {
+        unicodeRange: rule.style.getPropertyValue("unicode-range"),
+      });
+      document.fonts.add(face);
+      const f = await fixture(
+        [
+          `<div style="font:48px '${family}';font-stretch:91.5%">Programmatic</div>`,
+        ],
+        {
+          fontCSS: rule.cssText.replace(
+            /font-family:[^;]+;/,
+            `font-family: '${family}';`,
+          ),
+        },
+      );
+      try {
+        const captured = await f.book._snapshot(0);
+        assert(inkWidth(captured) > 200, "programmatic font missing");
+        assert(f.book.styleSheets.size === 0, "unrelated external CSS fetched");
+        assert(f.book.fontCache.size === 1, "wrong font face count");
+      } finally {
+        f.close();
+        document.fonts.delete(face);
+      }
+    },
+  );
+  await check(
+    "a stalled unrelated font does not block page capture",
+    async () => {
+      const slow = new FontFace(
+        "Unrelated Slow Font",
+        `url('${origin}/slow-font?${Date.now()}')`,
+      );
+      document.fonts.add(slow);
+      slow.load().catch(() => {});
+      const f = await fixture([
+        `<div style="font:48px Bungee">Fast page</div>`,
+      ]);
+      try {
+        assert(slow.status === "loading", "slow font did not start");
+        const captured = await f.book._snapshot(0);
+        assert(
+          slow.status === "loading",
+          "capture waited for an unrelated font",
+        );
+        assert(inkWidth(captured) > 100, "page text missing");
+      } finally {
+        f.close();
+        document.fonts.delete(slow);
+      }
+    },
+  );
+  await check(
+    "editing Latin text reuses embedded faces and leaves warm turns ready",
+    async () => {
+      const f = await fixture([
+        `<div style="font:48px Bungee">First title</div>`,
+        `<p style="font:italic 48px 'Space Mono'">Second</p>`,
+      ]);
+      try {
+        assert(await f.book.prepare(), "explicit preparation failed");
+        let embeds = 0;
+        const embed = f.book._embedURLs.bind(f.book);
+        f.book._embedURLs = (...args) => {
+          if (args[0].startsWith("@font-face")) embeds++;
+          return embed(...args);
+        };
+        f.book.pages[0].firstChild.textContent = "Changed title";
+        f.book.refresh(0);
+        assert(await f.book.prepare(), "edited preparation failed");
+        assert(embeds === 0, "same faces embedded again after an edit");
+        let misses = 0;
+        const snapshot = f.book._snapshot.bind(f.book);
+        f.book._snapshot = (i) => {
+          if (!f.book.cache.has(i)) misses++;
+          return snapshot(i);
+        };
+        assert(await f.book._prepare(1), "turn failed");
+        assert(misses === 0, "prepared turn captured text on click");
+      } finally {
+        f.close();
+      }
+    },
+  );
+  await check(
     "nearby preloaded pages need no new capture when clicked",
     async () => {
       const f = await fixture(

@@ -30,6 +30,7 @@ export interface PaperCurlExposed {
   last(): void;
   goTo(page: number): void;
   goToSpread(spread: number): void;
+  prepare(pages?: number | number[]): Promise<boolean>;
   refresh(pages?: number | number[]): void;
   readonly page: number;
   readonly spread: number;

@@ -2,7 +2,7 @@
 
 A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet bends during a turn; native HTML returns when the page lands. The plain JavaScript core has no runtime dependencies or required build step. An optional **Vue 3 component** keeps your page content reactive.
 
-Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 49 KB of formatted, readable source, or 13 KB gzipped. Photographs and example layouts are separate from the library.
+Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 55 KB of formatted, readable source, or 15 KB gzipped. Photographs and example layouts are separate from the library.
 
 ## Start here
 
@@ -65,7 +65,7 @@ With `showCover: true`, the first page is a centered front cover. Use an even nu
 Install from this GitHub repository (this project has not been published to npm):
 
 ```sh
-npm install github:martial/paper-curl#v0.2.1
+npm install github:martial/paper-curl#v0.3.0
 ```
 
 Vue is an optional peer dependency; use this component in a Vue 3.3+ app:
@@ -132,7 +132,7 @@ Events:
 - `@ready="book => …"` — mounted or rebuilt, with the exposed navigation API.
 - `@error="error => …"` — image/font capture or WebGL failure; native navigation remains available.
 
-The component ref exposes `next()`, `prev()`, `first()`, `last()`, `goTo(index)`, `goToSpread(index)`, `refresh()`, and the core's read-only state getters. Use `@change` or `v-model` for reactive state in templates. Unmounting cleans up the observer, listeners, capture work, and GPU resources. ESM imports are safe during SSR; the book renders an empty shell on the server and initializes after mounting in the browser.
+The component ref exposes `next()`, `prev()`, `first()`, `last()`, `goTo(index)`, `goToSpread(index)`, `prepare(indices?)`, `refresh()`, and the core's read-only state getters. Use `@change` or `v-model` for reactive state in templates. Unmounting cleans up the observer, listeners, capture work, and GPU resources. ESM imports are safe during SSR; the book renders an empty shell on the server and initializes after mounting in the browser.
 
 Try the editable **[Vue demo](examples/vue/App.vue)**:
 
@@ -212,7 +212,20 @@ To add, remove, or reorder pages after initialization, call `book.destroy()`, ed
 
 Leave `preload` enabled so image/font preparation happens while the user reads. The next sheet is prepared first, followed by the previous sheet; mounting a long book does not capture every page. Pending captures are reused if a click arrives before preparation finishes.
 
-For content edits, prefer `refresh([pageIndex])` over a full `refresh()`; the Vue component does this automatically. Google Fonts stylesheets and downloaded font/image bytes are shared between page captures, and only the Unicode subsets needed by a page are embedded. Multiple images are fetched and decoded concurrently. A first click before remote assets have loaded can still wait on the network.
+For content edits, prefer `refresh([pageIndex])` over a full `refresh()`; the Vue component does this automatically. Font preparation matches the page's actual text runs with the browser's font matcher, including weights, italics, variable ranges and Unicode subsets. It does not wait for unrelated document fonts. Parsed stylesheets, embedded faces and decoded font/image data are reused across page captures. Image and font preparation runs concurrently. Unusual font shorthand values use a conservative family-based fallback to preserve fidelity.
+
+For an explicit readiness signal, call `prepare()` on the core instance or Vue component ref:
+
+```js
+const ready = await book.prepare(); // prepare the next and previous turning sheets
+if (ready) book.next();            // reuse prepared textures
+
+await book.prepare([0, 1, 2, 3]);  // optionally prepare specific pages ahead of time
+```
+
+The promise resolves to `true` when all requested textures are ready, or `false` if preparation was invalidated by refresh/destroy or WebGL is unavailable. Asset errors and invalid indices reject the promise; handle them in your app. Preparing pages does not navigate or change the visible content. At most two pages are captured concurrently. Preparing a whole long book retains more canvas memory; nearby preparation is the default.
+
+In Vue, `@ready` means the instance has mounted, not that its assets have finished loading. Its API supports `await api.prepare()` too. After changing content, wait for Vue to apply the update before requesting preparation. A first click before the requested page's fonts/images have loaded can still wait on the network; subsequent prepared turns do no font loading or embedding.
 
 `duration` controls how long the animation lasts; reducing it does not shorten page preparation. `textureScale` controls snapshot resolution and memory use; lowering it to `1` reduces capture work at the cost of sharpness on high-density displays.
 
@@ -260,7 +273,7 @@ npm run test:fixtures
 npm run dev:vue
 ```
 
-Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite also fetches a real Google Font, compares captured glyphs with native canvas text, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. The font test needs internet access. Expected CORS failures belong to the blocked-image test.
+Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite checks several Google Fonts, variable weights, italics, extended characters, programmatic fonts, and an intentionally stalled unrelated font. It compares captured glyphs with native canvas text, checks that text edits reuse embedded faces, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. Font tests need internet access. Expected CORS and slow-font 404 errors belong to deliberate failure fixtures.
 
 ## License
 

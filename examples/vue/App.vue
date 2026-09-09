@@ -6,6 +6,14 @@ import PaperCurl from "paper-curl/vue";
 const book = ref(null);
 const page = ref(0);
 const title = ref("A slower kind of story.");
+const typography = ref("Playfair Display");
+const fontFamilies = [
+  "Playfair Display",
+  "Cormorant Garamond",
+  "DM Sans",
+  "Space Mono",
+  "Bungee",
+];
 const curl = ref(1.72);
 const duration = ref(1400);
 const likes = ref(0);
@@ -70,6 +78,9 @@ function removePage() {
             :key="sheet.id"
             class="page"
             :class="sheet.type"
+            :style="{
+              '--heading-font': `'${typography === 'Mixed' ? fontFamilies[index % fontFamilies.length] : typography}'`,
+            }"
           >
             <template v-if="sheet.type === 'cover'">
               <img
@@ -154,6 +165,15 @@ function removePage() {
       <aside class="editor">
         <p class="eyebrow">MAKE IT YOURS</p>
         <h2>A page is a canvas.</h2>
+        <label
+          >Typography
+          <select v-model="typography">
+            <option value="Mixed">Mix five families</option>
+            <option v-for="family in fontFamilies" :key="family">
+              {{ family }}
+            </option>
+          </select>
+        </label>
         <label>Cover title<input v-model="title" /></label
         ><label
           >Curl <span>{{ curl.toFixed(2) }}</span
@@ -217,7 +237,8 @@ body {
   margin: 0;
 }
 button,
-input {
+input,
+select {
   font: inherit;
 }
 button,
@@ -268,7 +289,7 @@ footer {
 }
 .intro h1 {
   font:
-    400 clamp(34px, 4vw, 55px)/1.05 "Playfair Display",
+    400 clamp(34px, 4vw, 55px) / 1.05 "Playfair Display",
     serif;
   letter-spacing: -1.6px;
   margin: 12px 0;
@@ -338,7 +359,8 @@ nav span {
   float: right;
   color: #737e76;
 }
-.editor input:not([type="range"]) {
+.editor input:not([type="range"]),
+.editor select {
   width: 100%;
   margin-top: 10px;
   padding: 10px;
@@ -396,7 +418,7 @@ footer {
 }
 .page h2 {
   font:
-    400 46px/1.07 "Playfair Display",
+    400 46px/1.07 var(--heading-font, "Playfair Display"),
     serif;
   letter-spacing: -1.3px;
   margin: 33px 0 24px;

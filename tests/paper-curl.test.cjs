@@ -357,12 +357,39 @@ test("destroy interrupts a click during background preparation", async () => {
   f.window.happyDOM.abort();
 });
 
-test("font subset matching keeps needed Unicode ranges and skips unrelated scripts", async () => {
+test("explicit preparation warms requested pages without navigating", async () => {
   const f = await fixture();
-  assert.equal(f.book._fontRangeUsed("U+0400-04FF", [..."Hello"]), false);
-  assert.equal(f.book._fontRangeUsed("U+0400-04FF", [..."Привет"]), true);
-  assert.equal(f.book._fontRangeUsed("U+0100-02FF", [..."Āę"]), true);
-  assert.equal(f.book._fontRangeUsed("U+4??", [..."Ж"]), true);
-  assert.equal(f.book._fontRangeUsed("U+1F600-1F64F", [..."😀"]), true);
+  const pages = [];
+  f.book._snapshot = async (index) => {
+    pages.push(index);
+  };
+  assert.equal(await f.book.prepare(), true);
+  assert.deepEqual(pages, [0, 1]);
+  pages.length = 0;
+  assert.equal(await f.book.prepare([3, 3, 4, 5]), true);
+  assert.deepEqual(pages, [3, 4, 5]);
+  assert.equal(f.book.page, 0);
+  assert.equal(f.renderer.uploads, 0);
+  await assert.rejects(f.book.prepare([99]), /valid page/);
+  f.close();
+});
+
+test("preparation reports invalidation and propagates capture failures", async () => {
+  const f = await fixture();
+  let finish;
+  f.book._snapshot = () =>
+    new Promise((done) => {
+      finish = done;
+    });
+  const pending = f.book.prepare(0);
+  f.book.refresh(0);
+  finish();
+  assert.equal(await pending, false);
+  f.book._snapshot = async () => {
+    throw Error("CORS blocked");
+  };
+  await assert.rejects(f.book.prepare(1), /CORS blocked/);
+  f.book.destroy();
+  assert.equal(await f.book.prepare(), false);
   f.close();
 });

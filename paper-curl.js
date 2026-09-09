@@ -341,7 +341,7 @@
   /**
    * PaperCurl — a small, dependency-free book for ordinary HTML pages.
    * new PaperCurl('#book', { width: 450, height: 636, duration: 1150 });
-   * next(), prev(), first(), last(), goTo(page), goToSpread(spread), refresh(), destroy().
+   * next(), prev(), first(), last(), goTo(page), goToSpread(spread), prepare(), refresh(), destroy().
    * See README.md for the options, events, and content-editing examples.
    */
   class PaperCurl {
@@ -367,11 +367,13 @@
         typeof element === "string" ? document.querySelector(element) : element;
       if (!this.element) throw new Error("PaperCurl: book element not found.");
       this.options = { ...PaperCurl.defaults, ...options };
-      if (!(
-        this.options.width > 0 &&
-        this.options.height > 0 &&
-        this.options.duration >= 0
-      ))
+      if (
+        !(
+          this.options.width > 0 &&
+          this.options.height > 0 &&
+          this.options.duration >= 0
+        )
+      )
         throw new Error(
           "PaperCurl: width and height must be positive; duration must be nonnegative.",
         );
@@ -386,6 +388,7 @@
       this.assets = new Map();
       this.fontCache = new Map();
       this.styleSheets = new Map();
+      this.fontRules = null;
       this.preloadTimer = 0;
       this.epoch = 0;
       this.current = 0;
@@ -541,6 +544,35 @@
       if (this.active) this._draw(this.active.progress);
       return this;
     }
+    async prepare(pageIndices) {
+      if (this.destroyed || !this.renderer) return false;
+      const from = this.current,
+        epoch = this.epoch;
+      const indices =
+        pageIndices === undefined
+          ? [from + 1, from - 1]
+              .filter((to) => to >= 0 && to < this.pairs.length)
+              .flatMap((to) => this._turnPages(from, to))
+          : Array.isArray(pageIndices)
+            ? pageIndices
+            : [pageIndices];
+      const pages = [...new Set(indices)];
+      if (
+        pages.some(
+          (i) => !Number.isInteger(i) || i < 0 || i >= this.pages.length,
+        )
+      )
+        throw new RangeError("PaperCurl: prepare expects valid page indices.");
+      for (let i = 0; i < pages.length; i += 2) {
+        if (this.destroyed || epoch !== this.epoch) return false;
+        await Promise.all(
+          pages.slice(i, i + 2).map((index) => this._snapshot(index)),
+        );
+        if (i + 2 < pages.length)
+          await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+      return !this.destroyed && epoch === this.epoch;
+    }
     refresh(pageIndices) {
       // A targeted content edit keeps other textures and already downloaded assets.
       // Omit indices to explicitly reload every page, stylesheet, image and font.
@@ -555,6 +587,7 @@
         this.assets.clear();
         this.fontCache.clear();
         this.styleSheets.clear();
+        this.fontRules = null;
       } else {
         for (const index of Array.isArray(pageIndices)
           ? pageIndices
@@ -589,6 +622,7 @@
       this.assets.clear();
       this.fontCache.clear();
       this.styleSheets.clear();
+      this.fontRules = null;
     }
     _size() {
       const bounds = this.element.getBoundingClientRect(),
@@ -707,40 +741,136 @@
       });
       return value;
     }
-    async _fontStyles(families, text = "") {
-      const normalize = (name) =>
-        name
+    _fontKey(face) {
+      const stretch = {
+        "ultra-condensed": "50%",
+        "extra-condensed": "62.5%",
+        condensed: "75%",
+        "semi-condensed": "87.5%",
+        normal: "100%",
+        "semi-expanded": "112.5%",
+        expanded: "125%",
+        "extra-expanded": "150%",
+        "ultra-expanded": "200%",
+      };
+      return JSON.stringify([
+        face.family
           .trim()
           .replace(/^["']|["']$/g, "")
-          .toLowerCase();
-      const used = new Set(
-        families.flatMap((value) => value.split(",").map(normalize)),
+          .toLowerCase(),
+        (face.weight || "normal")
+          .replace(/normal/g, "400")
+          .replace(/bold/g, "700"),
+        face.style || "normal",
+        (face.stretch || "normal")
+          .split(/\s+/)
+          .map((s) => stretch[s] || s)
+          .join(" "),
+        (face.unicodeRange || "U+0-10FFFF").replace(/\s/g, "").toUpperCase(),
+      ]);
+    }
+    async _pageFonts(nodes) {
+      // Match actual text runs, not container families or the document-wide ready
+      // promise. The browser handles variable ranges, nearest weights and synthesis.
+      const runs = new Map();
+      for (const node of nodes) {
+        if (
+          ["STYLE", "SCRIPT", "IFRAME", "VIDEO", "AUDIO"].includes(node.tagName)
+        )
+          continue;
+        let text = [...node.childNodes]
+          .filter((child) => child.nodeType === 3)
+          .map((child) => child.textContent)
+          .join("");
+        if (node.tagName === "INPUT" || node.tagName === "TEXTAREA")
+          text += node.value || "";
+        if (!text.trim()) continue;
+        const style = getComputedStyle(node);
+        if (
+          style.display === "none" ||
+          (style.display !== "contents" && !node.getClientRects().length)
+        )
+          continue;
+        // Include case expansions such as ß → SS when choosing Unicode subsets.
+        const lang = node.closest("[lang]")?.lang;
+        try {
+          text +=
+            text.toLocaleUpperCase(lang || undefined) +
+            text.toLocaleLowerCase(lang || undefined);
+        } catch {
+          text += text.toUpperCase() + text.toLowerCase();
+        }
+        const stretch =
+          {
+            "50%": "ultra-condensed",
+            "62.5%": "extra-condensed",
+            "75%": "condensed",
+            "87.5%": "semi-condensed",
+            "100%": "normal",
+            "112.5%": "semi-expanded",
+            "125%": "expanded",
+            "150%": "extra-expanded",
+            "200%": "ultra-expanded",
+          }[style.fontStretch] || style.fontStretch;
+        const font =
+          style.font ||
+          `${style.fontStyle} ${style.fontWeight} ${stretch} ${style.fontSize} ${style.fontFamily}`;
+        if (!runs.has(font))
+          runs.set(font, { family: style.fontFamily, characters: new Set() });
+        for (const character of text) runs.get(font).characters.add(character);
+      }
+      const matches = await Promise.all(
+        [...runs].map(async ([font, run]) => {
+          const text = [...run.characters].join("");
+          try {
+            return await document.fonts.load(font, text);
+          } catch (error) {
+            if (error.name !== "SyntaxError") throw error;
+            // Some computed values (e.g. fractional stretch) cannot be represented
+            // by the FontFaceSet shorthand. Preserve fidelity with a family fallback.
+            const normalize = (name) =>
+              name
+                .trim()
+                .replace(/^["']|["']$/g, "")
+                .toLowerCase();
+            const families = run.family.split(",").map(normalize);
+            return Promise.all(
+              [...document.fonts]
+                .filter(
+                  (face) =>
+                    families.includes(normalize(face.family)) &&
+                    this._fontRangeUsed(face.unicodeRange, [...text]),
+                )
+                .map((face) => face.load()),
+            );
+          }
+        }),
       );
-      const names = new Set(
-        [...(document.fonts || [])]
-          .map((font) => normalize(font.family))
-          .filter((name) => used.has(name)),
-      );
-      const characters = [...new Set([...text])];
-      const key = [...used].sort().join(",") + ":" + characters.sort().join("");
-      if (this.fontCache.has(key)) return this.fontCache.get(key);
+      return [...new Set(matches.flat())];
+    }
+    async _fontCatalog() {
+      if (this.fontRules) return this.fontRules;
       const job = (async () => {
         const faces = [],
           inaccessible = [],
           visited = new Set();
         const collect = (rules, base) => {
           for (const rule of rules) {
-            if (
-              rule.type === 5 &&
-              used.has(normalize(rule.style.getPropertyValue("font-family")))
-            )
+            if (rule.type === 5) {
+              const get = (name) => rule.style.getPropertyValue(name);
               faces.push({
                 css: rule.cssText,
                 base,
-                family: normalize(rule.style.getPropertyValue("font-family")),
-                range: rule.style.getPropertyValue("unicode-range"),
+                key: this._fontKey({
+                  family: get("font-family"),
+                  weight: get("font-weight"),
+                  style: get("font-style"),
+                  stretch: get("font-stretch"),
+                  unicodeRange: get("unicode-range"),
+                }),
               });
-            else if (rule.type === 3 && rule.styleSheet) visit(rule.styleSheet);
+            } else if (rule.type === 3 && rule.styleSheet)
+              visit(rule.styleSheet);
             else if (rule.cssRules) collect(rule.cssRules, base);
           }
         };
@@ -763,94 +893,141 @@
           ...(document.adoptedStyleSheets || []),
         ].forEach(visit);
         if (this.options.fontCSS) parse(this.options.fontCSS, document.baseURI);
-        // Cross-origin stylesheets (including Google Fonts) are readable via CORS
-        // fetch even when CSSOM access to cssRules is prohibited.
-        if (
-          [...names].some((name) => !faces.some((face) => face.family === name))
-        ) {
-          const seenURLs = new Set();
-          const load = async (url) => {
-            if (seenURLs.has(url)) return;
-            seenURLs.add(url);
-            if (!this.styleSheets.has(url)) {
-              const job = fetch(url).then((response) => {
-                if (!response.ok)
-                  throw new Error(
-                    "Font stylesheet could not be loaded: " + url,
-                  );
-                return response.text();
-              });
-              this.styleSheets.set(url, job);
-              job.catch(() => {
-                if (this.styleSheets.get(url) === job)
-                  this.styleSheets.delete(url);
-              });
-            }
-            const css = await this.styleSheets.get(url);
-            // Resolve @import before parsing: constructable stylesheets omit imports.
-            for (const match of css.matchAll(
-              /@import\s+(?:url\(\s*)?["']([^"']+)["']/g,
-            ))
-              await load(new URL(match[1], url).href);
-            parse(css.replace(/@import[^;]+;/g, ""), url);
-          };
-          for (const url of inaccessible) {
-            try {
-              await load(url);
-            } catch {
-              /* Report only if a used font remains missing. */
-            }
+        // Parse each external sheet only once per cache lifetime. Keep import order
+        // deterministic even when several pages request the same catalog together.
+        const seenURLs = new Set();
+        const load = async (url) => {
+          if (seenURLs.has(url)) return;
+          seenURLs.add(url);
+          if (!this.styleSheets.has(url)) {
+            const request = fetch(url).then((response) => {
+              if (!response.ok)
+                throw new Error("Font stylesheet could not be loaded: " + url);
+              return response.text();
+            });
+            this.styleSheets.set(url, request);
+            request.catch(() => {
+              if (this.styleSheets.get(url) === request)
+                this.styleSheets.delete(url);
+            });
           }
-        }
-        const missing = [...names].filter(
-          (name) => !faces.some((face) => face.family === name),
-        );
-        if (missing.length)
-          throw new Error(
-            "PaperCurl: cannot embed font " +
-              missing.join(", ") +
-              ". Supply its @font-face rules with the fontCSS option.",
-          );
-        return (
-          await Promise.all(
-            faces
-              .filter((face) => this._fontRangeUsed(face.range, characters))
-              .map(async (face) => {
-                // Force the embedded source, rather than a possibly unavailable local face.
-                const css = face.css.includes("url(")
-                  ? face.css.replace(/local\([^)]*\)\s*,?\s*/g, "")
-                  : face.css;
-                return this._embedURLs(css, face.base);
-              }),
-          )
-        ).join("\n");
+          const css = await this.styleSheets.get(url);
+          for (const match of css.matchAll(
+            /@import\s+(?:url\(\s*)?["']([^"']+)["']/g,
+          ))
+            await load(new URL(match[1], url).href);
+          parse(css.replace(/@import[^;]+;/g, ""), url);
+        };
+        let remoteJob;
+        return {
+          faces,
+          loadRemote: () =>
+            (remoteJob ||= (async () => {
+              for (const url of inaccessible) {
+                try {
+                  await load(url);
+                } catch {
+                  /* Missing used faces are reported by _fontStyles. */
+                }
+              }
+            })()),
+        };
       })();
-      this.fontCache.set(key, job);
+      this.fontRules = job;
       job.catch(() => {
-        if (this.fontCache.get(key) === job) this.fontCache.delete(key);
+        if (this.fontRules === job) this.fontRules = null;
       });
       return job;
     }
+    async _fontStyles(usedFaces) {
+      if (!usedFaces.length) return "";
+      const used = new Map(
+        usedFaces.map((face) => [this._fontKey(face), face.family]),
+      );
+      const catalog = await this._fontCatalog();
+      if (
+        [...used.keys()].some(
+          (key) => !catalog.faces.some((face) => face.key === key),
+        )
+      )
+        await catalog.loadRemote();
+      const faces = catalog.faces.filter((face) => used.has(face.key));
+      const missing = [...used].filter(
+        ([key]) => !faces.some((face) => face.key === key),
+      );
+      if (missing.length) {
+        // Permit retry after a failed stylesheet request; never silently use a fallback.
+        this.fontRules = null;
+        throw new Error(
+          "PaperCurl: cannot embed font " +
+            [...new Set(missing.map(([, name]) => name))].join(", ") +
+            ". Supply its @font-face rules with the fontCSS option.",
+        );
+      }
+      return (
+        await Promise.all(
+          faces.map((face) => {
+            const key = face.base + "\n" + face.css;
+            if (!this.fontCache.has(key)) {
+              const css = face.css.includes("url(")
+                ? face.css.replace(/local\([^)]*\)\s*,?\s*/g, "")
+                : face.css;
+              const job = this._embedURLs(css, face.base).then(
+                async (embedded) => {
+                  // Decode the embedded source once too. A loaded remote URL does not
+                  // mean its data-URL copy is ready for an SVG's first paint in Chrome.
+                  const sheet = new CSSStyleSheet();
+                  sheet.replaceSync(embedded);
+                  const rule = sheet.cssRules[0];
+                  const get = (name) => rule.style.getPropertyValue(name);
+                  const descriptors = {};
+                  for (const [key, name] of [
+                    ["weight", "font-weight"],
+                    ["style", "font-style"],
+                    ["stretch", "font-stretch"],
+                    ["unicodeRange", "unicode-range"],
+                  ])
+                    if (get(name)) descriptors[key] = get(name);
+                  await new FontFace(
+                    get("font-family"),
+                    get("src"),
+                    descriptors,
+                  ).load();
+                  rule.style.setProperty("font-display", "block");
+                  return rule.cssText;
+                },
+              );
+              this.fontCache.set(key, job);
+              job.catch(() => {
+                if (this.fontCache.get(key) === job) this.fontCache.delete(key);
+              });
+            }
+            return this.fontCache.get(key);
+          }),
+        )
+      ).join("\n");
+    }
     _fontRangeUsed(range, characters) {
-      // A Google Fonts stylesheet contains several script subsets. Embed only
-      // those needed by this page, preserving extended Latin and non-Latin text.
-      if (!range || !characters.length) return true;
       const intervals = [
         ...range.matchAll(/U\+([0-9A-F?]+)(?:-([0-9A-F]+))?/gi),
-      ].map((match) => [
-        parseInt(match[1].replace(/\?/g, "0"), 16),
-        parseInt(match[2] || match[1].replace(/\?/g, "F"), 16),
+      ].map((m) => [
+        parseInt(m[1].replace(/\?/g, "0"), 16),
+        parseInt(m[2] || m[1].replace(/\?/g, "F"), 16),
       ]);
-      if (!intervals.length) return true;
-      return characters.some((character) => {
-        const code = character.codePointAt(0);
-        return intervals.some(([start, end]) => code >= start && code <= end);
-      });
+      return (
+        !intervals.length ||
+        characters.some((character) =>
+          intervals.some(
+            ([start, end]) =>
+              character.codePointAt(0) >= start &&
+              character.codePointAt(0) <= end,
+          ),
+        )
+      );
     }
     async _snapshot(index) {
       if (this.cache.has(index)) return this.cache.get(index);
       const job = (async () => {
-        await document.fonts.ready;
         if (this.destroyed)
           throw new Error("PaperCurl: destroyed during capture.");
         const stage = this._node("pc-capture");
@@ -867,7 +1044,7 @@
           const cloned = [clone, ...clone.querySelectorAll("*")];
           // Select the already-displayed responsive image, before detaching picture
           // sources or srcset. Lazy images must be decoded before SVG rasterization.
-          await Promise.all(
+          const images = Promise.all(
             cloned.map(async (node, i) => {
               const original = originals[i];
               if (node.tagName === "SOURCE") node.remove();
@@ -906,9 +1083,13 @@
                 node.textContent = original.value;
             }),
           );
-          stage.getBoundingClientRect(); // Start layout-dependent font loads before awaiting readiness.
-          await document.fonts.ready;
           const nodes = [stage, ...stage.querySelectorAll("*")];
+          const [fonts] = await Promise.all([
+            this._pageFonts(nodes).then((faces) => this._fontStyles(faces)),
+            images,
+          ]);
+          if (this.destroyed)
+            throw new Error("PaperCurl: destroyed during capture.");
           // Only visual computed properties: no inherited custom-property payloads or dependencies.
           const properties =
             "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background-color background-image background-attachment background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
@@ -921,10 +1102,6 @@
               computed.getPropertyValue(property),
             ]);
           });
-          const fonts = await this._fontStyles(
-            nodes.map((node) => getComputedStyle(node).fontFamily),
-            clone.textContent,
-          );
           for (let n = 0; n < nodes.length; n++) {
             const node = nodes[n];
             node.removeAttribute("id");

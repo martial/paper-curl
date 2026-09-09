@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PaperCurl · multiple fonts</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=DM+Sans:ital,wght@0,100..1000;1,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    />
+    <style>
+      body {
+        font: 15px/1.7 system-ui;
+        padding: 24px;
+        background: #eae9e1;
+        color: #273d39;
+      }
+      button {
+        font: inherit;
+        padding: 12px;
+        cursor: pointer;
+      }
+      pre {
+        white-space: pre-wrap;
+      }
+      .fixture {
+        width: 900px;
+        height: 500px;
+      }
+      .fixture article {
+        background: white;
+        padding: 0;
+        color: black;
+      }
+      .specimen {
+        height: 100px;
+        font-size: 48px;
+        line-height: 100px;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Five families. Real page captures.</h1>
+    <p>
+      Measures preparation separately from click latency. No arbitrary warm-up
+      delay.
+    </p>
+    <button id="run">Measure fonts and turns</button>
+    <pre id="results" role="status">Ready.</pre>
+    <div id="fixture"></div>
+    <script type="module" src="./fonts.js"></script>
+  </body>
+</html>

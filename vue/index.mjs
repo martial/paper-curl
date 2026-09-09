@@ -166,6 +166,7 @@ export const PaperCurl = defineComponent({
       last: () => book?.last(),
       goTo: (page) => book?.goTo(page),
       goToSpread: (spread) => book?.goToSpread(spread),
+      prepare: (pages) => book?.prepare(pages) ?? Promise.resolve(false),
       refresh: (pages) => book?.refresh(pages),
       get page() {
         return book?.page ?? 0;
