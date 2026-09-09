@@ -178,6 +178,10 @@ for (const [key, name] of Object.entries(names)) {
     ].join("\n") + "\n",
   );
   let inventory = `# ${name} CSS property inventory\n\nPaperCurl ${report.libraryVersion}; ${report.completedAt}.\n\nBrowser: ${report.browser}. DPR ${report.viewport.dpr}.\n\n[All browsers](../CSS_PROPERTIES.md) · [Method and limits](../CSS_SUPPORT.md) · [JSON evidence](${key}.json) · [CSV](${key}.csv)\n\nOne selected declaration is tested per property on visible and hidden pages. These values do not certify every rendered pixel or value combination.\n\n${visual}\n`;
+  if (report.attemptNotes?.length)
+    inventory +=
+      "\n## Run observations\n\n" +
+      report.attemptNotes.map((note) => "- " + note + "\n").join("");
   if (report.visual?.output) {
     const failures = report.visual.output
       .split("\n")

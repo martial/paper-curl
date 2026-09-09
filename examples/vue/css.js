@@ -198,6 +198,9 @@ function render() {
   $("visual-result").textContent = report.visual
     ? `Recorded visual/browser suite: ${report.visual.passed} passed, ${report.visual.failed} failed. See the documentation and JSON for individual cases.`
     : "Visual/browser checks are separate; this report records property values only.";
+  if (report.attemptNotes?.length)
+    $("visual-result").textContent +=
+      " Earlier-run observations are included in the documentation and JSON.";
   const query = $("search").value.trim().toLowerCase(),
     filter = $("filter").value;
   const rows = report.rows.filter(

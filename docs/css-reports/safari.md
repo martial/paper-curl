@@ -1,0 +1,733 @@
+# Safari CSS property inventory
+
+PaperCurl 0.4.3; 2026-09-09T20:17:07.067Z.
+
+Browser: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15. DPR 2.
+
+[All browsers](../CSS_PROPERTIES.md) · [Method and limits](../CSS_SUPPORT.md) · [JSON evidence](safari.json) · [CSV](safari.csv)
+
+One selected declaration is tested per property on visible and hidden pages. These values do not certify every rendered pixel or value combination.
+
+Visual/browser suite: **61 passed, 0 failed**.
+
+## Run observations
+
+- The initial visual run stopped one font fixture before capture because its Latin-range lookup was case-sensitive. Safari serializes U+0-FF as U+0-ff. The fixture now normalizes case; the font assertions are unchanged.
+- An earlier rerun reported navigation did not settle in the 24-turn case, then exceeded the overall suite timeout. Its cause was not established. The complete run recorded here passed all 61 checks; this does not establish that the intermittent observation was fixed.
+
+## Value preserved (446)
+
+- `-webkit-appearance` — tested `button`; 27 ms for both page states.
+- `-webkit-border-after` — tested `24px`; 13 ms for both page states.
+- `-webkit-border-after-color` — tested `red`; 12 ms for both page states.
+- `-webkit-border-after-style` — tested `none`; 6 ms for both page states.
+- `-webkit-border-after-width` — tested `24px`; 7 ms for both page states.
+- `-webkit-border-before` — tested `24px`; 11 ms for both page states.
+- `-webkit-border-before-color` — tested `red`; 8 ms for both page states.
+- `-webkit-border-before-style` — tested `none`; 9 ms for both page states.
+- `-webkit-border-before-width` — tested `24px`; 7 ms for both page states.
+- `-webkit-border-end` — tested `24px`; 13 ms for both page states.
+- `-webkit-border-end-color` — tested `red`; 13 ms for both page states.
+- `-webkit-border-end-style` — tested `none`; 13 ms for both page states.
+- `-webkit-border-end-width` — tested `24px`; 10 ms for both page states.
+- `-webkit-border-horizontal-spacing` — tested `24px`; 10 ms for both page states.
+- `-webkit-border-start` — tested `24px`; 9 ms for both page states.
+- `-webkit-border-start-color` — tested `red`; 13 ms for both page states.
+- `-webkit-border-start-style` — tested `none`; 12 ms for both page states.
+- `-webkit-border-start-width` — tested `24px`; 7 ms for both page states.
+- `-webkit-border-vertical-spacing` — tested `24px`; 14 ms for both page states.
+- `-webkit-box-align` — tested `center`; 12 ms for both page states.
+- `-webkit-box-decoration-break` — tested `clone`; 15 ms for both page states.
+- `-webkit-box-direction` — tested `reverse`; 16 ms for both page states.
+- `-webkit-box-flex` — tested `2`; 10 ms for both page states.
+- `-webkit-box-flex-group` — tested `2`; 13 ms for both page states.
+- `-webkit-box-ordinal-group` — tested `2`; 9 ms for both page states.
+- `-webkit-box-pack` — tested `center`; 8 ms for both page states.
+- `-webkit-box-reflect` — tested `above`; 9 ms for both page states.
+- `-webkit-column-progression` — tested `reverse`; 12 ms for both page states.
+- `-webkit-font-smoothing` — tested `none`; 9 ms for both page states.
+- `-webkit-hyphenate-limit-after` — tested `2`; 7 ms for both page states.
+- `-webkit-hyphenate-limit-before` — tested `2`; 16 ms for both page states.
+- `-webkit-hyphenate-limit-lines` — tested `2`; 12 ms for both page states.
+- `-webkit-initial-letter` — tested `2`; 12 ms for both page states.
+- `-webkit-line-box-contain` — tested `none`; 16 ms for both page states.
+- `-webkit-line-clamp` — tested `25%`; 12 ms for both page states.
+- `-webkit-line-grid` — tested `red`; 10 ms for both page states.
+- `-webkit-locale` — tested `auto`; 8 ms for both page states.
+- `-webkit-mask-clip` — tested `padding`; 10 ms for both page states.
+- `-webkit-mask-composite` — tested `xor`; 11 ms for both page states.
+- `-webkit-mask-image` — tested `linear-gradient(red, blue)`; 17 ms for both page states.
+- `-webkit-mask-origin` — tested `padding`; 9 ms for both page states.
+- `-webkit-mask-position` — tested `24px`; 12 ms for both page states.
+- `-webkit-mask-position-x` — tested `center`; 6 ms for both page states.
+- `-webkit-mask-position-y` — tested `center`; 11 ms for both page states.
+- `-webkit-mask-repeat` — tested `repeat-x`; 11 ms for both page states.
+- `-webkit-mask-size` — tested `24px`; 9 ms for both page states.
+- `-webkit-nbsp-mode` — tested `space`; 8 ms for both page states.
+- `-webkit-text-fill-color` — tested `red`; 11 ms for both page states.
+- `-webkit-text-security` — tested `disc`; 12 ms for both page states.
+- `-webkit-text-stroke-color` — tested `red`; 12 ms for both page states.
+- `-webkit-text-stroke-width` — tested `24px`; 6 ms for both page states.
+- `-webkit-user-drag` — tested `none`; 8 ms for both page states.
+- `-webkit-user-modify` — tested `read-write`; 4 ms for both page states.
+- `accent-color` — tested `red`; 11 ms for both page states.
+- `align-content` — tested `center`; 10 ms for both page states.
+- `align-items` — tested `stretch`; 10 ms for both page states.
+- `align-self` — tested `normal`; 18 ms for both page states.
+- `alignment-baseline` — tested `alphabetic`; 14 ms for both page states.
+- `anchor-name` — tested `--pc-example`; 8 ms for both page states.
+- `anchor-scope` — tested `all`; 11 ms for both page states.
+- `appearance` — tested `auto`; 10 ms for both page states.
+- `aspect-ratio` — tested `2`; 6 ms for both page states.
+- `backdrop-filter` — tested `blur(2px)`; 11 ms for both page states.
+- `backface-visibility` — tested `hidden`; 6 ms for both page states.
+- `background` — tested `linear-gradient(red,blue)`; 15 ms for both page states.
+- `background-attachment` — tested `fixed`; 8 ms for both page states.
+- `background-blend-mode` — tested `multiply`; 13 ms for both page states.
+- `background-clip` — tested `content-box`; 12 ms for both page states.
+- `background-color` — tested `red`; 7 ms for both page states.
+- `background-image` — tested `linear-gradient(red, blue)`; 9 ms for both page states.
+- `background-origin` — tested `content-box`; 5 ms for both page states.
+- `background-position` — tested `24px`; 10 ms for both page states.
+- `background-position-x` — tested `center`; 9 ms for both page states.
+- `background-position-y` — tested `center`; 8 ms for both page states.
+- `background-repeat` — tested `repeat-x`; 11 ms for both page states.
+- `background-size` — tested `24px`; 7 ms for both page states.
+- `baseline-shift` — tested `sub`; 7 ms for both page states.
+- `block-size` — tested `24px`; 7 ms for both page states.
+- `border` — tested `4px solid red`; 13 ms for both page states.
+- `border-block` — tested `24px`; 32 ms for both page states.
+- `border-block-color` — tested `red`; 14 ms for both page states.
+- `border-block-end` — tested `24px`; 9 ms for both page states.
+- `border-block-end-color` — tested `red`; 5 ms for both page states.
+- `border-block-end-style` — tested `none`; 8 ms for both page states.
+- `border-block-end-width` — tested `24px`; 11 ms for both page states.
+- `border-block-start` — tested `24px`; 6 ms for both page states.
+- `border-block-start-color` — tested `red`; 6 ms for both page states.
+- `border-block-start-style` — tested `none`; 10 ms for both page states.
+- `border-block-start-width` — tested `24px`; 8 ms for both page states.
+- `border-block-style` — tested `none`; 11 ms for both page states.
+- `border-block-width` — tested `24px`; 9 ms for both page states.
+- `border-bottom` — tested `24px`; 7 ms for both page states.
+- `border-bottom-color` — tested `red`; 7 ms for both page states.
+- `border-bottom-left-radius` — tested `24px`; 19 ms for both page states.
+- `border-bottom-right-radius` — tested `24px`; 13 ms for both page states.
+- `border-bottom-style` — tested `none`; 9 ms for both page states.
+- `border-bottom-width` — tested `24px`; 13 ms for both page states.
+- `border-collapse` — tested `collapse`; 14 ms for both page states.
+- `border-color` — tested `red`; 9 ms for both page states.
+- `border-end-end-radius` — tested `24px`; 14 ms for both page states.
+- `border-end-start-radius` — tested `24px`; 9 ms for both page states.
+- `border-image` — tested `linear-gradient(red,blue) 1`; 8 ms for both page states.
+- `border-image-outset` — tested `24px`; 13 ms for both page states.
+- `border-image-repeat` — tested `repeat`; 10 ms for both page states.
+- `border-image-slice` — tested `25%`; 14 ms for both page states.
+- `border-image-source` — tested `linear-gradient(red, blue)`; 10 ms for both page states.
+- `border-image-width` — tested `auto`; 9 ms for both page states.
+- `border-inline` — tested `24px`; 11 ms for both page states.
+- `border-inline-color` — tested `red`; 13 ms for both page states.
+- `border-inline-end` — tested `24px`; 8 ms for both page states.
+- `border-inline-end-color` — tested `red`; 6 ms for both page states.
+- `border-inline-end-style` — tested `none`; 9 ms for both page states.
+- `border-inline-end-width` — tested `24px`; 6 ms for both page states.
+- `border-inline-start` — tested `24px`; 7 ms for both page states.
+- `border-inline-start-color` — tested `red`; 7 ms for both page states.
+- `border-inline-start-style` — tested `none`; 8 ms for both page states.
+- `border-inline-start-width` — tested `24px`; 6 ms for both page states.
+- `border-inline-style` — tested `none`; 10 ms for both page states.
+- `border-inline-width` — tested `24px`; 10 ms for both page states.
+- `border-left` — tested `24px`; 7 ms for both page states.
+- `border-left-color` — tested `red`; 8 ms for both page states.
+- `border-left-style` — tested `none`; 7 ms for both page states.
+- `border-left-width` — tested `24px`; 7 ms for both page states.
+- `border-radius` — tested `24px`; 17 ms for both page states.
+- `border-right` — tested `24px`; 13 ms for both page states.
+- `border-right-color` — tested `red`; 12 ms for both page states.
+- `border-right-style` — tested `none`; 8 ms for both page states.
+- `border-right-width` — tested `24px`; 9 ms for both page states.
+- `border-spacing` — tested `24px`; 17 ms for both page states.
+- `border-start-end-radius` — tested `24px`; 11 ms for both page states.
+- `border-start-start-radius` — tested `24px`; 9 ms for both page states.
+- `border-style` — tested `none`; 14 ms for both page states.
+- `border-top` — tested `24px`; 9 ms for both page states.
+- `border-top-color` — tested `red`; 7 ms for both page states.
+- `border-top-left-radius` — tested `24px`; 8 ms for both page states.
+- `border-top-right-radius` — tested `24px`; 7 ms for both page states.
+- `border-top-style` — tested `none`; 4 ms for both page states.
+- `border-top-width` — tested `24px`; 7 ms for both page states.
+- `border-width` — tested `24px`; 9 ms for both page states.
+- `bottom` — tested `24px`; 17 ms for both page states.
+- `box-shadow` — tested `3px 4px 2px red`; 13 ms for both page states.
+- `box-sizing` — tested `content-box`; 8 ms for both page states.
+- `break-after` — tested `avoid`; 10 ms for both page states.
+- `break-before` — tested `avoid`; 16 ms for both page states.
+- `break-inside` — tested `avoid`; 12 ms for both page states.
+- `caption-side` — tested `bottom`; 14 ms for both page states.
+- `clear` — tested `left`; 10 ms for both page states.
+- `clip` — tested `rect(0px, 100px, 80px, 0px)`; 7 ms for both page states.
+- `clip-path` — tested `circle(35% at 50% 50%)`; 11 ms for both page states.
+- `clip-rule` — tested `evenodd`; 6 ms for both page states.
+- `color` — tested `red`; 11 ms for both page states.
+- `color-interpolation` — tested `auto`; 10 ms for both page states.
+- `color-interpolation-filters` — tested `auto`; 9 ms for both page states.
+- `color-scheme` — tested `light`; 10 ms for both page states.
+- `column-count` — tested `2`; 9 ms for both page states.
+- `column-fill` — tested `auto`; 10 ms for both page states.
+- `column-gap` — tested `24px`; 8 ms for both page states.
+- `column-rule` — tested `24px`; 9 ms for both page states.
+- `column-rule-color` — tested `red`; 8 ms for both page states.
+- `column-rule-style` — tested `solid`; 7 ms for both page states.
+- `column-rule-width` — tested `24px`; 5 ms for both page states.
+- `column-span` — tested `all`; 13 ms for both page states.
+- `column-width` — tested `24px`; 12 ms for both page states.
+- `columns` — tested `24px`; 7 ms for both page states.
+- `contain` — tested `layout paint`; 12 ms for both page states.
+- `contain-intrinsic-block-size` — tested `24px`; 7 ms for both page states.
+- `contain-intrinsic-height` — tested `24px`; 6 ms for both page states.
+- `contain-intrinsic-inline-size` — tested `24px`; 17 ms for both page states.
+- `contain-intrinsic-size` — tested `24px`; 14 ms for both page states.
+- `contain-intrinsic-width` — tested `24px`; 7 ms for both page states.
+- `container` — tested `test / inline-size`; 22 ms for both page states.
+- `container-name` — tested `red`; 13 ms for both page states.
+- `container-type` — tested `size`; 9 ms for both page states.
+- `content` — tested `"CSS"`; 9 ms for both page states.
+- `content-visibility` — tested `auto`; 6 ms for both page states.
+- `counter-increment` — tested `chapter 2`; 7 ms for both page states.
+- `counter-reset` — tested `chapter 2`; 8 ms for both page states.
+- `counter-set` — tested `chapter 2`; 8 ms for both page states.
+- `cx` — tested `24px`; 8 ms for both page states.
+- `cy` — tested `24px`; 8 ms for both page states.
+- `direction` — tested `rtl`; 10 ms for both page states.
+- `display` — tested `none`; 10 ms for both page states.
+- `dominant-baseline` — tested `alphabetic`; 11 ms for both page states.
+- `dynamic-range-limit` — tested `standard`; 7 ms for both page states.
+- `empty-cells` — tested `hide`; 9 ms for both page states.
+- `field-sizing` — tested `content`; 5 ms for both page states.
+- `fill` — tested `red`; 6 ms for both page states.
+- `fill-opacity` — tested `25%`; 8 ms for both page states.
+- `fill-rule` — tested `evenodd`; 10 ms for both page states.
+- `filter` — tested `blur(2px)`; 22 ms for both page states.
+- `flex` — tested `none`; 9 ms for both page states.
+- `flex-basis` — tested `content`; 15 ms for both page states.
+- `flex-direction` — tested `row-reverse`; 10 ms for both page states.
+- `flex-flow` — tested `wrap`; 8 ms for both page states.
+- `flex-grow` — tested `2`; 15 ms for both page states.
+- `flex-shrink` — tested `2`; 13 ms for both page states.
+- `flex-wrap` — tested `wrap`; 5 ms for both page states.
+- `float` — tested `left`; 7 ms for both page states.
+- `flood-color` — tested `red`; 10 ms for both page states.
+- `flood-opacity` — tested `25%`; 7 ms for both page states.
+- `flow-tolerance` — tested `24px`; 10 ms for both page states.
+- `font` — tested `italic 20px/1.4 Arial`; 8 ms for both page states.
+- `font-family` — tested `Georgia, serif`; 11 ms for both page states.
+- `font-feature-settings` — tested `"liga" 0`; 10 ms for both page states.
+- `font-kerning` — tested `normal`; 8 ms for both page states.
+- `font-optical-sizing` — tested `none`; 10 ms for both page states.
+- `font-palette` — tested `light`; 12 ms for both page states.
+- `font-size` — tested `22px`; 6 ms for both page states.
+- `font-size-adjust` — tested `from-font`; 10 ms for both page states.
+- `font-stretch` — tested `25%`; 24 ms for both page states.
+- `font-style` — tested `italic`; 12 ms for both page states.
+- `font-synthesis` — tested `none`; 8 ms for both page states.
+- `font-synthesis-small-caps` — tested `none`; 6 ms for both page states.
+- `font-synthesis-style` — tested `none`; 11 ms for both page states.
+- `font-synthesis-weight` — tested `none`; 9 ms for both page states.
+- `font-variant` — tested `none`; 6 ms for both page states.
+- `font-variant-alternates` — tested `historical-forms`; 10 ms for both page states.
+- `font-variant-caps` — tested `small-caps`; 11 ms for both page states.
+- `font-variant-east-asian` — tested `ruby`; 6 ms for both page states.
+- `font-variant-ligatures` — tested `none`; 6 ms for both page states.
+- `font-variant-numeric` — tested `ordinal`; 9 ms for both page states.
+- `font-variant-position` — tested `sub`; 11 ms for both page states.
+- `font-variation-settings` — tested `"wght" 650`; 8 ms for both page states.
+- `font-weight` — tested `bolder`; 10 ms for both page states.
+- `font-width` — tested `ultra-condensed`; 7 ms for both page states.
+- `gap` — tested `24px`; 9 ms for both page states.
+- `grid` — tested `none`; 7 ms for both page states.
+- `grid-area` — tested `2`; 8 ms for both page states.
+- `grid-auto-columns` — tested `24px`; 9 ms for both page states.
+- `grid-auto-flow` — tested `row`; 8 ms for both page states.
+- `grid-auto-rows` — tested `24px`; 13 ms for both page states.
+- `grid-column` — tested `2`; 13 ms for both page states.
+- `grid-column-end` — tested `2`; 11 ms for both page states.
+- `grid-column-gap` — tested `24px`; 8 ms for both page states.
+- `grid-column-start` — tested `2`; 12 ms for both page states.
+- `grid-gap` — tested `24px`; 7 ms for both page states.
+- `grid-row` — tested `2`; 8 ms for both page states.
+- `grid-row-end` — tested `2`; 12 ms for both page states.
+- `grid-row-gap` — tested `24px`; 13 ms for both page states.
+- `grid-row-start` — tested `2`; 4 ms for both page states.
+- `grid-template` — tested `40px 40px / 50px 50px`; 8 ms for both page states.
+- `grid-template-areas` — tested `"a b" "a b"`; 10 ms for both page states.
+- `grid-template-columns` — tested `subgrid`; 11 ms for both page states.
+- `grid-template-rows` — tested `subgrid`; 12 ms for both page states.
+- `hanging-punctuation` — tested `first`; 7 ms for both page states.
+- `height` — tested `auto`; 13 ms for both page states.
+- `hyphenate-character` — tested `"CSS"`; 11 ms for both page states.
+- `hyphens` — tested `none`; 8 ms for both page states.
+- `image-orientation` — tested `none`; 9 ms for both page states.
+- `image-rendering` — tested `crisp-edges`; 8 ms for both page states.
+- `inline-size` — tested `24px`; 7 ms for both page states.
+- `inset` — tested `24px`; 18 ms for both page states.
+- `inset-block` — tested `24px`; 10 ms for both page states.
+- `inset-block-end` — tested `24px`; 5 ms for both page states.
+- `inset-block-start` — tested `24px`; 14 ms for both page states.
+- `inset-inline` — tested `24px`; 8 ms for both page states.
+- `inset-inline-end` — tested `24px`; 15 ms for both page states.
+- `inset-inline-start` — tested `24px`; 9 ms for both page states.
+- `isolation` — tested `isolate`; 7 ms for both page states.
+- `justify-content` — tested `left`; 9 ms for both page states.
+- `justify-items` — tested `stretch`; 7 ms for both page states.
+- `justify-self` — tested `normal`; 7 ms for both page states.
+- `left` — tested `24px`; 7 ms for both page states.
+- `letter-spacing` — tested `24px`; 10 ms for both page states.
+- `lighting-color` — tested `red`; 16 ms for both page states.
+- `line-break` — tested `loose`; 10 ms for both page states.
+- `line-height` — tested `normal`; 7 ms for both page states.
+- `list-style` — tested `square inside`; 8 ms for both page states.
+- `list-style-image` — tested `linear-gradient(red, blue)`; 9 ms for both page states.
+- `list-style-position` — tested `inside`; 7 ms for both page states.
+- `list-style-type` — tested `none`; 10 ms for both page states.
+- `margin` — tested `24px`; 12 ms for both page states.
+- `margin-block` — tested `24px`; 17 ms for both page states.
+- `margin-block-end` — tested `24px`; 12 ms for both page states.
+- `margin-block-start` — tested `24px`; 7 ms for both page states.
+- `margin-bottom` — tested `auto`; 6 ms for both page states.
+- `margin-inline` — tested `24px`; 17 ms for both page states.
+- `margin-inline-end` — tested `24px`; 10 ms for both page states.
+- `margin-inline-start` — tested `24px`; 9 ms for both page states.
+- `margin-left` — tested `auto`; 12 ms for both page states.
+- `margin-right` — tested `auto`; 10 ms for both page states.
+- `margin-top` — tested `auto`; 14 ms for both page states.
+- `margin-trim` — tested `block`; 7 ms for both page states.
+- `mask` — tested `linear-gradient(white,transparent)`; 12 ms for both page states.
+- `mask-border` — tested `linear-gradient(red, blue)`; 15 ms for both page states.
+- `mask-border-outset` — tested `24px`; 14 ms for both page states.
+- `mask-border-repeat` — tested `repeat`; 13 ms for both page states.
+- `mask-border-slice` — tested `25%`; 11 ms for both page states.
+- `mask-border-source` — tested `linear-gradient(red, blue)`; 25 ms for both page states.
+- `mask-border-width` — tested `24px`; 18 ms for both page states.
+- `mask-clip` — tested `no-clip`; 11 ms for both page states.
+- `mask-composite` — tested `exclude`; 5 ms for both page states.
+- `mask-image` — tested `linear-gradient(white,transparent)`; 10 ms for both page states.
+- `mask-mode` — tested `luminance`; 11 ms for both page states.
+- `mask-origin` — tested `content-box`; 8 ms for both page states.
+- `mask-position` — tested `24px`; 7 ms for both page states.
+- `mask-repeat` — tested `repeat-x`; 6 ms for both page states.
+- `mask-size` — tested `24px`; 10 ms for both page states.
+- `mask-type` — tested `alpha`; 12 ms for both page states.
+- `math-depth` — tested `2`; 12 ms for both page states.
+- `math-shift` — tested `compact`; 7 ms for both page states.
+- `math-style` — tested `compact`; 16 ms for both page states.
+- `max-block-size` — tested `24px`; 12 ms for both page states.
+- `max-height` — tested `min-content`; 12 ms for both page states.
+- `max-inline-size` — tested `24px`; 15 ms for both page states.
+- `max-width` — tested `min-content`; 13 ms for both page states.
+- `min-block-size` — tested `24px`; 12 ms for both page states.
+- `min-height` — tested `min-content`; 11 ms for both page states.
+- `min-inline-size` — tested `24px`; 10 ms for both page states.
+- `min-width` — tested `min-content`; 11 ms for both page states.
+- `mix-blend-mode` — tested `plus-darker`; 16 ms for both page states.
+- `object-fit` — tested `contain`; 15 ms for both page states.
+- `object-position` — tested `20% 30%`; 16 ms for both page states.
+- `offset` — tested `24px`; 15 ms for both page states.
+- `offset-anchor` — tested `24px`; 8 ms for both page states.
+- `offset-distance` — tested `24px`; 7 ms for both page states.
+- `offset-path` — tested `path("M 0 0 L 40 40")`; 10 ms for both page states.
+- `offset-position` — tested `auto`; 14 ms for both page states.
+- `offset-rotate` — tested `reverse`; 12 ms for both page states.
+- `opacity` — tested `25%`; 13 ms for both page states.
+- `order` — tested `2`; 9 ms for both page states.
+- `orphans` — tested `3`; 10 ms for both page states.
+- `outline` — tested `4px dashed blue`; 9 ms for both page states.
+- `outline-color` — tested `red`; 12 ms for both page states.
+- `outline-offset` — tested `24px`; 10 ms for both page states.
+- `outline-style` — tested `auto`; 20 ms for both page states.
+- `outline-width` — tested `24px`; 14 ms for both page states.
+- `overflow` — tested `hidden`; 12 ms for both page states.
+- `overflow-block` — tested `hidden`; 15 ms for both page states.
+- `overflow-inline` — tested `hidden`; 7 ms for both page states.
+- `overflow-wrap` — tested `break-word`; 7 ms for both page states.
+- `overflow-x` — tested `hidden`; 12 ms for both page states.
+- `overflow-y` — tested `hidden`; 9 ms for both page states.
+- `padding` — tested `24px`; 6 ms for both page states.
+- `padding-block` — tested `24px`; 7 ms for both page states.
+- `padding-block-end` — tested `24px`; 14 ms for both page states.
+- `padding-block-start` — tested `24px`; 7 ms for both page states.
+- `padding-bottom` — tested `24px`; 7 ms for both page states.
+- `padding-inline` — tested `24px`; 10 ms for both page states.
+- `padding-inline-end` — tested `24px`; 10 ms for both page states.
+- `padding-inline-start` — tested `24px`; 10 ms for both page states.
+- `padding-left` — tested `24px`; 7 ms for both page states.
+- `padding-right` — tested `24px`; 7 ms for both page states.
+- `padding-top` — tested `24px`; 7 ms for both page states.
+- `page-break-after` — tested `always`; 8 ms for both page states.
+- `page-break-before` — tested `always`; 10 ms for both page states.
+- `page-break-inside` — tested `avoid`; 6 ms for both page states.
+- `paint-order` — tested `fill`; 13 ms for both page states.
+- `perspective` — tested `24px`; 17 ms for both page states.
+- `perspective-origin` — tested `24px`; 13 ms for both page states.
+- `place-content` — tested `center`; 15 ms for both page states.
+- `place-items` — tested `center`; 12 ms for both page states.
+- `place-self` — tested `normal`; 14 ms for both page states.
+- `position` — tested `static`; 9 ms for both page states.
+- `position-anchor` — tested `--pc-example`; 14 ms for both page states.
+- `position-area` — tested `center`; 11 ms for both page states.
+- `position-try` — tested `center`; 13 ms for both page states.
+- `position-try-fallbacks` — tested `center`; 11 ms for both page states.
+- `position-visibility` — tested `always`; 16 ms for both page states.
+- `print-color-adjust` — tested `exact`; 12 ms for both page states.
+- `quotes` — tested `"«" "»"`; 7 ms for both page states.
+- `r` — tested `24px`; 8 ms for both page states.
+- `right` — tested `24px`; 12 ms for both page states.
+- `rotate` — tested `15deg`; 9 ms for both page states.
+- `row-gap` — tested `24px`; 11 ms for both page states.
+- `ruby-align` — tested `start`; 9 ms for both page states.
+- `ruby-overhang` — tested `none`; 14 ms for both page states.
+- `ruby-position` — tested `under`; 8 ms for both page states.
+- `rx` — tested `24px`; 11 ms for both page states.
+- `ry` — tested `24px`; 8 ms for both page states.
+- `scale` — tested `0.8`; 6 ms for both page states.
+- `scrollbar-gutter` — tested `stable`; 9 ms for both page states.
+- `scrollbar-width` — tested `thin`; 10 ms for both page states.
+- `shape-image-threshold` — tested `2`; 8 ms for both page states.
+- `shape-margin` — tested `24px`; 11 ms for both page states.
+- `shape-outside` — tested `linear-gradient(red, blue)`; 15 ms for both page states.
+- `shape-rendering` — tested `crispEdges`; 12 ms for both page states.
+- `speak-as` — tested `spell-out`; 9 ms for both page states.
+- `stop-color` — tested `red`; 8 ms for both page states.
+- `stop-opacity` — tested `25%`; 14 ms for both page states.
+- `stroke` — tested `red`; 14 ms for both page states.
+- `stroke-color` — tested `red`; 10 ms for both page states.
+- `stroke-dasharray` — tested `8px 4px`; 12 ms for both page states.
+- `stroke-dashoffset` — tested `24px`; 12 ms for both page states.
+- `stroke-linecap` — tested `round`; 15 ms for both page states.
+- `stroke-linejoin` — tested `round`; 13 ms for both page states.
+- `stroke-miterlimit` — tested `2`; 6 ms for both page states.
+- `stroke-opacity` — tested `25%`; 11 ms for both page states.
+- `stroke-width` — tested `24px`; 7 ms for both page states.
+- `tab-size` — tested `24px`; 11 ms for both page states.
+- `table-layout` — tested `fixed`; 10 ms for both page states.
+- `text-align` — tested `end`; 9 ms for both page states.
+- `text-align-last` — tested `start`; 9 ms for both page states.
+- `text-anchor` — tested `middle`; 8 ms for both page states.
+- `text-autospace` — tested `normal`; 9 ms for both page states.
+- `text-box` — tested `auto`; 8 ms for both page states.
+- `text-box-trim` — tested `trim-start`; 10 ms for both page states.
+- `text-combine-upright` — tested `all`; 7 ms for both page states.
+- `text-decoration` — tested `underline wavy red`; 7 ms for both page states.
+- `text-decoration-color` — tested `red`; 11 ms for both page states.
+- `text-decoration-line` — tested `underline`; 5 ms for both page states.
+- `text-decoration-skip` — tested `none`; 14 ms for both page states.
+- `text-decoration-skip-ink` — tested `all`; 14 ms for both page states.
+- `text-decoration-style` — tested `double`; 7 ms for both page states.
+- `text-decoration-thickness` — tested `from-font`; 13 ms for both page states.
+- `text-emphasis` — tested `red`; 9 ms for both page states.
+- `text-emphasis-color` — tested `red`; 5 ms for both page states.
+- `text-emphasis-position` — tested `under`; 8 ms for both page states.
+- `text-emphasis-style` — tested `filled`; 10 ms for both page states.
+- `text-indent` — tested `24px`; 7 ms for both page states.
+- `text-orientation` — tested `upright`; 10 ms for both page states.
+- `text-overflow` — tested `ellipsis`; 7 ms for both page states.
+- `text-rendering` — tested `geometricPrecision`; 10 ms for both page states.
+- `text-shadow` — tested `2px 2px red`; 13 ms for both page states.
+- `text-transform` — tested `capitalize`; 8 ms for both page states.
+- `text-underline-offset` — tested `24px`; 7 ms for both page states.
+- `text-underline-position` — tested `from-font`; 11 ms for both page states.
+- `text-wrap-mode` — tested `nowrap`; 7 ms for both page states.
+- `text-wrap-style` — tested `balance`; 11 ms for both page states.
+- `timeline-scope` — tested `--pc-example`; 7 ms for both page states.
+- `top` — tested `24px`; 6 ms for both page states.
+- `transform` — tested `translate(12px, 4px)`; 7 ms for both page states.
+- `transform-box` — tested `content-box`; 11 ms for both page states.
+- `transform-origin` — tested `left`; 15 ms for both page states.
+- `transform-style` — tested `preserve-3d`; 17 ms for both page states.
+- `translate` — tested `12px 4px`; 7 ms for both page states.
+- `unicode-bidi` — tested `embed`; 7 ms for both page states.
+- `vector-effect` — tested `non-scaling-stroke`; 10 ms for both page states.
+- `vertical-align` — tested `sub`; 12 ms for both page states.
+- `view-timeline` — tested `--pc-example`; 8 ms for both page states.
+- `view-timeline-axis` — tested `inline`; 15 ms for both page states.
+- `view-timeline-inset` — tested `24px`; 12 ms for both page states.
+- `view-timeline-name` — tested `--pc-example`; 6 ms for both page states.
+- `visibility` — tested `hidden`; 10 ms for both page states.
+- `white-space` — tested `pre`; 12 ms for both page states.
+- `white-space-collapse` — tested `preserve`; 7 ms for both page states.
+- `widows` — tested `3`; 11 ms for both page states.
+- `width` — tested `auto`; 12 ms for both page states.
+- `word-break` — tested `break-all`; 7 ms for both page states.
+- `word-spacing` — tested `24px`; 11 ms for both page states.
+- `word-wrap` — tested `break-word`; 5 ms for both page states.
+- `writing-mode` — tested `vertical-rl`; 7 ms for both page states.
+- `x` — tested `24px`; 13 ms for both page states.
+- `y` — tested `24px`; 6 ms for both page states.
+- `z-index` — tested `2`; 7 ms for both page states.
+- `zoom` — tested `25%`; 10 ms for both page states.
+
+## Browser unsupported (171)
+
+- `-moz-appearance`.
+- `-moz-binding`.
+- `-moz-border-bottom-colors`.
+- `-moz-border-left-colors`.
+- `-moz-border-right-colors`.
+- `-moz-border-top-colors`.
+- `-moz-context-properties`.
+- `-moz-float-edge`.
+- `-moz-force-broken-image-icon`.
+- `-moz-orient`.
+- `-moz-outline-radius`.
+- `-moz-outline-radius-bottomleft`.
+- `-moz-outline-radius-bottomright`.
+- `-moz-outline-radius-topleft`.
+- `-moz-outline-radius-topright`.
+- `-moz-stack-sizing`.
+- `-moz-text-blink`.
+- `-moz-user-focus`.
+- `-moz-user-input`.
+- `-moz-user-modify`.
+- `-moz-window-dragging`.
+- `-moz-window-shadow`.
+- `-ms-accelerator`.
+- `-ms-block-progression`.
+- `-ms-content-zoom-chaining`.
+- `-ms-content-zoom-limit`.
+- `-ms-content-zoom-limit-max`.
+- `-ms-content-zoom-limit-min`.
+- `-ms-content-zoom-snap`.
+- `-ms-content-zoom-snap-points`.
+- `-ms-content-zoom-snap-type`.
+- `-ms-content-zooming`.
+- `-ms-filter`.
+- `-ms-flow-from`.
+- `-ms-flow-into`.
+- `-ms-grid-columns`.
+- `-ms-grid-rows`.
+- `-ms-high-contrast-adjust`.
+- `-ms-hyphenate-limit-chars`.
+- `-ms-hyphenate-limit-lines`.
+- `-ms-hyphenate-limit-zone`.
+- `-ms-ime-align`.
+- `-ms-overflow-style`.
+- `-ms-scroll-chaining`.
+- `-ms-scroll-limit`.
+- `-ms-scroll-limit-x-max`.
+- `-ms-scroll-limit-x-min`.
+- `-ms-scroll-limit-y-max`.
+- `-ms-scroll-limit-y-min`.
+- `-ms-scroll-rails`.
+- `-ms-scroll-snap-points-x`.
+- `-ms-scroll-snap-points-y`.
+- `-ms-scroll-snap-type`.
+- `-ms-scroll-snap-x`.
+- `-ms-scroll-snap-y`.
+- `-ms-scroll-translation`.
+- `-ms-scrollbar-3dlight-color`.
+- `-ms-scrollbar-arrow-color`.
+- `-ms-scrollbar-base-color`.
+- `-ms-scrollbar-darkshadow-color`.
+- `-ms-scrollbar-face-color`.
+- `-ms-scrollbar-highlight-color`.
+- `-ms-scrollbar-shadow-color`.
+- `-ms-scrollbar-track-color`.
+- `-ms-text-autospace`.
+- `-ms-touch-select`.
+- `-ms-user-select`.
+- `-ms-wrap-flow`.
+- `-ms-wrap-margin`.
+- `-ms-wrap-through`.
+- `-webkit-mask-attachment`.
+- `-webkit-mask-repeat-x`.
+- `-webkit-mask-repeat-y`.
+- `-webkit-overflow-scrolling`.
+- `-webkit-tap-highlight-color`.
+- `-webkit-touch-callout`.
+- `align-tracks`.
+- `animation-trigger`.
+- `baseline-source`.
+- `border-shape`.
+- `box-align`.
+- `box-decoration-break`.
+- `box-direction`.
+- `box-flex`.
+- `box-flex-group`.
+- `box-lines`.
+- `box-ordinal-group`.
+- `box-orient`.
+- `box-pack`.
+- `caret`.
+- `caret-animation`.
+- `caret-shape`.
+- `column-height`.
+- `column-wrap`.
+- `corner-block-end-shape`.
+- `corner-block-start-shape`.
+- `corner-bottom-left-shape`.
+- `corner-bottom-right-shape`.
+- `corner-bottom-shape`.
+- `corner-end-end-shape`.
+- `corner-end-start-shape`.
+- `corner-inline-end-shape`.
+- `corner-inline-start-shape`.
+- `corner-left-shape`.
+- `corner-right-shape`.
+- `corner-shape`.
+- `corner-start-end-shape`.
+- `corner-start-start-shape`.
+- `corner-top-left-shape`.
+- `corner-top-right-shape`.
+- `corner-top-shape`.
+- `d`.
+- `flex-line-count`.
+- `font-language-override`.
+- `font-smooth`.
+- `font-synthesis-position`.
+- `font-variant-emoji`.
+- `forced-color-adjust`.
+- `frame-sizing`.
+- `hyphenate-limit-chars`.
+- `image-resolution`.
+- `ime-mode`.
+- `initial-letter`.
+- `initial-letter-align`.
+- `interactivity`.
+- `interest-delay`.
+- `interest-delay-end`.
+- `interest-delay-start`.
+- `interpolate-size`.
+- `justify-tracks`.
+- `line-clamp`.
+- `line-height-step`.
+- `link-parameters`.
+- `mask-border-mode`.
+- `masonry-auto-flow`.
+- `max-lines`.
+- `object-view-box`.
+- `overflow-anchor`.
+- `overflow-clip-box`.
+- `overflow-clip-margin`.
+- `overlay`.
+- `path-length`.
+- `reading-flow`.
+- `reading-order`.
+- `ruby-merge`.
+- `scroll-initial-target`.
+- `scroll-marker-group`.
+- `scroll-snap-coordinate`.
+- `scroll-snap-destination`.
+- `scroll-snap-points-x`.
+- `scroll-snap-points-y`.
+- `scroll-snap-type-x`.
+- `scroll-snap-type-y`.
+- `scroll-target-group`.
+- `text-decoration-inset`.
+- `text-fit`.
+- `text-justify`.
+- `text-size-adjust`.
+- `text-spacing-trim`.
+- `timeline-trigger`.
+- `timeline-trigger-activation-range`.
+- `timeline-trigger-activation-range-end`.
+- `timeline-trigger-activation-range-start`.
+- `timeline-trigger-active-range`.
+- `timeline-trigger-active-range-end`.
+- `timeline-trigger-active-range-start`.
+- `timeline-trigger-name`.
+- `timeline-trigger-source`.
+- `trigger-scope`.
+- `user-select`.
+- `view-transition-scope`.
+
+## Native / frozen (63)
+
+- `-webkit-user-select`.
+- `animation`.
+- `animation-composition`.
+- `animation-delay`.
+- `animation-direction`.
+- `animation-duration`.
+- `animation-fill-mode`.
+- `animation-iteration-count`.
+- `animation-name`.
+- `animation-play-state`.
+- `animation-range`.
+- `animation-range-end`.
+- `animation-range-start`.
+- `animation-timeline`.
+- `animation-timing-function`.
+- `caret-color`.
+- `cursor`.
+- `overscroll-behavior`.
+- `overscroll-behavior-block`.
+- `overscroll-behavior-inline`.
+- `overscroll-behavior-x`.
+- `overscroll-behavior-y`.
+- `pointer-events`.
+- `resize`.
+- `scroll-behavior`.
+- `scroll-margin`.
+- `scroll-margin-block`.
+- `scroll-margin-block-end`.
+- `scroll-margin-block-start`.
+- `scroll-margin-bottom`.
+- `scroll-margin-inline`.
+- `scroll-margin-inline-end`.
+- `scroll-margin-inline-start`.
+- `scroll-margin-left`.
+- `scroll-margin-right`.
+- `scroll-margin-top`.
+- `scroll-padding`.
+- `scroll-padding-block`.
+- `scroll-padding-block-end`.
+- `scroll-padding-block-start`.
+- `scroll-padding-bottom`.
+- `scroll-padding-inline`.
+- `scroll-padding-inline-end`.
+- `scroll-padding-inline-start`.
+- `scroll-padding-left`.
+- `scroll-padding-right`.
+- `scroll-padding-top`.
+- `scroll-snap-align`.
+- `scroll-snap-stop`.
+- `scroll-snap-type`.
+- `scroll-timeline`.
+- `scroll-timeline-axis`.
+- `scroll-timeline-name`.
+- `touch-action`.
+- `transition`.
+- `transition-behavior`.
+- `transition-delay`.
+- `transition-duration`.
+- `transition-property`.
+- `transition-timing-function`.
+- `view-transition-class`.
+- `view-transition-name`.
+- `will-change`.
+
+## Needs a dedicated fixture (25)
+
+- `-apple-pay-button-style`.
+- `-apple-pay-button-type`.
+- `-webkit-box-lines`.
+- `-webkit-box-orient`.
+- `-webkit-column-axis`.
+- `-webkit-cursor-visibility`.
+- `-webkit-line-align`.
+- `-webkit-line-snap`.
+- `-webkit-mask`.
+- `-webkit-rtl-ordering`.
+- `-webkit-text-stroke`.
+- `-webkit-text-zoom`.
+- `all`.
+- `buffered-rendering`.
+- `glyph-orientation-horizontal`.
+- `glyph-orientation-vertical`.
+- `marker`.
+- `marker-end`.
+- `marker-mid`.
+- `marker-start`.
+- `page`.
+- `position-try-order`.
+- `scrollbar-color`.
+- `text-box-edge`.
+- `text-wrap`.

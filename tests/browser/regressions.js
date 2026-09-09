@@ -511,8 +511,12 @@ document.querySelector("#run").onclick = async () => {
       ).then((r) => r.text());
       const rules = new CSSStyleSheet();
       rules.replaceSync(source);
+      // Safari serializes hexadecimal ranges in lowercase; CSS ranges are case-insensitive.
       const rule = [...rules.cssRules].find((r) =>
-        r.style?.getPropertyValue("unicode-range").includes("U+0-FF"),
+        r.style
+          ?.getPropertyValue("unicode-range")
+          .toUpperCase()
+          .includes("U+0-FF"),
       );
       assert(rule, "Latin font rule missing");
       const family = "Programmatic Display";

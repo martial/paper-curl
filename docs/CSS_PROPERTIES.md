@@ -42,4 +42,12 @@ Capture median **30.1 ms**, p95 **203.6 ms**, for two snapshots per tested decla
 
 ## Safari
 
-Not measured yet. Real Safari automation requires macOS authorization and Safari’s **Allow remote automation** setting. No WebKit or Chromium result is substituted.
+**Safari 26.6.2**, PaperCurl **0.4.3**, recorded 2026-09-09T20:17:07.067Z; DPR 2.
+
+705 properties: **446 preserved values**, **0 mismatches**, **171 browser-unsupported**, **63 native/frozen**, **25 unverified**, **0 capture errors**.
+
+Visual/browser suite: **61 passed, 0 failed**.
+
+Capture median **10 ms**, p95 **16 ms**, for two snapshots per tested declaration. Full sweep: 5.6 seconds.
+
+[Full property list](css-reports/safari.md) · [JSON evidence](css-reports/safari.json) · [CSV](css-reports/safari.csv)

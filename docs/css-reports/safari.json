@@ -1,0 +1,5554 @@
+{
+  "schemaVersion": 1,
+  "libraryVersion": "0.4.3",
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+  "browserIdentity": {
+    "name": "safari",
+    "version": "26.6.2",
+    "platform": "macOS",
+    "headless": false,
+    "driver": "W3C WebDriver"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 848,
+    "dpr": 2
+  },
+  "startedAt": "2026-09-09T20:17:01.510Z",
+  "catalog": {
+    "source": "https://raw.githubusercontent.com/mdn/data/635d63e0c4b4a0a4216aa9ee1cbdaed0c5111065/css/properties.json",
+    "revision": "635d63e0c4b4a0a4216aa9ee1cbdaed0c5111065",
+    "license": "CC0-1.0"
+  },
+  "method": "One non-default declaration per property; real SVG rasterization and computed-value round trip on visible and hidden pages. Not a full pixel equivalence test.",
+  "scope": "Full catalog and browser inventory",
+  "total": 705,
+  "complete": true,
+  "rows": [
+    {
+      "property": "-apple-pay-button-style",
+      "status": "untested"
+    },
+    {
+      "property": "-apple-pay-button-type",
+      "status": "untested"
+    },
+    {
+      "property": "-moz-appearance",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-binding",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-border-bottom-colors",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-border-left-colors",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-border-right-colors",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-border-top-colors",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-context-properties",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-float-edge",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-force-broken-image-icon",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-orient",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-outline-radius",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-outline-radius-bottomleft",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-outline-radius-bottomright",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-outline-radius-topleft",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-outline-radius-topright",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-stack-sizing",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-text-blink",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-user-focus",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-user-input",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-user-modify",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-window-dragging",
+      "status": "unsupported"
+    },
+    {
+      "property": "-moz-window-shadow",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-accelerator",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-block-progression",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zoom-chaining",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zoom-limit",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zoom-limit-max",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zoom-limit-min",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zoom-snap",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zoom-snap-points",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zoom-snap-type",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-content-zooming",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-filter",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-flow-from",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-flow-into",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-grid-columns",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-grid-rows",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-high-contrast-adjust",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-hyphenate-limit-chars",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-hyphenate-limit-lines",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-hyphenate-limit-zone",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-ime-align",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-overflow-style",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-chaining",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-limit",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-limit-x-max",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-limit-x-min",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-limit-y-max",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-limit-y-min",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-rails",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-snap-points-x",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-snap-points-y",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-snap-type",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-snap-x",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-snap-y",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scroll-translation",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-3dlight-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-arrow-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-base-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-darkshadow-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-face-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-highlight-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-shadow-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-scrollbar-track-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-text-autospace",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-touch-select",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-user-select",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-wrap-flow",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-wrap-margin",
+      "status": "unsupported"
+    },
+    {
+      "property": "-ms-wrap-through",
+      "status": "unsupported"
+    },
+    {
+      "property": "-webkit-appearance",
+      "status": "preserved",
+      "value": "button",
+      "captureMs": 27,
+      "expected": "button",
+      "restored": "button",
+      "hiddenExpected": "button",
+      "hiddenRestored": "button"
+    },
+    {
+      "property": "-webkit-border-after",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "-webkit-border-after-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 12,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "-webkit-border-after-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 6,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "-webkit-border-after-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "-webkit-border-before",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "-webkit-border-before-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 8,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "-webkit-border-before-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 9,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "-webkit-border-before-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "-webkit-border-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "-webkit-border-end-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 13,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "-webkit-border-end-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 13,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "-webkit-border-end-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "-webkit-border-horizontal-spacing",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "-webkit-border-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "-webkit-border-start-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 13,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "-webkit-border-start-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 12,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "-webkit-border-start-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "-webkit-border-vertical-spacing",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 14,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "-webkit-box-align",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 12,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "-webkit-box-decoration-break",
+      "status": "preserved",
+      "value": "clone",
+      "captureMs": 15,
+      "expected": "clone",
+      "restored": "clone",
+      "hiddenExpected": "clone",
+      "hiddenRestored": "clone"
+    },
+    {
+      "property": "-webkit-box-direction",
+      "status": "preserved",
+      "value": "reverse",
+      "captureMs": 16,
+      "expected": "reverse",
+      "restored": "reverse",
+      "hiddenExpected": "reverse",
+      "hiddenRestored": "reverse"
+    },
+    {
+      "property": "-webkit-box-flex",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 10,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "-webkit-box-flex-group",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 13,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "-webkit-box-lines",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-box-ordinal-group",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 9,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "-webkit-box-orient",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-box-pack",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 8,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "-webkit-box-reflect",
+      "status": "preserved",
+      "value": "above",
+      "captureMs": 9,
+      "expected": "above 0px none",
+      "restored": "above 0px none",
+      "hiddenExpected": "above 0px none",
+      "hiddenRestored": "above 0px none"
+    },
+    {
+      "property": "-webkit-column-axis",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-column-progression",
+      "status": "preserved",
+      "value": "reverse",
+      "captureMs": 12,
+      "expected": "reverse",
+      "restored": "reverse",
+      "hiddenExpected": "reverse",
+      "hiddenRestored": "reverse"
+    },
+    {
+      "property": "-webkit-cursor-visibility",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-font-smoothing",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 9,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "-webkit-hyphenate-limit-after",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 7,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "-webkit-hyphenate-limit-before",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 16,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "-webkit-hyphenate-limit-lines",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 12,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "-webkit-initial-letter",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 12,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "-webkit-line-align",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-line-box-contain",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 16,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "-webkit-line-clamp",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 12,
+      "expected": "25%",
+      "restored": "25%",
+      "hiddenExpected": "25%",
+      "hiddenRestored": "25%"
+    },
+    {
+      "property": "-webkit-line-grid",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 10,
+      "expected": "red",
+      "restored": "red",
+      "hiddenExpected": "red",
+      "hiddenRestored": "red"
+    },
+    {
+      "property": "-webkit-line-snap",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-locale",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 8,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "-webkit-mask",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-mask-attachment",
+      "status": "unsupported"
+    },
+    {
+      "property": "-webkit-mask-clip",
+      "status": "preserved",
+      "value": "padding",
+      "captureMs": 10,
+      "expected": "padding-box",
+      "restored": "padding-box",
+      "hiddenExpected": "padding-box",
+      "hiddenRestored": "padding-box"
+    },
+    {
+      "property": "-webkit-mask-composite",
+      "status": "preserved",
+      "value": "xor",
+      "captureMs": 11,
+      "expected": "xor",
+      "restored": "xor",
+      "hiddenExpected": "xor",
+      "hiddenRestored": "xor"
+    },
+    {
+      "property": "-webkit-mask-image",
+      "status": "preserved",
+      "value": "linear-gradient(red, blue)",
+      "captureMs": 17,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))"
+    },
+    {
+      "property": "-webkit-mask-origin",
+      "status": "preserved",
+      "value": "padding",
+      "captureMs": 9,
+      "expected": "padding-box",
+      "restored": "padding-box",
+      "hiddenExpected": "padding-box",
+      "hiddenRestored": "padding-box"
+    },
+    {
+      "property": "-webkit-mask-position",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px 50%",
+      "restored": "24px 50%",
+      "hiddenExpected": "24px 50%",
+      "hiddenRestored": "24px 50%"
+    },
+    {
+      "property": "-webkit-mask-position-x",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 6,
+      "expected": "50%",
+      "restored": "50%",
+      "hiddenExpected": "50%",
+      "hiddenRestored": "50%"
+    },
+    {
+      "property": "-webkit-mask-position-y",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 11,
+      "expected": "50%",
+      "restored": "50%",
+      "hiddenExpected": "50%",
+      "hiddenRestored": "50%"
+    },
+    {
+      "property": "-webkit-mask-repeat",
+      "status": "preserved",
+      "value": "repeat-x",
+      "captureMs": 11,
+      "expected": "repeat-x",
+      "restored": "repeat-x",
+      "hiddenExpected": "repeat-x",
+      "hiddenRestored": "repeat-x"
+    },
+    {
+      "property": "-webkit-mask-repeat-x",
+      "status": "unsupported"
+    },
+    {
+      "property": "-webkit-mask-repeat-y",
+      "status": "unsupported"
+    },
+    {
+      "property": "-webkit-mask-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px auto",
+      "restored": "24px auto",
+      "hiddenExpected": "24px auto",
+      "hiddenRestored": "24px auto"
+    },
+    {
+      "property": "-webkit-nbsp-mode",
+      "status": "preserved",
+      "value": "space",
+      "captureMs": 8,
+      "expected": "space",
+      "restored": "space",
+      "hiddenExpected": "space",
+      "hiddenRestored": "space"
+    },
+    {
+      "property": "-webkit-overflow-scrolling",
+      "status": "unsupported"
+    },
+    {
+      "property": "-webkit-rtl-ordering",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-tap-highlight-color",
+      "status": "unsupported"
+    },
+    {
+      "property": "-webkit-text-fill-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 11,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "-webkit-text-security",
+      "status": "preserved",
+      "value": "disc",
+      "captureMs": 12,
+      "expected": "disc",
+      "restored": "disc",
+      "hiddenExpected": "disc",
+      "hiddenRestored": "disc"
+    },
+    {
+      "property": "-webkit-text-stroke",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-text-stroke-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 12,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "-webkit-text-stroke-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "-webkit-text-zoom",
+      "status": "untested"
+    },
+    {
+      "property": "-webkit-touch-callout",
+      "status": "unsupported"
+    },
+    {
+      "property": "-webkit-user-drag",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 8,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "-webkit-user-modify",
+      "status": "preserved",
+      "value": "read-write",
+      "captureMs": 4,
+      "expected": "read-write",
+      "restored": "read-write",
+      "hiddenExpected": "read-write",
+      "hiddenRestored": "read-write"
+    },
+    {
+      "property": "-webkit-user-select",
+      "status": "native"
+    },
+    {
+      "property": "accent-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 11,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "align-content",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 10,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "align-items",
+      "status": "preserved",
+      "value": "stretch",
+      "captureMs": 10,
+      "expected": "stretch",
+      "restored": "stretch",
+      "hiddenExpected": "stretch",
+      "hiddenRestored": "stretch"
+    },
+    {
+      "property": "align-self",
+      "status": "preserved",
+      "value": "normal",
+      "captureMs": 18,
+      "expected": "normal",
+      "restored": "normal",
+      "hiddenExpected": "normal",
+      "hiddenRestored": "normal"
+    },
+    {
+      "property": "align-tracks",
+      "status": "unsupported"
+    },
+    {
+      "property": "alignment-baseline",
+      "status": "preserved",
+      "value": "alphabetic",
+      "captureMs": 14,
+      "expected": "alphabetic",
+      "restored": "alphabetic",
+      "hiddenExpected": "alphabetic",
+      "hiddenRestored": "alphabetic"
+    },
+    {
+      "property": "all",
+      "status": "untested"
+    },
+    {
+      "property": "anchor-name",
+      "status": "preserved",
+      "value": "--pc-example",
+      "captureMs": 8,
+      "expected": "--pc-example",
+      "restored": "--pc-example",
+      "hiddenExpected": "--pc-example",
+      "hiddenRestored": "--pc-example"
+    },
+    {
+      "property": "anchor-scope",
+      "status": "preserved",
+      "value": "all",
+      "captureMs": 11,
+      "expected": "all",
+      "restored": "all",
+      "hiddenExpected": "all",
+      "hiddenRestored": "all"
+    },
+    {
+      "property": "animation",
+      "status": "native"
+    },
+    {
+      "property": "animation-composition",
+      "status": "native"
+    },
+    {
+      "property": "animation-delay",
+      "status": "native"
+    },
+    {
+      "property": "animation-direction",
+      "status": "native"
+    },
+    {
+      "property": "animation-duration",
+      "status": "native"
+    },
+    {
+      "property": "animation-fill-mode",
+      "status": "native"
+    },
+    {
+      "property": "animation-iteration-count",
+      "status": "native"
+    },
+    {
+      "property": "animation-name",
+      "status": "native"
+    },
+    {
+      "property": "animation-play-state",
+      "status": "native"
+    },
+    {
+      "property": "animation-range",
+      "status": "native"
+    },
+    {
+      "property": "animation-range-end",
+      "status": "native"
+    },
+    {
+      "property": "animation-range-start",
+      "status": "native"
+    },
+    {
+      "property": "animation-timeline",
+      "status": "native"
+    },
+    {
+      "property": "animation-timing-function",
+      "status": "native"
+    },
+    {
+      "property": "animation-trigger",
+      "status": "unsupported"
+    },
+    {
+      "property": "appearance",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 10,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "aspect-ratio",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 6,
+      "expected": "2 / 1",
+      "restored": "2 / 1",
+      "hiddenExpected": "2 / 1",
+      "hiddenRestored": "2 / 1"
+    },
+    {
+      "property": "backdrop-filter",
+      "status": "preserved",
+      "value": "blur(2px)",
+      "captureMs": 11,
+      "expected": "blur(2px)",
+      "restored": "blur(2px)",
+      "hiddenExpected": "blur(2px)",
+      "hiddenRestored": "blur(2px)"
+    },
+    {
+      "property": "backface-visibility",
+      "status": "preserved",
+      "value": "hidden",
+      "captureMs": 6,
+      "expected": "hidden",
+      "restored": "hidden",
+      "hiddenExpected": "hidden",
+      "hiddenRestored": "hidden"
+    },
+    {
+      "property": "background",
+      "status": "preserved",
+      "value": "linear-gradient(red,blue)",
+      "captureMs": 15,
+      "expected": "rgba(0, 0, 0, 0) linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) repeat scroll 0% 0% / auto padding-box border-box",
+      "restored": "rgba(0, 0, 0, 0) linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) repeat scroll 0% 0% / auto padding-box border-box",
+      "hiddenExpected": "rgba(0, 0, 0, 0) linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) repeat scroll 0% 0% / auto padding-box border-box",
+      "hiddenRestored": "rgba(0, 0, 0, 0) linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) repeat scroll 0% 0% / auto padding-box border-box"
+    },
+    {
+      "property": "background-attachment",
+      "status": "preserved",
+      "value": "fixed",
+      "captureMs": 8,
+      "expected": "fixed",
+      "restored": "fixed",
+      "hiddenExpected": "fixed",
+      "hiddenRestored": "fixed"
+    },
+    {
+      "property": "background-blend-mode",
+      "status": "preserved",
+      "value": "multiply",
+      "captureMs": 13,
+      "expected": "multiply",
+      "restored": "multiply",
+      "hiddenExpected": "multiply",
+      "hiddenRestored": "multiply"
+    },
+    {
+      "property": "background-clip",
+      "status": "preserved",
+      "value": "content-box",
+      "captureMs": 12,
+      "expected": "content-box",
+      "restored": "content-box",
+      "hiddenExpected": "content-box",
+      "hiddenRestored": "content-box"
+    },
+    {
+      "property": "background-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 7,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "background-image",
+      "status": "preserved",
+      "value": "linear-gradient(red, blue)",
+      "captureMs": 9,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))"
+    },
+    {
+      "property": "background-origin",
+      "status": "preserved",
+      "value": "content-box",
+      "captureMs": 5,
+      "expected": "content-box",
+      "restored": "content-box",
+      "hiddenExpected": "content-box",
+      "hiddenRestored": "content-box"
+    },
+    {
+      "property": "background-position",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px 50%",
+      "restored": "24px 50%",
+      "hiddenExpected": "24px 50%",
+      "hiddenRestored": "24px 50%"
+    },
+    {
+      "property": "background-position-x",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 9,
+      "expected": "50%",
+      "restored": "50%",
+      "hiddenExpected": "50%",
+      "hiddenRestored": "50%"
+    },
+    {
+      "property": "background-position-y",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 8,
+      "expected": "50%",
+      "restored": "50%",
+      "hiddenExpected": "50%",
+      "hiddenRestored": "50%"
+    },
+    {
+      "property": "background-repeat",
+      "status": "preserved",
+      "value": "repeat-x",
+      "captureMs": 11,
+      "expected": "repeat-x",
+      "restored": "repeat-x",
+      "hiddenExpected": "repeat-x",
+      "hiddenRestored": "repeat-x"
+    },
+    {
+      "property": "background-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px auto",
+      "restored": "24px auto",
+      "hiddenExpected": "24px auto",
+      "hiddenRestored": "24px auto"
+    },
+    {
+      "property": "baseline-shift",
+      "status": "preserved",
+      "value": "sub",
+      "captureMs": 7,
+      "expected": "sub",
+      "restored": "sub",
+      "hiddenExpected": "sub",
+      "hiddenRestored": "sub"
+    },
+    {
+      "property": "baseline-source",
+      "status": "unsupported"
+    },
+    {
+      "property": "block-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "32px",
+      "restored": "32px",
+      "hiddenExpected": "32px",
+      "hiddenRestored": "32px"
+    },
+    {
+      "property": "border",
+      "status": "preserved",
+      "value": "4px solid red",
+      "captureMs": 13,
+      "expected": "4px solid rgb(255, 0, 0)",
+      "restored": "4px solid rgb(255, 0, 0)",
+      "hiddenExpected": "4px solid rgb(255, 0, 0)",
+      "hiddenRestored": "4px solid rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-block",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 32,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-block-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 14,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-block-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-block-end-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 5,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-block-end-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 8,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-block-end-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-block-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-block-start-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 6,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-block-start-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 10,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-block-start-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-block-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 11,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-block-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-bottom",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-bottom-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 7,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-bottom-left-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 19,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-bottom-right-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-bottom-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 9,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-bottom-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-collapse",
+      "status": "preserved",
+      "value": "collapse",
+      "captureMs": 14,
+      "expected": "collapse",
+      "restored": "collapse",
+      "hiddenExpected": "collapse",
+      "hiddenRestored": "collapse"
+    },
+    {
+      "property": "border-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 9,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-end-end-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 14,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-end-start-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-image",
+      "status": "preserved",
+      "value": "linear-gradient(red,blue) 1",
+      "captureMs": 8,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 1 / 1 / 0 stretch",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 1 / 1 / 0 stretch",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 1 / 1 / 0 stretch",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 1 / 1 / 0 stretch"
+    },
+    {
+      "property": "border-image-outset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-image-repeat",
+      "status": "preserved",
+      "value": "repeat",
+      "captureMs": 10,
+      "expected": "repeat",
+      "restored": "repeat",
+      "hiddenExpected": "repeat",
+      "hiddenRestored": "repeat"
+    },
+    {
+      "property": "border-image-slice",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 14,
+      "expected": "25%",
+      "restored": "25%",
+      "hiddenExpected": "25%",
+      "hiddenRestored": "25%"
+    },
+    {
+      "property": "border-image-source",
+      "status": "preserved",
+      "value": "linear-gradient(red, blue)",
+      "captureMs": 10,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))"
+    },
+    {
+      "property": "border-image-width",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 9,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "border-inline",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-inline-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 13,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-inline-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-inline-end-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 6,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-inline-end-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 9,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-inline-end-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-inline-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-inline-start-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 7,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-inline-start-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 8,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-inline-start-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-inline-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 10,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-inline-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-left",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-left-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 8,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-left-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 7,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-left-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 17,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-right",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-right-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 12,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-right-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 8,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-right-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "border-spacing",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 17,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-start-end-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-start-start-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 14,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-top",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "0px none rgb(23, 37, 30)",
+      "restored": "0px none rgb(23, 37, 30)",
+      "hiddenExpected": "0px none rgb(23, 37, 30)",
+      "hiddenRestored": "0px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "border-top-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 7,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "border-top-left-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-top-right-radius",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-top-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 4,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "border-top-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "border-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "bottom",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 17,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "box-align",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-decoration-break",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-direction",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-flex",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-flex-group",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-lines",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-ordinal-group",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-orient",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-pack",
+      "status": "unsupported"
+    },
+    {
+      "property": "box-shadow",
+      "status": "preserved",
+      "value": "3px 4px 2px red",
+      "captureMs": 13,
+      "expected": "rgb(255, 0, 0) 3px 4px 2px 0px",
+      "restored": "rgb(255, 0, 0) 3px 4px 2px 0px",
+      "hiddenExpected": "rgb(255, 0, 0) 3px 4px 2px 0px",
+      "hiddenRestored": "rgb(255, 0, 0) 3px 4px 2px 0px"
+    },
+    {
+      "property": "box-sizing",
+      "status": "preserved",
+      "value": "content-box",
+      "captureMs": 8,
+      "expected": "content-box",
+      "restored": "content-box",
+      "hiddenExpected": "content-box",
+      "hiddenRestored": "content-box"
+    },
+    {
+      "property": "break-after",
+      "status": "preserved",
+      "value": "avoid",
+      "captureMs": 10,
+      "expected": "avoid",
+      "restored": "avoid",
+      "hiddenExpected": "avoid",
+      "hiddenRestored": "avoid"
+    },
+    {
+      "property": "break-before",
+      "status": "preserved",
+      "value": "avoid",
+      "captureMs": 16,
+      "expected": "avoid",
+      "restored": "avoid",
+      "hiddenExpected": "avoid",
+      "hiddenRestored": "avoid"
+    },
+    {
+      "property": "break-inside",
+      "status": "preserved",
+      "value": "avoid",
+      "captureMs": 12,
+      "expected": "avoid",
+      "restored": "avoid",
+      "hiddenExpected": "avoid",
+      "hiddenRestored": "avoid"
+    },
+    {
+      "property": "buffered-rendering",
+      "status": "untested"
+    },
+    {
+      "property": "caption-side",
+      "status": "preserved",
+      "value": "bottom",
+      "captureMs": 14,
+      "expected": "bottom",
+      "restored": "bottom",
+      "hiddenExpected": "bottom",
+      "hiddenRestored": "bottom"
+    },
+    {
+      "property": "caret",
+      "status": "unsupported"
+    },
+    {
+      "property": "caret-animation",
+      "status": "unsupported"
+    },
+    {
+      "property": "caret-color",
+      "status": "native"
+    },
+    {
+      "property": "caret-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "clear",
+      "status": "preserved",
+      "value": "left",
+      "captureMs": 10,
+      "expected": "left",
+      "restored": "left",
+      "hiddenExpected": "left",
+      "hiddenRestored": "left"
+    },
+    {
+      "property": "clip",
+      "status": "preserved",
+      "value": "rect(0px, 100px, 80px, 0px)",
+      "captureMs": 7,
+      "expected": "rect(0px, 100px, 80px, 0px)",
+      "restored": "rect(0px, 100px, 80px, 0px)",
+      "hiddenExpected": "rect(0px, 100px, 80px, 0px)",
+      "hiddenRestored": "rect(0px, 100px, 80px, 0px)"
+    },
+    {
+      "property": "clip-path",
+      "status": "preserved",
+      "value": "circle(35% at 50% 50%)",
+      "captureMs": 11,
+      "expected": "circle(35% at 50% 50%)",
+      "restored": "circle(35% at 50% 50%)",
+      "hiddenExpected": "circle(35% at 50% 50%)",
+      "hiddenRestored": "circle(35% at 50% 50%)"
+    },
+    {
+      "property": "clip-rule",
+      "status": "preserved",
+      "value": "evenodd",
+      "captureMs": 6,
+      "expected": "evenodd",
+      "restored": "evenodd",
+      "hiddenExpected": "evenodd",
+      "hiddenRestored": "evenodd"
+    },
+    {
+      "property": "color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 11,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "color-interpolation",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 10,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "color-interpolation-filters",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 9,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "color-scheme",
+      "status": "preserved",
+      "value": "light",
+      "captureMs": 10,
+      "expected": "light",
+      "restored": "light",
+      "hiddenExpected": "light",
+      "hiddenRestored": "light"
+    },
+    {
+      "property": "column-count",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 9,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "column-fill",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 10,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "column-gap",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "column-height",
+      "status": "unsupported"
+    },
+    {
+      "property": "column-rule",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px none rgb(23, 37, 30)",
+      "restored": "24px none rgb(23, 37, 30)",
+      "hiddenExpected": "24px none rgb(23, 37, 30)",
+      "hiddenRestored": "24px none rgb(23, 37, 30)"
+    },
+    {
+      "property": "column-rule-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 8,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "column-rule-style",
+      "status": "preserved",
+      "value": "solid",
+      "captureMs": 7,
+      "expected": "solid",
+      "restored": "solid",
+      "hiddenExpected": "solid",
+      "hiddenRestored": "solid"
+    },
+    {
+      "property": "column-rule-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 5,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "column-span",
+      "status": "preserved",
+      "value": "all",
+      "captureMs": 13,
+      "expected": "all",
+      "restored": "all",
+      "hiddenExpected": "all",
+      "hiddenRestored": "all"
+    },
+    {
+      "property": "column-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "column-wrap",
+      "status": "unsupported"
+    },
+    {
+      "property": "columns",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "contain",
+      "status": "preserved",
+      "value": "layout paint",
+      "captureMs": 12,
+      "expected": "layout paint",
+      "restored": "layout paint",
+      "hiddenExpected": "layout paint",
+      "hiddenRestored": "layout paint"
+    },
+    {
+      "property": "contain-intrinsic-block-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "contain-intrinsic-height",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "contain-intrinsic-inline-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 17,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "contain-intrinsic-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 14,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "contain-intrinsic-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "container",
+      "status": "preserved",
+      "value": "test / inline-size",
+      "captureMs": 22,
+      "expected": "test / inline-size",
+      "restored": "test / inline-size",
+      "hiddenExpected": "test / inline-size",
+      "hiddenRestored": "test / inline-size"
+    },
+    {
+      "property": "container-name",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 13,
+      "expected": "red",
+      "restored": "red",
+      "hiddenExpected": "red",
+      "hiddenRestored": "red"
+    },
+    {
+      "property": "container-type",
+      "status": "preserved",
+      "value": "size",
+      "captureMs": 9,
+      "expected": "size",
+      "restored": "size",
+      "hiddenExpected": "size",
+      "hiddenRestored": "size"
+    },
+    {
+      "property": "content",
+      "status": "preserved",
+      "value": "\"CSS\"",
+      "captureMs": 9,
+      "expected": "\"CSS\"",
+      "restored": "\"CSS\"",
+      "hiddenExpected": "\"CSS\"",
+      "hiddenRestored": "\"CSS\""
+    },
+    {
+      "property": "content-visibility",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 6,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "corner-block-end-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-block-start-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-bottom-left-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-bottom-right-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-bottom-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-end-end-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-end-start-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-inline-end-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-inline-start-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-left-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-right-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-start-end-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-start-start-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-top-left-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-top-right-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "corner-top-shape",
+      "status": "unsupported"
+    },
+    {
+      "property": "counter-increment",
+      "status": "preserved",
+      "value": "chapter 2",
+      "captureMs": 7,
+      "expected": "chapter 2",
+      "restored": "chapter 2",
+      "hiddenExpected": "chapter 2",
+      "hiddenRestored": "chapter 2"
+    },
+    {
+      "property": "counter-reset",
+      "status": "preserved",
+      "value": "chapter 2",
+      "captureMs": 8,
+      "expected": "chapter 2",
+      "restored": "chapter 2",
+      "hiddenExpected": "chapter 2",
+      "hiddenRestored": "chapter 2"
+    },
+    {
+      "property": "counter-set",
+      "status": "preserved",
+      "value": "chapter 2",
+      "captureMs": 8,
+      "expected": "chapter 2",
+      "restored": "chapter 2",
+      "hiddenExpected": "chapter 2",
+      "hiddenRestored": "chapter 2"
+    },
+    {
+      "property": "cursor",
+      "status": "native"
+    },
+    {
+      "property": "cx",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "cy",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "d",
+      "status": "unsupported"
+    },
+    {
+      "property": "direction",
+      "status": "preserved",
+      "value": "rtl",
+      "captureMs": 10,
+      "expected": "rtl",
+      "restored": "rtl",
+      "hiddenExpected": "rtl",
+      "hiddenRestored": "rtl"
+    },
+    {
+      "property": "display",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 10,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "dominant-baseline",
+      "status": "preserved",
+      "value": "alphabetic",
+      "captureMs": 11,
+      "expected": "alphabetic",
+      "restored": "alphabetic",
+      "hiddenExpected": "alphabetic",
+      "hiddenRestored": "alphabetic"
+    },
+    {
+      "property": "dynamic-range-limit",
+      "status": "preserved",
+      "value": "standard",
+      "captureMs": 7,
+      "expected": "standard",
+      "restored": "standard",
+      "hiddenExpected": "standard",
+      "hiddenRestored": "standard"
+    },
+    {
+      "property": "empty-cells",
+      "status": "preserved",
+      "value": "hide",
+      "captureMs": 9,
+      "expected": "hide",
+      "restored": "hide",
+      "hiddenExpected": "hide",
+      "hiddenRestored": "hide"
+    },
+    {
+      "property": "field-sizing",
+      "status": "preserved",
+      "value": "content",
+      "captureMs": 5,
+      "expected": "content",
+      "restored": "content",
+      "hiddenExpected": "content",
+      "hiddenRestored": "content"
+    },
+    {
+      "property": "fill",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 6,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "fill-opacity",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 8,
+      "expected": "0.25",
+      "restored": "0.25",
+      "hiddenExpected": "0.25",
+      "hiddenRestored": "0.25"
+    },
+    {
+      "property": "fill-rule",
+      "status": "preserved",
+      "value": "evenodd",
+      "captureMs": 10,
+      "expected": "evenodd",
+      "restored": "evenodd",
+      "hiddenExpected": "evenodd",
+      "hiddenRestored": "evenodd"
+    },
+    {
+      "property": "filter",
+      "status": "preserved",
+      "value": "blur(2px)",
+      "captureMs": 22,
+      "expected": "blur(2px)",
+      "restored": "blur(2px)",
+      "hiddenExpected": "blur(2px)",
+      "hiddenRestored": "blur(2px)"
+    },
+    {
+      "property": "flex",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 9,
+      "expected": "0 0 auto",
+      "restored": "0 0 auto",
+      "hiddenExpected": "0 0 auto",
+      "hiddenRestored": "0 0 auto"
+    },
+    {
+      "property": "flex-basis",
+      "status": "preserved",
+      "value": "content",
+      "captureMs": 15,
+      "expected": "content",
+      "restored": "content",
+      "hiddenExpected": "content",
+      "hiddenRestored": "content"
+    },
+    {
+      "property": "flex-direction",
+      "status": "preserved",
+      "value": "row-reverse",
+      "captureMs": 10,
+      "expected": "row-reverse",
+      "restored": "row-reverse",
+      "hiddenExpected": "row-reverse",
+      "hiddenRestored": "row-reverse"
+    },
+    {
+      "property": "flex-flow",
+      "status": "preserved",
+      "value": "wrap",
+      "captureMs": 8,
+      "expected": "wrap",
+      "restored": "wrap",
+      "hiddenExpected": "wrap",
+      "hiddenRestored": "wrap"
+    },
+    {
+      "property": "flex-grow",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 15,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "flex-line-count",
+      "status": "unsupported"
+    },
+    {
+      "property": "flex-shrink",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 13,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "flex-wrap",
+      "status": "preserved",
+      "value": "wrap",
+      "captureMs": 5,
+      "expected": "wrap",
+      "restored": "wrap",
+      "hiddenExpected": "wrap",
+      "hiddenRestored": "wrap"
+    },
+    {
+      "property": "float",
+      "status": "preserved",
+      "value": "left",
+      "captureMs": 7,
+      "expected": "left",
+      "restored": "left",
+      "hiddenExpected": "left",
+      "hiddenRestored": "left"
+    },
+    {
+      "property": "flood-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 10,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "flood-opacity",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 7,
+      "expected": "0.25",
+      "restored": "0.25",
+      "hiddenExpected": "0.25",
+      "hiddenRestored": "0.25"
+    },
+    {
+      "property": "flow-tolerance",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "font",
+      "status": "preserved",
+      "value": "italic 20px/1.4 Arial",
+      "captureMs": 8,
+      "expected": "italic 20px / 28px Arial",
+      "restored": "italic 20px / 28px Arial",
+      "hiddenExpected": "italic 20px / 28px Arial",
+      "hiddenRestored": "italic 20px / 28px Arial"
+    },
+    {
+      "property": "font-family",
+      "status": "preserved",
+      "value": "Georgia, serif",
+      "captureMs": 11,
+      "expected": "Georgia, serif",
+      "restored": "Georgia, serif",
+      "hiddenExpected": "Georgia, serif",
+      "hiddenRestored": "Georgia, serif"
+    },
+    {
+      "property": "font-feature-settings",
+      "status": "preserved",
+      "value": "\"liga\" 0",
+      "captureMs": 10,
+      "expected": "\"liga\" 0",
+      "restored": "\"liga\" 0",
+      "hiddenExpected": "\"liga\" 0",
+      "hiddenRestored": "\"liga\" 0"
+    },
+    {
+      "property": "font-kerning",
+      "status": "preserved",
+      "value": "normal",
+      "captureMs": 8,
+      "expected": "normal",
+      "restored": "normal",
+      "hiddenExpected": "normal",
+      "hiddenRestored": "normal"
+    },
+    {
+      "property": "font-language-override",
+      "status": "unsupported"
+    },
+    {
+      "property": "font-optical-sizing",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 10,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "font-palette",
+      "status": "preserved",
+      "value": "light",
+      "captureMs": 12,
+      "expected": "light",
+      "restored": "light",
+      "hiddenExpected": "light",
+      "hiddenRestored": "light"
+    },
+    {
+      "property": "font-size",
+      "status": "preserved",
+      "value": "22px",
+      "captureMs": 6,
+      "expected": "22px",
+      "restored": "22px",
+      "hiddenExpected": "22px",
+      "hiddenRestored": "22px"
+    },
+    {
+      "property": "font-size-adjust",
+      "status": "preserved",
+      "value": "from-font",
+      "captureMs": 10,
+      "expected": "0.518555",
+      "restored": "0.518555",
+      "hiddenExpected": "0.518555",
+      "hiddenRestored": "0.518555"
+    },
+    {
+      "property": "font-smooth",
+      "status": "unsupported"
+    },
+    {
+      "property": "font-stretch",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 24,
+      "expected": "25%",
+      "restored": "25%",
+      "hiddenExpected": "25%",
+      "hiddenRestored": "25%"
+    },
+    {
+      "property": "font-style",
+      "status": "preserved",
+      "value": "italic",
+      "captureMs": 12,
+      "expected": "italic",
+      "restored": "italic",
+      "hiddenExpected": "italic",
+      "hiddenRestored": "italic"
+    },
+    {
+      "property": "font-synthesis",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 8,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "font-synthesis-position",
+      "status": "unsupported"
+    },
+    {
+      "property": "font-synthesis-small-caps",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 6,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "font-synthesis-style",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 11,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "font-synthesis-weight",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 9,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "font-variant",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 6,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "font-variant-alternates",
+      "status": "preserved",
+      "value": "historical-forms",
+      "captureMs": 10,
+      "expected": "historical-forms",
+      "restored": "historical-forms",
+      "hiddenExpected": "historical-forms",
+      "hiddenRestored": "historical-forms"
+    },
+    {
+      "property": "font-variant-caps",
+      "status": "preserved",
+      "value": "small-caps",
+      "captureMs": 11,
+      "expected": "small-caps",
+      "restored": "small-caps",
+      "hiddenExpected": "small-caps",
+      "hiddenRestored": "small-caps"
+    },
+    {
+      "property": "font-variant-east-asian",
+      "status": "preserved",
+      "value": "ruby",
+      "captureMs": 6,
+      "expected": "ruby",
+      "restored": "ruby",
+      "hiddenExpected": "ruby",
+      "hiddenRestored": "ruby"
+    },
+    {
+      "property": "font-variant-emoji",
+      "status": "unsupported"
+    },
+    {
+      "property": "font-variant-ligatures",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 6,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "font-variant-numeric",
+      "status": "preserved",
+      "value": "ordinal",
+      "captureMs": 9,
+      "expected": "ordinal",
+      "restored": "ordinal",
+      "hiddenExpected": "ordinal",
+      "hiddenRestored": "ordinal"
+    },
+    {
+      "property": "font-variant-position",
+      "status": "preserved",
+      "value": "sub",
+      "captureMs": 11,
+      "expected": "sub",
+      "restored": "sub",
+      "hiddenExpected": "sub",
+      "hiddenRestored": "sub"
+    },
+    {
+      "property": "font-variation-settings",
+      "status": "preserved",
+      "value": "\"wght\" 650",
+      "captureMs": 8,
+      "expected": "\"wght\" 650",
+      "restored": "\"wght\" 650",
+      "hiddenExpected": "\"wght\" 650",
+      "hiddenRestored": "\"wght\" 650"
+    },
+    {
+      "property": "font-weight",
+      "status": "preserved",
+      "value": "bolder",
+      "captureMs": 10,
+      "expected": "700",
+      "restored": "700",
+      "hiddenExpected": "700",
+      "hiddenRestored": "700"
+    },
+    {
+      "property": "font-width",
+      "status": "preserved",
+      "value": "ultra-condensed",
+      "captureMs": 7,
+      "expected": "50%",
+      "restored": "50%",
+      "hiddenExpected": "50%",
+      "hiddenRestored": "50%"
+    },
+    {
+      "property": "forced-color-adjust",
+      "status": "unsupported"
+    },
+    {
+      "property": "frame-sizing",
+      "status": "unsupported"
+    },
+    {
+      "property": "gap",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "glyph-orientation-horizontal",
+      "status": "untested"
+    },
+    {
+      "property": "glyph-orientation-vertical",
+      "status": "untested"
+    },
+    {
+      "property": "grid",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 7,
+      "expected": "none / none / none / row / auto / auto",
+      "restored": "none / none / none / row / auto / auto",
+      "hiddenExpected": "none / none / none / row / auto / auto",
+      "hiddenRestored": "none / none / none / row / auto / auto"
+    },
+    {
+      "property": "grid-area",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 8,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "grid-auto-columns",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "grid-auto-flow",
+      "status": "preserved",
+      "value": "row",
+      "captureMs": 8,
+      "expected": "row",
+      "restored": "row",
+      "hiddenExpected": "row",
+      "hiddenRestored": "row"
+    },
+    {
+      "property": "grid-auto-rows",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "grid-column",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 13,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "grid-column-end",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 11,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "grid-column-gap",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "grid-column-start",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 12,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "grid-gap",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "grid-row",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 8,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "grid-row-end",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 12,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "grid-row-gap",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "grid-row-start",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 4,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "grid-template",
+      "status": "preserved",
+      "value": "40px 40px / 50px 50px",
+      "captureMs": 8,
+      "expected": "40px 40px / 50px 50px",
+      "restored": "40px 40px / 50px 50px",
+      "hiddenExpected": "40px 40px / 50px 50px",
+      "hiddenRestored": "40px 40px / 50px 50px"
+    },
+    {
+      "property": "grid-template-areas",
+      "status": "preserved",
+      "value": "\"a b\" \"a b\"",
+      "captureMs": 10,
+      "expected": "\"a b\" \"a b\"",
+      "restored": "\"a b\" \"a b\"",
+      "hiddenExpected": "\"a b\" \"a b\"",
+      "hiddenRestored": "\"a b\" \"a b\""
+    },
+    {
+      "property": "grid-template-columns",
+      "status": "preserved",
+      "value": "subgrid",
+      "captureMs": 11,
+      "expected": "subgrid",
+      "restored": "subgrid",
+      "hiddenExpected": "subgrid",
+      "hiddenRestored": "subgrid"
+    },
+    {
+      "property": "grid-template-rows",
+      "status": "preserved",
+      "value": "subgrid",
+      "captureMs": 12,
+      "expected": "subgrid",
+      "restored": "subgrid",
+      "hiddenExpected": "subgrid",
+      "hiddenRestored": "subgrid"
+    },
+    {
+      "property": "hanging-punctuation",
+      "status": "preserved",
+      "value": "first",
+      "captureMs": 7,
+      "expected": "first",
+      "restored": "first",
+      "hiddenExpected": "first",
+      "hiddenRestored": "first"
+    },
+    {
+      "property": "height",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 13,
+      "expected": "52px",
+      "restored": "52px",
+      "hiddenExpected": "52px",
+      "hiddenRestored": "52px"
+    },
+    {
+      "property": "hyphenate-character",
+      "status": "preserved",
+      "value": "\"CSS\"",
+      "captureMs": 11,
+      "expected": "\"CSS\"",
+      "restored": "\"CSS\"",
+      "hiddenExpected": "\"CSS\"",
+      "hiddenRestored": "\"CSS\""
+    },
+    {
+      "property": "hyphenate-limit-chars",
+      "status": "unsupported"
+    },
+    {
+      "property": "hyphens",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 8,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "image-orientation",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 9,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "image-rendering",
+      "status": "preserved",
+      "value": "crisp-edges",
+      "captureMs": 8,
+      "expected": "crisp-edges",
+      "restored": "crisp-edges",
+      "hiddenExpected": "crisp-edges",
+      "hiddenRestored": "crisp-edges"
+    },
+    {
+      "property": "image-resolution",
+      "status": "unsupported"
+    },
+    {
+      "property": "ime-mode",
+      "status": "unsupported"
+    },
+    {
+      "property": "initial-letter",
+      "status": "unsupported"
+    },
+    {
+      "property": "initial-letter-align",
+      "status": "unsupported"
+    },
+    {
+      "property": "inline-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "32px",
+      "restored": "32px",
+      "hiddenExpected": "32px",
+      "hiddenRestored": "32px"
+    },
+    {
+      "property": "inset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 18,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "inset-block",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "inset-block-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 5,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "inset-block-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 14,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "inset-inline",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "inset-inline-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 15,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "inset-inline-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "interactivity",
+      "status": "unsupported"
+    },
+    {
+      "property": "interest-delay",
+      "status": "unsupported"
+    },
+    {
+      "property": "interest-delay-end",
+      "status": "unsupported"
+    },
+    {
+      "property": "interest-delay-start",
+      "status": "unsupported"
+    },
+    {
+      "property": "interpolate-size",
+      "status": "unsupported"
+    },
+    {
+      "property": "isolation",
+      "status": "preserved",
+      "value": "isolate",
+      "captureMs": 7,
+      "expected": "isolate",
+      "restored": "isolate",
+      "hiddenExpected": "isolate",
+      "hiddenRestored": "isolate"
+    },
+    {
+      "property": "justify-content",
+      "status": "preserved",
+      "value": "left",
+      "captureMs": 9,
+      "expected": "left",
+      "restored": "left",
+      "hiddenExpected": "left",
+      "hiddenRestored": "left"
+    },
+    {
+      "property": "justify-items",
+      "status": "preserved",
+      "value": "stretch",
+      "captureMs": 7,
+      "expected": "stretch",
+      "restored": "stretch",
+      "hiddenExpected": "stretch",
+      "hiddenRestored": "stretch"
+    },
+    {
+      "property": "justify-self",
+      "status": "preserved",
+      "value": "normal",
+      "captureMs": 7,
+      "expected": "normal",
+      "restored": "normal",
+      "hiddenExpected": "normal",
+      "hiddenRestored": "normal"
+    },
+    {
+      "property": "justify-tracks",
+      "status": "unsupported"
+    },
+    {
+      "property": "left",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "letter-spacing",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "lighting-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 16,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "line-break",
+      "status": "preserved",
+      "value": "loose",
+      "captureMs": 10,
+      "expected": "loose",
+      "restored": "loose",
+      "hiddenExpected": "loose",
+      "hiddenRestored": "loose"
+    },
+    {
+      "property": "line-clamp",
+      "status": "unsupported"
+    },
+    {
+      "property": "line-height",
+      "status": "preserved",
+      "value": "normal",
+      "captureMs": 7,
+      "expected": "normal",
+      "restored": "normal",
+      "hiddenExpected": "normal",
+      "hiddenRestored": "normal"
+    },
+    {
+      "property": "line-height-step",
+      "status": "unsupported"
+    },
+    {
+      "property": "link-parameters",
+      "status": "unsupported"
+    },
+    {
+      "property": "list-style",
+      "status": "preserved",
+      "value": "square inside",
+      "captureMs": 8,
+      "expected": "inside none square",
+      "restored": "inside none square",
+      "hiddenExpected": "inside none square",
+      "hiddenRestored": "inside none square"
+    },
+    {
+      "property": "list-style-image",
+      "status": "preserved",
+      "value": "linear-gradient(red, blue)",
+      "captureMs": 9,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))"
+    },
+    {
+      "property": "list-style-position",
+      "status": "preserved",
+      "value": "inside",
+      "captureMs": 7,
+      "expected": "inside",
+      "restored": "inside",
+      "hiddenExpected": "inside",
+      "hiddenRestored": "inside"
+    },
+    {
+      "property": "list-style-type",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 10,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "margin",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "margin-block",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 17,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "margin-block-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "margin-block-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "margin-bottom",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 6,
+      "expected": "0px",
+      "restored": "0px",
+      "hiddenExpected": "0px",
+      "hiddenRestored": "0px"
+    },
+    {
+      "property": "margin-inline",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 17,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "margin-inline-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "margin-inline-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 9,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "margin-left",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 12,
+      "expected": "140px",
+      "restored": "140px",
+      "hiddenExpected": "140px",
+      "hiddenRestored": "140px"
+    },
+    {
+      "property": "margin-right",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 10,
+      "expected": "140px",
+      "restored": "140px",
+      "hiddenExpected": "140px",
+      "hiddenRestored": "140px"
+    },
+    {
+      "property": "margin-top",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 14,
+      "expected": "0px",
+      "restored": "0px",
+      "hiddenExpected": "0px",
+      "hiddenRestored": "0px"
+    },
+    {
+      "property": "margin-trim",
+      "status": "preserved",
+      "value": "block",
+      "captureMs": 7,
+      "expected": "block",
+      "restored": "block",
+      "hiddenExpected": "block",
+      "hiddenRestored": "block"
+    },
+    {
+      "property": "marker",
+      "status": "untested"
+    },
+    {
+      "property": "marker-end",
+      "status": "untested"
+    },
+    {
+      "property": "marker-mid",
+      "status": "untested"
+    },
+    {
+      "property": "marker-start",
+      "status": "untested"
+    },
+    {
+      "property": "mask",
+      "status": "preserved",
+      "value": "linear-gradient(white,transparent)",
+      "captureMs": 12,
+      "expected": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0)) 0% 0% / auto repeat border-box border-box add match-source",
+      "restored": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0)) 0% 0% / auto repeat border-box border-box add match-source",
+      "hiddenExpected": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0)) 0% 0% / auto repeat border-box border-box add match-source",
+      "hiddenRestored": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0)) 0% 0% / auto repeat border-box border-box add match-source"
+    },
+    {
+      "property": "mask-border",
+      "status": "preserved",
+      "value": "linear-gradient(red, blue)",
+      "captureMs": 15,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 0 / auto / 0 stretch",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 0 / auto / 0 stretch",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 0 / auto / 0 stretch",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255)) 0 / auto / 0 stretch"
+    },
+    {
+      "property": "mask-border-mode",
+      "status": "unsupported"
+    },
+    {
+      "property": "mask-border-outset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 14,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "mask-border-repeat",
+      "status": "preserved",
+      "value": "repeat",
+      "captureMs": 13,
+      "expected": "repeat",
+      "restored": "repeat",
+      "hiddenExpected": "repeat",
+      "hiddenRestored": "repeat"
+    },
+    {
+      "property": "mask-border-slice",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 11,
+      "expected": "25%",
+      "restored": "25%",
+      "hiddenExpected": "25%",
+      "hiddenRestored": "25%"
+    },
+    {
+      "property": "mask-border-source",
+      "status": "preserved",
+      "value": "linear-gradient(red, blue)",
+      "captureMs": 25,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))"
+    },
+    {
+      "property": "mask-border-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 18,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "mask-clip",
+      "status": "preserved",
+      "value": "no-clip",
+      "captureMs": 11,
+      "expected": "no-clip",
+      "restored": "no-clip",
+      "hiddenExpected": "no-clip",
+      "hiddenRestored": "no-clip"
+    },
+    {
+      "property": "mask-composite",
+      "status": "preserved",
+      "value": "exclude",
+      "captureMs": 5,
+      "expected": "exclude",
+      "restored": "exclude",
+      "hiddenExpected": "exclude",
+      "hiddenRestored": "exclude"
+    },
+    {
+      "property": "mask-image",
+      "status": "preserved",
+      "value": "linear-gradient(white,transparent)",
+      "captureMs": 10,
+      "expected": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0))",
+      "restored": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0))",
+      "hiddenExpected": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0))",
+      "hiddenRestored": "linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0))"
+    },
+    {
+      "property": "mask-mode",
+      "status": "preserved",
+      "value": "luminance",
+      "captureMs": 11,
+      "expected": "luminance",
+      "restored": "luminance",
+      "hiddenExpected": "luminance",
+      "hiddenRestored": "luminance"
+    },
+    {
+      "property": "mask-origin",
+      "status": "preserved",
+      "value": "content-box",
+      "captureMs": 8,
+      "expected": "content-box",
+      "restored": "content-box",
+      "hiddenExpected": "content-box",
+      "hiddenRestored": "content-box"
+    },
+    {
+      "property": "mask-position",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px 50%",
+      "restored": "24px 50%",
+      "hiddenExpected": "24px 50%",
+      "hiddenRestored": "24px 50%"
+    },
+    {
+      "property": "mask-repeat",
+      "status": "preserved",
+      "value": "repeat-x",
+      "captureMs": 6,
+      "expected": "repeat-x",
+      "restored": "repeat-x",
+      "hiddenExpected": "repeat-x",
+      "hiddenRestored": "repeat-x"
+    },
+    {
+      "property": "mask-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px auto",
+      "restored": "24px auto",
+      "hiddenExpected": "24px auto",
+      "hiddenRestored": "24px auto"
+    },
+    {
+      "property": "mask-type",
+      "status": "preserved",
+      "value": "alpha",
+      "captureMs": 12,
+      "expected": "alpha",
+      "restored": "alpha",
+      "hiddenExpected": "alpha",
+      "hiddenRestored": "alpha"
+    },
+    {
+      "property": "masonry-auto-flow",
+      "status": "unsupported"
+    },
+    {
+      "property": "math-depth",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 12,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "math-shift",
+      "status": "preserved",
+      "value": "compact",
+      "captureMs": 7,
+      "expected": "compact",
+      "restored": "compact",
+      "hiddenExpected": "compact",
+      "hiddenRestored": "compact"
+    },
+    {
+      "property": "math-style",
+      "status": "preserved",
+      "value": "compact",
+      "captureMs": 16,
+      "expected": "compact",
+      "restored": "compact",
+      "hiddenExpected": "compact",
+      "hiddenRestored": "compact"
+    },
+    {
+      "property": "max-block-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "max-height",
+      "status": "preserved",
+      "value": "min-content",
+      "captureMs": 12,
+      "expected": "min-content",
+      "restored": "min-content",
+      "hiddenExpected": "min-content",
+      "hiddenRestored": "min-content"
+    },
+    {
+      "property": "max-inline-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 15,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "max-lines",
+      "status": "unsupported"
+    },
+    {
+      "property": "max-width",
+      "status": "preserved",
+      "value": "min-content",
+      "captureMs": 13,
+      "expected": "min-content",
+      "restored": "min-content",
+      "hiddenExpected": "min-content",
+      "hiddenRestored": "min-content"
+    },
+    {
+      "property": "min-block-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "min-height",
+      "status": "preserved",
+      "value": "min-content",
+      "captureMs": 11,
+      "expected": "min-content",
+      "restored": "min-content",
+      "hiddenExpected": "min-content",
+      "hiddenRestored": "min-content"
+    },
+    {
+      "property": "min-inline-size",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "min-width",
+      "status": "preserved",
+      "value": "min-content",
+      "captureMs": 11,
+      "expected": "min-content",
+      "restored": "min-content",
+      "hiddenExpected": "min-content",
+      "hiddenRestored": "min-content"
+    },
+    {
+      "property": "mix-blend-mode",
+      "status": "preserved",
+      "value": "plus-darker",
+      "captureMs": 16,
+      "expected": "plus-darker",
+      "restored": "plus-darker",
+      "hiddenExpected": "plus-darker",
+      "hiddenRestored": "plus-darker"
+    },
+    {
+      "property": "object-fit",
+      "status": "preserved",
+      "value": "contain",
+      "captureMs": 15,
+      "expected": "contain",
+      "restored": "contain",
+      "hiddenExpected": "contain",
+      "hiddenRestored": "contain"
+    },
+    {
+      "property": "object-position",
+      "status": "preserved",
+      "value": "20% 30%",
+      "captureMs": 16,
+      "expected": "20% 30%",
+      "restored": "20% 30%",
+      "hiddenExpected": "20% 30%",
+      "hiddenRestored": "20% 30%"
+    },
+    {
+      "property": "object-view-box",
+      "status": "unsupported"
+    },
+    {
+      "property": "offset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 15,
+      "expected": "24px 50%",
+      "restored": "24px 50%",
+      "hiddenExpected": "24px 50%",
+      "hiddenRestored": "24px 50%"
+    },
+    {
+      "property": "offset-anchor",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px 50%",
+      "restored": "24px 50%",
+      "hiddenExpected": "24px 50%",
+      "hiddenRestored": "24px 50%"
+    },
+    {
+      "property": "offset-distance",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "offset-path",
+      "status": "preserved",
+      "value": "path(\"M 0 0 L 40 40\")",
+      "captureMs": 10,
+      "expected": "path(\"M 0 0 L 40 40\")",
+      "restored": "path(\"M 0 0 L 40 40\")",
+      "hiddenExpected": "path(\"M 0 0 L 40 40\")",
+      "hiddenRestored": "path(\"M 0 0 L 40 40\")"
+    },
+    {
+      "property": "offset-position",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 14,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "offset-rotate",
+      "status": "preserved",
+      "value": "reverse",
+      "captureMs": 12,
+      "expected": "auto 180deg",
+      "restored": "auto 180deg",
+      "hiddenExpected": "auto 180deg",
+      "hiddenRestored": "auto 180deg"
+    },
+    {
+      "property": "opacity",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 13,
+      "expected": "0.25",
+      "restored": "0.25",
+      "hiddenExpected": "0.25",
+      "hiddenRestored": "0.25"
+    },
+    {
+      "property": "order",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 9,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "orphans",
+      "status": "preserved",
+      "value": "3",
+      "captureMs": 10,
+      "expected": "3",
+      "restored": "3",
+      "hiddenExpected": "3",
+      "hiddenRestored": "3"
+    },
+    {
+      "property": "outline",
+      "status": "preserved",
+      "value": "4px dashed blue",
+      "captureMs": 9,
+      "expected": "4px dashed rgb(0, 0, 255)",
+      "restored": "4px dashed rgb(0, 0, 255)",
+      "hiddenExpected": "4px dashed rgb(0, 0, 255)",
+      "hiddenRestored": "4px dashed rgb(0, 0, 255)"
+    },
+    {
+      "property": "outline-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 12,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "outline-offset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "outline-style",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 20,
+      "expected": "auto",
+      "restored": "auto",
+      "hiddenExpected": "auto",
+      "hiddenRestored": "auto"
+    },
+    {
+      "property": "outline-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 14,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "overflow",
+      "status": "preserved",
+      "value": "hidden",
+      "captureMs": 12,
+      "expected": "hidden",
+      "restored": "hidden",
+      "hiddenExpected": "hidden",
+      "hiddenRestored": "hidden"
+    },
+    {
+      "property": "overflow-anchor",
+      "status": "unsupported"
+    },
+    {
+      "property": "overflow-block",
+      "status": "preserved",
+      "value": "hidden",
+      "captureMs": 15,
+      "expected": "hidden",
+      "restored": "hidden",
+      "hiddenExpected": "hidden",
+      "hiddenRestored": "hidden"
+    },
+    {
+      "property": "overflow-clip-box",
+      "status": "unsupported"
+    },
+    {
+      "property": "overflow-clip-margin",
+      "status": "unsupported"
+    },
+    {
+      "property": "overflow-inline",
+      "status": "preserved",
+      "value": "hidden",
+      "captureMs": 7,
+      "expected": "hidden",
+      "restored": "hidden",
+      "hiddenExpected": "hidden",
+      "hiddenRestored": "hidden"
+    },
+    {
+      "property": "overflow-wrap",
+      "status": "preserved",
+      "value": "break-word",
+      "captureMs": 7,
+      "expected": "break-word",
+      "restored": "break-word",
+      "hiddenExpected": "break-word",
+      "hiddenRestored": "break-word"
+    },
+    {
+      "property": "overflow-x",
+      "status": "preserved",
+      "value": "hidden",
+      "captureMs": 12,
+      "expected": "hidden",
+      "restored": "hidden",
+      "hiddenExpected": "hidden",
+      "hiddenRestored": "hidden"
+    },
+    {
+      "property": "overflow-y",
+      "status": "preserved",
+      "value": "hidden",
+      "captureMs": 9,
+      "expected": "hidden",
+      "restored": "hidden",
+      "hiddenExpected": "hidden",
+      "hiddenRestored": "hidden"
+    },
+    {
+      "property": "overlay",
+      "status": "unsupported"
+    },
+    {
+      "property": "overscroll-behavior",
+      "status": "native"
+    },
+    {
+      "property": "overscroll-behavior-block",
+      "status": "native"
+    },
+    {
+      "property": "overscroll-behavior-inline",
+      "status": "native"
+    },
+    {
+      "property": "overscroll-behavior-x",
+      "status": "native"
+    },
+    {
+      "property": "overscroll-behavior-y",
+      "status": "native"
+    },
+    {
+      "property": "padding",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-block",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-block-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 14,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-block-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-bottom",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-inline",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-inline-end",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-inline-start",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 10,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-left",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-right",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "padding-top",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "page",
+      "status": "untested"
+    },
+    {
+      "property": "page-break-after",
+      "status": "preserved",
+      "value": "always",
+      "captureMs": 8,
+      "expected": "always",
+      "restored": "always",
+      "hiddenExpected": "always",
+      "hiddenRestored": "always"
+    },
+    {
+      "property": "page-break-before",
+      "status": "preserved",
+      "value": "always",
+      "captureMs": 10,
+      "expected": "always",
+      "restored": "always",
+      "hiddenExpected": "always",
+      "hiddenRestored": "always"
+    },
+    {
+      "property": "page-break-inside",
+      "status": "preserved",
+      "value": "avoid",
+      "captureMs": 6,
+      "expected": "avoid",
+      "restored": "avoid",
+      "hiddenExpected": "avoid",
+      "hiddenRestored": "avoid"
+    },
+    {
+      "property": "paint-order",
+      "status": "preserved",
+      "value": "fill",
+      "captureMs": 13,
+      "expected": "fill",
+      "restored": "fill",
+      "hiddenExpected": "fill",
+      "hiddenRestored": "fill"
+    },
+    {
+      "property": "path-length",
+      "status": "unsupported"
+    },
+    {
+      "property": "perspective",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 17,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "perspective-origin",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "24px 50px",
+      "restored": "24px 50px",
+      "hiddenExpected": "24px 50px",
+      "hiddenRestored": "24px 50px"
+    },
+    {
+      "property": "place-content",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 15,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "place-items",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 12,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "place-self",
+      "status": "preserved",
+      "value": "normal",
+      "captureMs": 14,
+      "expected": "normal",
+      "restored": "normal",
+      "hiddenExpected": "normal",
+      "hiddenRestored": "normal"
+    },
+    {
+      "property": "pointer-events",
+      "status": "native"
+    },
+    {
+      "property": "position",
+      "status": "preserved",
+      "value": "static",
+      "captureMs": 9,
+      "expected": "static",
+      "restored": "static",
+      "hiddenExpected": "static",
+      "hiddenRestored": "static"
+    },
+    {
+      "property": "position-anchor",
+      "status": "preserved",
+      "value": "--pc-example",
+      "captureMs": 14,
+      "expected": "--pc-example",
+      "restored": "--pc-example",
+      "hiddenExpected": "--pc-example",
+      "hiddenRestored": "--pc-example"
+    },
+    {
+      "property": "position-area",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 11,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "position-try",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 13,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "position-try-fallbacks",
+      "status": "preserved",
+      "value": "center",
+      "captureMs": 11,
+      "expected": "center",
+      "restored": "center",
+      "hiddenExpected": "center",
+      "hiddenRestored": "center"
+    },
+    {
+      "property": "position-try-order",
+      "status": "untested"
+    },
+    {
+      "property": "position-visibility",
+      "status": "preserved",
+      "value": "always",
+      "captureMs": 16,
+      "expected": "always",
+      "restored": "always",
+      "hiddenExpected": "always",
+      "hiddenRestored": "always"
+    },
+    {
+      "property": "print-color-adjust",
+      "status": "preserved",
+      "value": "exact",
+      "captureMs": 12,
+      "expected": "exact",
+      "restored": "exact",
+      "hiddenExpected": "exact",
+      "hiddenRestored": "exact"
+    },
+    {
+      "property": "quotes",
+      "status": "preserved",
+      "value": "\"«\" \"»\"",
+      "captureMs": 7,
+      "expected": "\"«\" \"»\"",
+      "restored": "\"«\" \"»\"",
+      "hiddenExpected": "\"«\" \"»\"",
+      "hiddenRestored": "\"«\" \"»\""
+    },
+    {
+      "property": "r",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "reading-flow",
+      "status": "unsupported"
+    },
+    {
+      "property": "reading-order",
+      "status": "unsupported"
+    },
+    {
+      "property": "resize",
+      "status": "native"
+    },
+    {
+      "property": "right",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "rotate",
+      "status": "preserved",
+      "value": "15deg",
+      "captureMs": 9,
+      "expected": "15deg",
+      "restored": "15deg",
+      "hiddenExpected": "15deg",
+      "hiddenRestored": "15deg"
+    },
+    {
+      "property": "row-gap",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "ruby-align",
+      "status": "preserved",
+      "value": "start",
+      "captureMs": 9,
+      "expected": "start",
+      "restored": "start",
+      "hiddenExpected": "start",
+      "hiddenRestored": "start"
+    },
+    {
+      "property": "ruby-merge",
+      "status": "unsupported"
+    },
+    {
+      "property": "ruby-overhang",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 14,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "ruby-position",
+      "status": "preserved",
+      "value": "under",
+      "captureMs": 8,
+      "expected": "under",
+      "restored": "under",
+      "hiddenExpected": "under",
+      "hiddenRestored": "under"
+    },
+    {
+      "property": "rx",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "ry",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 8,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "scale",
+      "status": "preserved",
+      "value": "0.8",
+      "captureMs": 6,
+      "expected": "0.8",
+      "restored": "0.8",
+      "hiddenExpected": "0.8",
+      "hiddenRestored": "0.8"
+    },
+    {
+      "property": "scroll-behavior",
+      "status": "native"
+    },
+    {
+      "property": "scroll-initial-target",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-margin",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-block",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-block-end",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-block-start",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-bottom",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-inline",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-inline-end",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-inline-start",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-left",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-right",
+      "status": "native"
+    },
+    {
+      "property": "scroll-margin-top",
+      "status": "native"
+    },
+    {
+      "property": "scroll-marker-group",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-padding",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-block",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-block-end",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-block-start",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-bottom",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-inline",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-inline-end",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-inline-start",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-left",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-right",
+      "status": "native"
+    },
+    {
+      "property": "scroll-padding-top",
+      "status": "native"
+    },
+    {
+      "property": "scroll-snap-align",
+      "status": "native"
+    },
+    {
+      "property": "scroll-snap-coordinate",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-snap-destination",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-snap-points-x",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-snap-points-y",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-snap-stop",
+      "status": "native"
+    },
+    {
+      "property": "scroll-snap-type",
+      "status": "native"
+    },
+    {
+      "property": "scroll-snap-type-x",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-snap-type-y",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-target-group",
+      "status": "unsupported"
+    },
+    {
+      "property": "scroll-timeline",
+      "status": "native"
+    },
+    {
+      "property": "scroll-timeline-axis",
+      "status": "native"
+    },
+    {
+      "property": "scroll-timeline-name",
+      "status": "native"
+    },
+    {
+      "property": "scrollbar-color",
+      "status": "untested"
+    },
+    {
+      "property": "scrollbar-gutter",
+      "status": "preserved",
+      "value": "stable",
+      "captureMs": 9,
+      "expected": "stable",
+      "restored": "stable",
+      "hiddenExpected": "stable",
+      "hiddenRestored": "stable"
+    },
+    {
+      "property": "scrollbar-width",
+      "status": "preserved",
+      "value": "thin",
+      "captureMs": 10,
+      "expected": "thin",
+      "restored": "thin",
+      "hiddenExpected": "thin",
+      "hiddenRestored": "thin"
+    },
+    {
+      "property": "shape-image-threshold",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 8,
+      "expected": "1",
+      "restored": "1",
+      "hiddenExpected": "1",
+      "hiddenRestored": "1"
+    },
+    {
+      "property": "shape-margin",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "shape-outside",
+      "status": "preserved",
+      "value": "linear-gradient(red, blue)",
+      "captureMs": 15,
+      "expected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "restored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenExpected": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))",
+      "hiddenRestored": "linear-gradient(rgb(255, 0, 0), rgb(0, 0, 255))"
+    },
+    {
+      "property": "shape-rendering",
+      "status": "preserved",
+      "value": "crispEdges",
+      "captureMs": 12,
+      "expected": "crispedges",
+      "restored": "crispedges",
+      "hiddenExpected": "crispedges",
+      "hiddenRestored": "crispedges"
+    },
+    {
+      "property": "speak-as",
+      "status": "preserved",
+      "value": "spell-out",
+      "captureMs": 9,
+      "expected": "spell-out",
+      "restored": "spell-out",
+      "hiddenExpected": "spell-out",
+      "hiddenRestored": "spell-out"
+    },
+    {
+      "property": "stop-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 8,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "stop-opacity",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 14,
+      "expected": "0.25",
+      "restored": "0.25",
+      "hiddenExpected": "0.25",
+      "hiddenRestored": "0.25"
+    },
+    {
+      "property": "stroke",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 14,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "stroke-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 10,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "stroke-dasharray",
+      "status": "preserved",
+      "value": "8px 4px",
+      "captureMs": 12,
+      "expected": "8px, 4px",
+      "restored": "8px, 4px",
+      "hiddenExpected": "8px, 4px",
+      "hiddenRestored": "8px, 4px"
+    },
+    {
+      "property": "stroke-dashoffset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "stroke-linecap",
+      "status": "preserved",
+      "value": "round",
+      "captureMs": 15,
+      "expected": "round",
+      "restored": "round",
+      "hiddenExpected": "round",
+      "hiddenRestored": "round"
+    },
+    {
+      "property": "stroke-linejoin",
+      "status": "preserved",
+      "value": "round",
+      "captureMs": 13,
+      "expected": "round",
+      "restored": "round",
+      "hiddenExpected": "round",
+      "hiddenRestored": "round"
+    },
+    {
+      "property": "stroke-miterlimit",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 6,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "stroke-opacity",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 11,
+      "expected": "0.25",
+      "restored": "0.25",
+      "hiddenExpected": "0.25",
+      "hiddenRestored": "0.25"
+    },
+    {
+      "property": "stroke-width",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "tab-size",
+      "status": "preserved",
+      "value": "24px",
+      "typedValue": "24px",
+      "captureMs": 11,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "table-layout",
+      "status": "preserved",
+      "value": "fixed",
+      "captureMs": 10,
+      "expected": "fixed",
+      "restored": "fixed",
+      "hiddenExpected": "fixed",
+      "hiddenRestored": "fixed"
+    },
+    {
+      "property": "text-align",
+      "status": "preserved",
+      "value": "end",
+      "captureMs": 9,
+      "expected": "end",
+      "restored": "end",
+      "hiddenExpected": "end",
+      "hiddenRestored": "end"
+    },
+    {
+      "property": "text-align-last",
+      "status": "preserved",
+      "value": "start",
+      "captureMs": 9,
+      "expected": "start",
+      "restored": "start",
+      "hiddenExpected": "start",
+      "hiddenRestored": "start"
+    },
+    {
+      "property": "text-anchor",
+      "status": "preserved",
+      "value": "middle",
+      "captureMs": 8,
+      "expected": "middle",
+      "restored": "middle",
+      "hiddenExpected": "middle",
+      "hiddenRestored": "middle"
+    },
+    {
+      "property": "text-autospace",
+      "status": "preserved",
+      "value": "normal",
+      "captureMs": 9,
+      "expected": "normal",
+      "restored": "normal",
+      "hiddenExpected": "normal",
+      "hiddenRestored": "normal"
+    },
+    {
+      "property": "text-box",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 8,
+      "expected": "trim-both",
+      "restored": "trim-both",
+      "hiddenExpected": "trim-both",
+      "hiddenRestored": "trim-both"
+    },
+    {
+      "property": "text-box-edge",
+      "status": "untested"
+    },
+    {
+      "property": "text-box-trim",
+      "status": "preserved",
+      "value": "trim-start",
+      "captureMs": 10,
+      "expected": "trim-start",
+      "restored": "trim-start",
+      "hiddenExpected": "trim-start",
+      "hiddenRestored": "trim-start"
+    },
+    {
+      "property": "text-combine-upright",
+      "status": "preserved",
+      "value": "all",
+      "captureMs": 7,
+      "expected": "all",
+      "restored": "all",
+      "hiddenExpected": "all",
+      "hiddenRestored": "all"
+    },
+    {
+      "property": "text-decoration",
+      "status": "preserved",
+      "value": "underline wavy red",
+      "captureMs": 7,
+      "expected": "underline wavy rgb(255, 0, 0)",
+      "restored": "underline wavy rgb(255, 0, 0)",
+      "hiddenExpected": "underline wavy rgb(255, 0, 0)",
+      "hiddenRestored": "underline wavy rgb(255, 0, 0)"
+    },
+    {
+      "property": "text-decoration-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 11,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "text-decoration-inset",
+      "status": "unsupported"
+    },
+    {
+      "property": "text-decoration-line",
+      "status": "preserved",
+      "value": "underline",
+      "captureMs": 5,
+      "expected": "underline",
+      "restored": "underline",
+      "hiddenExpected": "underline",
+      "hiddenRestored": "underline"
+    },
+    {
+      "property": "text-decoration-skip",
+      "status": "preserved",
+      "value": "none",
+      "captureMs": 14,
+      "expected": "none",
+      "restored": "none",
+      "hiddenExpected": "none",
+      "hiddenRestored": "none"
+    },
+    {
+      "property": "text-decoration-skip-ink",
+      "status": "preserved",
+      "value": "all",
+      "captureMs": 14,
+      "expected": "all",
+      "restored": "all",
+      "hiddenExpected": "all",
+      "hiddenRestored": "all"
+    },
+    {
+      "property": "text-decoration-style",
+      "status": "preserved",
+      "value": "double",
+      "captureMs": 7,
+      "expected": "double",
+      "restored": "double",
+      "hiddenExpected": "double",
+      "hiddenRestored": "double"
+    },
+    {
+      "property": "text-decoration-thickness",
+      "status": "preserved",
+      "value": "from-font",
+      "captureMs": 13,
+      "expected": "from-font",
+      "restored": "from-font",
+      "hiddenExpected": "from-font",
+      "hiddenRestored": "from-font"
+    },
+    {
+      "property": "text-emphasis",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 9,
+      "expected": "none rgb(255, 0, 0)",
+      "restored": "none rgb(255, 0, 0)",
+      "hiddenExpected": "none rgb(255, 0, 0)",
+      "hiddenRestored": "none rgb(255, 0, 0)"
+    },
+    {
+      "property": "text-emphasis-color",
+      "status": "preserved",
+      "value": "red",
+      "captureMs": 5,
+      "expected": "rgb(255, 0, 0)",
+      "restored": "rgb(255, 0, 0)",
+      "hiddenExpected": "rgb(255, 0, 0)",
+      "hiddenRestored": "rgb(255, 0, 0)"
+    },
+    {
+      "property": "text-emphasis-position",
+      "status": "preserved",
+      "value": "under",
+      "captureMs": 8,
+      "expected": "under",
+      "restored": "under",
+      "hiddenExpected": "under",
+      "hiddenRestored": "under"
+    },
+    {
+      "property": "text-emphasis-style",
+      "status": "preserved",
+      "value": "filled",
+      "captureMs": 10,
+      "expected": "circle",
+      "restored": "circle",
+      "hiddenExpected": "circle",
+      "hiddenRestored": "circle"
+    },
+    {
+      "property": "text-fit",
+      "status": "unsupported"
+    },
+    {
+      "property": "text-indent",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "text-justify",
+      "status": "unsupported"
+    },
+    {
+      "property": "text-orientation",
+      "status": "preserved",
+      "value": "upright",
+      "captureMs": 10,
+      "expected": "upright",
+      "restored": "upright",
+      "hiddenExpected": "upright",
+      "hiddenRestored": "upright"
+    },
+    {
+      "property": "text-overflow",
+      "status": "preserved",
+      "value": "ellipsis",
+      "captureMs": 7,
+      "expected": "ellipsis",
+      "restored": "ellipsis",
+      "hiddenExpected": "ellipsis",
+      "hiddenRestored": "ellipsis"
+    },
+    {
+      "property": "text-rendering",
+      "status": "preserved",
+      "value": "geometricPrecision",
+      "captureMs": 10,
+      "expected": "geometricprecision",
+      "restored": "geometricprecision",
+      "hiddenExpected": "geometricprecision",
+      "hiddenRestored": "geometricprecision"
+    },
+    {
+      "property": "text-shadow",
+      "status": "preserved",
+      "value": "2px 2px red",
+      "captureMs": 13,
+      "expected": "rgb(255, 0, 0) 2px 2px 0px",
+      "restored": "rgb(255, 0, 0) 2px 2px 0px",
+      "hiddenExpected": "rgb(255, 0, 0) 2px 2px 0px",
+      "hiddenRestored": "rgb(255, 0, 0) 2px 2px 0px"
+    },
+    {
+      "property": "text-size-adjust",
+      "status": "unsupported"
+    },
+    {
+      "property": "text-spacing-trim",
+      "status": "unsupported"
+    },
+    {
+      "property": "text-transform",
+      "status": "preserved",
+      "value": "capitalize",
+      "captureMs": 8,
+      "expected": "capitalize",
+      "restored": "capitalize",
+      "hiddenExpected": "capitalize",
+      "hiddenRestored": "capitalize"
+    },
+    {
+      "property": "text-underline-offset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 7,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "text-underline-position",
+      "status": "preserved",
+      "value": "from-font",
+      "captureMs": 11,
+      "expected": "from-font",
+      "restored": "from-font",
+      "hiddenExpected": "from-font",
+      "hiddenRestored": "from-font"
+    },
+    {
+      "property": "text-wrap",
+      "status": "untested"
+    },
+    {
+      "property": "text-wrap-mode",
+      "status": "preserved",
+      "value": "nowrap",
+      "captureMs": 7,
+      "expected": "nowrap",
+      "restored": "nowrap",
+      "hiddenExpected": "nowrap",
+      "hiddenRestored": "nowrap"
+    },
+    {
+      "property": "text-wrap-style",
+      "status": "preserved",
+      "value": "balance",
+      "captureMs": 11,
+      "expected": "balance",
+      "restored": "balance",
+      "hiddenExpected": "balance",
+      "hiddenRestored": "balance"
+    },
+    {
+      "property": "timeline-scope",
+      "status": "preserved",
+      "value": "--pc-example",
+      "captureMs": 7,
+      "expected": "--pc-example",
+      "restored": "--pc-example",
+      "hiddenExpected": "--pc-example",
+      "hiddenRestored": "--pc-example"
+    },
+    {
+      "property": "timeline-trigger",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-activation-range",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-activation-range-end",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-activation-range-start",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-active-range",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-active-range-end",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-active-range-start",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-name",
+      "status": "unsupported"
+    },
+    {
+      "property": "timeline-trigger-source",
+      "status": "unsupported"
+    },
+    {
+      "property": "top",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "touch-action",
+      "status": "native"
+    },
+    {
+      "property": "transform",
+      "status": "preserved",
+      "value": "translate(12px, 4px)",
+      "captureMs": 7,
+      "expected": "matrix(1, 0, 0, 1, 12, 4)",
+      "restored": "matrix(1, 0, 0, 1, 12, 4)",
+      "hiddenExpected": "matrix(1, 0, 0, 1, 12, 4)",
+      "hiddenRestored": "matrix(1, 0, 0, 1, 12, 4)"
+    },
+    {
+      "property": "transform-box",
+      "status": "preserved",
+      "value": "content-box",
+      "captureMs": 11,
+      "expected": "content-box",
+      "restored": "content-box",
+      "hiddenExpected": "content-box",
+      "hiddenRestored": "content-box"
+    },
+    {
+      "property": "transform-origin",
+      "status": "preserved",
+      "value": "left",
+      "captureMs": 15,
+      "expected": "0px 50px",
+      "restored": "0px 50px",
+      "hiddenExpected": "0px 50px",
+      "hiddenRestored": "0px 50px"
+    },
+    {
+      "property": "transform-style",
+      "status": "preserved",
+      "value": "preserve-3d",
+      "captureMs": 17,
+      "expected": "preserve-3d",
+      "restored": "preserve-3d",
+      "hiddenExpected": "preserve-3d",
+      "hiddenRestored": "preserve-3d"
+    },
+    {
+      "property": "transition",
+      "status": "native"
+    },
+    {
+      "property": "transition-behavior",
+      "status": "native"
+    },
+    {
+      "property": "transition-delay",
+      "status": "native"
+    },
+    {
+      "property": "transition-duration",
+      "status": "native"
+    },
+    {
+      "property": "transition-property",
+      "status": "native"
+    },
+    {
+      "property": "transition-timing-function",
+      "status": "native"
+    },
+    {
+      "property": "translate",
+      "status": "preserved",
+      "value": "12px 4px",
+      "captureMs": 7,
+      "expected": "12px 4px",
+      "restored": "12px 4px",
+      "hiddenExpected": "12px 4px",
+      "hiddenRestored": "12px 4px"
+    },
+    {
+      "property": "trigger-scope",
+      "status": "unsupported"
+    },
+    {
+      "property": "unicode-bidi",
+      "status": "preserved",
+      "value": "embed",
+      "captureMs": 7,
+      "expected": "embed",
+      "restored": "embed",
+      "hiddenExpected": "embed",
+      "hiddenRestored": "embed"
+    },
+    {
+      "property": "user-select",
+      "status": "unsupported"
+    },
+    {
+      "property": "vector-effect",
+      "status": "preserved",
+      "value": "non-scaling-stroke",
+      "captureMs": 10,
+      "expected": "non-scaling-stroke",
+      "restored": "non-scaling-stroke",
+      "hiddenExpected": "non-scaling-stroke",
+      "hiddenRestored": "non-scaling-stroke"
+    },
+    {
+      "property": "vertical-align",
+      "status": "preserved",
+      "value": "sub",
+      "captureMs": 12,
+      "expected": "sub",
+      "restored": "sub",
+      "hiddenExpected": "sub",
+      "hiddenRestored": "sub"
+    },
+    {
+      "property": "view-timeline",
+      "status": "preserved",
+      "value": "--pc-example",
+      "captureMs": 8,
+      "expected": "--pc-example",
+      "restored": "--pc-example",
+      "hiddenExpected": "--pc-example",
+      "hiddenRestored": "--pc-example"
+    },
+    {
+      "property": "view-timeline-axis",
+      "status": "preserved",
+      "value": "inline",
+      "captureMs": 15,
+      "expected": "inline",
+      "restored": "inline",
+      "hiddenExpected": "inline",
+      "hiddenRestored": "inline"
+    },
+    {
+      "property": "view-timeline-inset",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 12,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "view-timeline-name",
+      "status": "preserved",
+      "value": "--pc-example",
+      "captureMs": 6,
+      "expected": "--pc-example",
+      "restored": "--pc-example",
+      "hiddenExpected": "--pc-example",
+      "hiddenRestored": "--pc-example"
+    },
+    {
+      "property": "view-transition-class",
+      "status": "native"
+    },
+    {
+      "property": "view-transition-name",
+      "status": "native"
+    },
+    {
+      "property": "view-transition-scope",
+      "status": "unsupported"
+    },
+    {
+      "property": "visibility",
+      "status": "preserved",
+      "value": "hidden",
+      "captureMs": 10,
+      "expected": "hidden",
+      "restored": "hidden",
+      "hiddenExpected": "hidden",
+      "hiddenRestored": "hidden"
+    },
+    {
+      "property": "white-space",
+      "status": "preserved",
+      "value": "pre",
+      "captureMs": 12,
+      "expected": "pre",
+      "restored": "pre",
+      "hiddenExpected": "pre",
+      "hiddenRestored": "pre"
+    },
+    {
+      "property": "white-space-collapse",
+      "status": "preserved",
+      "value": "preserve",
+      "captureMs": 7,
+      "expected": "preserve",
+      "restored": "preserve",
+      "hiddenExpected": "preserve",
+      "hiddenRestored": "preserve"
+    },
+    {
+      "property": "widows",
+      "status": "preserved",
+      "value": "3",
+      "captureMs": 11,
+      "expected": "3",
+      "restored": "3",
+      "hiddenExpected": "3",
+      "hiddenRestored": "3"
+    },
+    {
+      "property": "width",
+      "status": "preserved",
+      "value": "auto",
+      "captureMs": 12,
+      "expected": "280px",
+      "restored": "280px",
+      "hiddenExpected": "280px",
+      "hiddenRestored": "280px"
+    },
+    {
+      "property": "will-change",
+      "status": "native"
+    },
+    {
+      "property": "word-break",
+      "status": "preserved",
+      "value": "break-all",
+      "captureMs": 7,
+      "expected": "break-all",
+      "restored": "break-all",
+      "hiddenExpected": "break-all",
+      "hiddenRestored": "break-all"
+    },
+    {
+      "property": "word-spacing",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 11,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "word-wrap",
+      "status": "preserved",
+      "value": "break-word",
+      "captureMs": 5,
+      "expected": "break-word",
+      "restored": "break-word",
+      "hiddenExpected": "break-word",
+      "hiddenRestored": "break-word"
+    },
+    {
+      "property": "writing-mode",
+      "status": "preserved",
+      "value": "vertical-rl",
+      "captureMs": 7,
+      "expected": "vertical-rl",
+      "restored": "vertical-rl",
+      "hiddenExpected": "vertical-rl",
+      "hiddenRestored": "vertical-rl"
+    },
+    {
+      "property": "x",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 13,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "y",
+      "status": "preserved",
+      "value": "24px",
+      "captureMs": 6,
+      "expected": "24px",
+      "restored": "24px",
+      "hiddenExpected": "24px",
+      "hiddenRestored": "24px"
+    },
+    {
+      "property": "z-index",
+      "status": "preserved",
+      "value": "2",
+      "captureMs": 7,
+      "expected": "2",
+      "restored": "2",
+      "hiddenExpected": "2",
+      "hiddenRestored": "2"
+    },
+    {
+      "property": "zoom",
+      "status": "preserved",
+      "value": "25%",
+      "captureMs": 10,
+      "expected": "0.25",
+      "restored": "0.25",
+      "hiddenExpected": "0.25",
+      "hiddenRestored": "0.25"
+    }
+  ],
+  "completedAt": "2026-09-09T20:17:07.067Z",
+  "durationMs": 5557,
+  "coreSha256": "29c744d46297586047c1d4a3d6252795b980e8e99c006d79f30f8492dc8f2b89",
+  "visual": {
+    "failed": 0,
+    "passed": 61,
+    "output": "PASS grid placement and gaps survive ordered style serialization (worker=false)\nPASS multiple columns preserve column count and gap (worker=false)\nPASS a single mask layer preserves its transparent half (worker=false)\nPASS unitless tab-size preserves native tab alignment (worker=false)\nPASS CSS nesting, cascade layers, has selectors and variables retain their result (worker=false)\nPASS oklch, color-mix and relative colors retain their painted colors (worker=false)\nPASS container queries and query units retain sizing and borders (worker=false)\nPASS vertical writing mode preserves logical dimensions and borders (worker=false)\nPASS scoped CSS preserves its scope-root selectors (worker=false)\nPASS gradient border-image survives capture (worker=false)\nPASS remote border-image embeds its asset (worker=false)\nPASS CSS composite masks preserve hollow frames (worker=false)\nPASS legacy WebKit mask operators preserve hollow frames (worker=false)\nPASS pseudo-element borders, rounded corners and decorations survive (worker=false)\nPASS pseudo-element text keeps its Google Font and attr content (worker=false)\nPASS clip-path and individual transforms preserve shape and placement (worker=false)\nPASS visibility hidden content stays hidden (worker=false)\nPASS ancestor-dependent CSS retains its native page context (worker=false)\nPASS logical and double borders preserve direction and gaps (worker=false)\nPASS grid placement and gaps survive ordered style serialization (worker=true)\nPASS multiple columns preserve column count and gap (worker=true)\nPASS a single mask layer preserves its transparent half (worker=true)\nPASS unitless tab-size preserves native tab alignment (worker=true)\nPASS CSS nesting, cascade layers, has selectors and variables retain their result (worker=true)\nPASS oklch, color-mix and relative colors retain their painted colors (worker=true)\nPASS container queries and query units retain sizing and borders (worker=true)\nPASS vertical writing mode preserves logical dimensions and borders (worker=true)\nPASS scoped CSS preserves its scope-root selectors (worker=true)\nPASS gradient border-image survives capture (worker=true)\nPASS remote border-image embeds its asset (worker=true)\nPASS CSS composite masks preserve hollow frames (worker=true)\nPASS legacy WebKit mask operators preserve hollow frames (worker=true)\nPASS pseudo-element borders, rounded corners and decorations survive (worker=true)\nPASS pseudo-element text keeps its Google Font and attr content (worker=true)\nPASS clip-path and individual transforms preserve shape and placement (worker=true)\nPASS visibility hidden content stays hidden (worker=true)\nPASS ancestor-dependent CSS retains its native page context (worker=true)\nPASS logical and double borders preserve direction and gaps (worker=true)\nPASS CSS text strokes, inherited fill and paint order survive capture (worker=false)\nPASS CSS SVG strokes preserve color, width, caps, joins and dashes (worker=false)\nPASS CSS borders retain different sides and offset outlines (worker=false)\nPASS CSS text strokes, inherited fill and paint order survive capture (worker=true)\nPASS CSS SVG strokes preserve color, width, caps, joins and dashes (worker=true)\nPASS CSS borders retain different sides and offset outlines (worker=true)\nPASS real worker encoding preserves font/image pixels and reports preparation stages\nPASS CSP-blocked worker falls back without breaking capture or progress\nPASS remote CORS image survives the real page snapshot\nPASS picture/source, srcset and lazy images keep their displayed source\nPASS remote CSS background image survives capture\nPASS SVG image elements embed remote href assets\nPASS Google Font glyphs match the live font instead of a fallback\nPASS extended Latin glyphs survive font subsetting\nPASS mixed font styles and variable weights match native glyphs\nPASS explicit fontCSS handles programmatic fonts without fetching unrelated sheets\nPASS stalled fonts outside the page or in hidden subtrees do not block capture\nPASS editing Latin text reuses embedded faces and leaves warm turns ready\nPASS nearby preloaded pages need no new capture when clicked\nPASS both faces upload to WebGL and remain visible through the curl\nPASS 24 full turns, rapid reversal, last → first leave one cover and no layer\nPASS CORS-blocked images preserve native pages and report an actionable error\nPASS content refresh and destroy cancel in-flight captures\n\n61 passed, 0 failed.",
+    "startedAt": "2026-09-09T20:17:07.832Z",
+    "completedAt": "2026-09-09T20:17:14.926Z",
+    "suiteSha256": "14df8d6d4e13fdf2c41e8ed2b594c527e3d0146dfc912e9eaae3de2e4298b2be"
+  },
+  "attemptNotes": [
+    "The initial visual run stopped one font fixture before capture because its Latin-range lookup was case-sensitive. Safari serializes U+0-FF as U+0-ff. The fixture now normalizes case; the font assertions are unchanged.",
+    "An earlier rerun reported navigation did not settle in the 24-turn case, then exceeded the overall suite timeout. Its cause was not established. The complete run recorded here passed all 61 checks; this does not establish that the intermittent observation was fixed."
+  ],
+  "summary": {
+    "counts": {
+      "preserved": 446,
+      "mismatch": 0,
+      "unsupported": 171,
+      "native": 63,
+      "untested": 25,
+      "error": 0
+    },
+    "captureMedianMs": 10,
+    "captureP95Ms": 16,
+    "timedProperties": 446
+  }
+}

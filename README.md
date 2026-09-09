@@ -4,7 +4,7 @@ A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet 
 
 **Fixed in v0.4.2:** broader CSS capture, gradient/image borders, masks, and `::before`/`::after` decorations. Styles retain their original selector context. [CSS capture →](#css-strokes-and-outlines)
 
-**Fixed in v0.4.3:** Firefox font embedding and first-load image preparation. The [compatibility reports](docs/CSS_SUPPORT.md) now record each tested browser separately, including remaining failures and unmeasured browsers.
+**Fixed in v0.4.3:** Firefox font embedding and first-load image preparation. The [compatibility reports](docs/CSS_SUPPORT.md) record each tested browser separately, including remaining mismatches and unverified cases.
 
 **CSS compatibility:** [support and known limits](docs/CSS_SUPPORT.md), [every property and its measured result](docs/CSS_PROPERTIES.md), and a [searchable online benchmark](https://paper-curl-vue.martialou543257.chatgpt.site/css.html). The report separates preserved values, mismatches, unsupported properties, frozen behavior, and unverified cases. Selected visual tests check actual rendered pixels separately.
 
@@ -414,13 +414,15 @@ The Vue demo includes **Outlined headings** and a **Page frame** selector with d
 
 ## Images and browser support
 
+If images disappear only on the first turn, start with [Reliable images on the first turn](docs/IMAGE_PRACTICES.md): preparation patterns for JavaScript and Vue, lazy/responsive images, remote asset access, cache invalidation, and a Chrome diagnostic checklist.
+
 Page textures use native browser HTML-to-SVG rasterization. Remote `<img>`, responsive `srcset`/`<picture>` sources, lazy images, CSS backgrounds, and SVG `<image>` assets are embedded before a turn. Image servers must allow CORS for capture. An image being visible in HTML does not imply its server permits canvas capture. If a server blocks access, the library emits an actionable error and completes navigation using native pages, with no blank curl layer. Serve such assets from your own origin or use embedded data URLs.
 
 Google Fonts and other accessible `@font-face` stylesheets are embedded into the page texture, preserving the font during a turn. Wait for asynchronously inserted font stylesheets to load before creating the book, or call `refresh()` afterward. For fonts loaded programmatically, provide their original `@font-face` rules through `fontCSS`; browsers do not expose the font bytes from a `FontFace` object. System fonts need no extra setup.
 
 For an HTML file opened directly without a server, use system fonts and embed images as data URLs; the standalone example does this automatically. Snapshots support ordinary text, images, and CSS layouts. Only `::before` and `::after` are reconstructed; other custom pseudo-element styling, counters depending on content outside the page, shadow-root contents, and live video/canvas are not captured comprehensively. Effects that depend on content outside the page can also differ in the isolated snapshot. Interactive elements remain native at rest.
 
-The curved renderer requires WebGL and SVG `foreignObject` rasterization. If rendering is unavailable, navigation falls back to immediate native page changes. Reduced-motion preferences are respected. Chromium has been checked locally; this initial version has not yet been validated across every browser and device.
+The curved renderer requires WebGL and SVG `foreignObject` rasterization. If rendering is unavailable, navigation falls back to immediate native page changes. Reduced-motion preferences are respected. Desktop Chromium, Firefox, Opera, and Safari have [separate measured reports](docs/CSS_SUPPORT.md); those results do not certify every browser version or device.
 
 ## Develop
 

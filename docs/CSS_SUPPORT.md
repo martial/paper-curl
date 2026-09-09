@@ -2,6 +2,8 @@
 
 [Run or search the benchmark](https://paper-curl-vue.martialou543257.chatgpt.site/css.html) · [Per-browser property lists, JSON, and CSV](CSS_PROPERTIES.md)
 
+[First-turn image issues and good practices](IMAGE_PRACTICES.md) covers asset readiness, JavaScript/Vue preparation, responsive images, remote access, and refresh behavior.
+
 PaperCurl uses the browser's resolved CSS values. It does not implement a separate CSS parser or maintain a list of allowed visual properties. Native nesting, cascade layers, scoped rules, container queries, modern colors, and variables are resolved before a page is serialized. The original elements supply the styles, preserving ancestor selectors and Vue scoped attributes. Hidden pages are made measurable only during synchronous reads so container queries resolve before preparation.
 
 ## Recorded property sweep
@@ -46,10 +48,17 @@ Capture median **30.1 ms**, p95 **203.6 ms**, for two snapshots per tested decla
 
 ### Safari
 
-Not measured yet. Real Safari automation requires macOS authorization and Safari’s **Allow remote automation** setting. No WebKit or Chromium result is substituted.
+**Safari 26.6.2**, PaperCurl **0.4.3**, recorded 2026-09-09T20:17:07.067Z; DPR 2.
+
+705 properties: **446 preserved values**, **0 mismatches**, **171 browser-unsupported**, **63 native/frozen**, **25 unverified**, **0 capture errors**.
+
+Visual/browser suite: **61 passed, 0 failed**.
+
+Capture median **10 ms**, p95 **16 ms**, for two snapshots per tested declaration. Full sweep: 5.6 seconds.
+
+[Full property list](css-reports/safari.md) · [JSON evidence](css-reports/safari.json) · [CSV](css-reports/safari.csv)
 
 Timings are local diagnostics, not a controlled browser speed ranking. Runs use different browser engines and may differ in viewport, DPR, font caches, and scheduling. Each JSON records its environment, exact core checksum, and failures.
-
 <!-- END GENERATED CSS RESULTS -->
 
 The source implementation is identified by SHA-256 in the JSON report. The inventory combines the [MDN CSS property catalog](https://github.com/mdn/data/blob/635d63e0c4b4a0a4216aa9ee1cbdaed0c5111065/css/properties.json) (CC0) with additional property names exposed by the running browser. It includes standard, experimental, vendor-prefixed, and obsolete names. It cannot enumerate infinite custom-property names or every combination of values, states, and layouts.
@@ -81,6 +90,7 @@ The CSS fixtures run with workers both enabled and disabled, and on visible and 
 
 ## Known limits
 
+- One Safari attempt reported `navigation did not settle` during repeated turns, then exceeded the suite timeout. The final complete run passed all 61 checks. The cause of the earlier stall was not established; the passing rerun does not prove that intermittent behavior was fixed. The [Safari run notes](css-reports/safari.md#run-observations) preserve that observation.
 - Firefox's recorded `-webkit-line-clamp: 2` becomes `none` after serialization. Text clamping needs a dedicated layout workaround; the current visual suite does not certify it.
 - Chromium and Opera's recorded DPR-2 runs change length-based `tab-size: 24px` from a computed `48px` to `96px`. Unitless `tab-size: 4` passes the visual fixture. Recheck length values at the browser zoom and pixel density you support.
 - The print-only [`page` property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/page) loses its named-page value in the recorded fixture. PaperCurl does not reproduce print pagination or `@page` rules inside its turning texture. This does not refer to PaperCurl's own page navigation.
@@ -89,11 +99,13 @@ The CSS fixtures run with workers both enabled and disabled, and on visible and 
 - Live video/canvas state and content inside custom-element shadow roots are not comprehensively captured.
 - CSS animations and transitions are frozen when a texture is prepared. Cached textures do not track later hover states, animation frames, or external stylesheet edits; call `refresh()` when those changes should become part of the next capture.
 - Remote image, mask, border-image, and font bytes must be accessible to JavaScript under CORS. Stylesheets themselves can still affect computed styles even when CSSOM rule access is restricted; embedding fonts may require readable font rules or `fontCSS`.
-- Results apply to the recorded desktop browser versions and environments. They do not certify mobile browsers or other versions. The Chromium baseline uses the Codex in-app browser; Firefox and Opera use actual desktop applications through their WebDriver services. Safari is marked unmeasured until a real Safari run succeeds; a WebKit test engine is not presented as Safari.
+- Results apply to the recorded desktop browser versions and environments. They do not certify mobile browsers or other versions. The Chromium baseline uses the Codex in-app browser; Firefox, Opera, and Safari use actual desktop applications through their WebDriver services.
 
 ## Fixes found by cross-browser testing
 
 Firefox initially failed 11 of the 61 visual checks on v0.4.2. In v0.4.3, font-display overrides are serialized as text because Firefox rejected the CSSOM descriptor write. Remote CSS images are decoded before the SVG is painted, and responsive image clones use a standalone decode probe to avoid cancellation when picture sources detach. The rerun passes all 61 checks in Firefox, while retaining the separate line-clamp value mismatch above.
+
+Safari's initial font fixture used a case-sensitive lookup for `U+0-FF`, while Safari serializes the equivalent range as `U+0-ff`. The fixture now normalizes case without weakening its image/font assertions. No additional Safari-specific runtime change was made for the final report.
 
 ## Repeat the benchmark
 
@@ -114,7 +126,7 @@ For visual checks, also run `npm run test:fixtures` in a second terminal, open `
 
 ### Automate a real browser
 
-The repository includes a small [W3C WebDriver](https://www.w3.org/TR/webdriver2/) runner with no npm dependencies. Start the browser's local driver, then run the matching command below. It creates an isolated automation session, verifies the user agent, captures both suites, rejects stale reports, and closes the session. The core must remain unchanged during the run.
+The repository includes a small [W3C WebDriver](https://www.w3.org/TR/webdriver2/) runner with no npm dependencies. Start the browser's local driver, then run the matching command below. It creates an isolated automation session, verifies the user agent, captures both suites, rejects stale or interrupted reports, and closes the session. The core and visual fixtures must remain unchanged during the run; new runs record both checksums. Keep the browser's test window visible during animation checks and avoid interacting with it while the suite runs.
 
 ```sh
 # With geckodriver listening on 127.0.0.1:4445:
