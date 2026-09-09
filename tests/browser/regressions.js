@@ -20,6 +20,15 @@ const pixel = (canvas, x, y) => [
 ];
 const red = (p) => p[0] > 230 && p[1] < 70 && p[2] < 40;
 const blue = (p) => p[0] < 30 && p[1] < 100 && p[2] > 230;
+function colorCount(canvas, matches) {
+  const { data } = canvas
+    .getContext("2d")
+    .getImageData(0, 0, canvas.width, canvas.height);
+  let count = 0;
+  for (let i = 0; i < data.length; i += 4)
+    if (matches(data.subarray(i, i + 4))) count++;
+  return count;
+}
 const img = (url) => `<img src="${url}" alt="Fixture">`;
 const origin = "http://127.0.0.1:8771";
 async function fixture(pages, options = {}) {
@@ -86,6 +95,145 @@ document.querySelector("#run").onclick = async () => {
       results.textContent += `FAIL ${name}: ${e.message}\n`;
     }
   }
+  // Rules intentionally live outside the captured page. Inline declarations
+  // alone would survive cloneNode and hide missing computed-style properties.
+  const strokeStyles = document.createElement("style");
+  strokeStyles.textContent = `
+    .stroke-text {
+      --ink: rgb(255, 0, 0);
+      font: 700 100px/140px Arial, sans-serif;
+      padding: 20px;
+      color: rgb(0, 0, 255);
+      -webkit-text-stroke: 3px var(--ink);
+      -webkit-text-fill-color: transparent;
+    }
+    .stroke-filled { -webkit-text-stroke-width: 12px; -webkit-text-fill-color: currentColor; }
+    .stroke-behind { paint-order: stroke fill; }
+    .stroke-vector {
+      --ink: rgb(255, 0, 0);
+      fill: rgb(0, 0, 255);
+      stroke: var(--ink);
+      stroke-width: 12px;
+    }
+    .stroke-vector line { stroke-width: 20px; stroke-linecap: round; stroke-dasharray: 30px 30px; stroke-dashoffset: 10px; }
+    .stroke-vector polyline { fill: none; stroke-linejoin: round; }
+    .stroke-border {
+      position: absolute; left: 40px; top: 40px; width: 160px; height: 120px;
+      border-top: 10px solid red; border-right: 10px solid blue;
+      border-bottom: 10px solid blue; border-left: 10px solid red;
+      outline: 5px solid rgb(0, 128, 0); outline-offset: 5px;
+    }
+  `;
+  document.head.append(strokeStyles);
+  for (const worker of [false, true]) {
+    await check(
+      `CSS text strokes, inherited fill and paint order survive capture (worker=${worker})`,
+      async () => {
+        const f = await fixture(
+          [
+            '<div class="stroke-text"><span>OOO</span></div>',
+            '<div class="stroke-text stroke-filled"><span>OOO</span></div>',
+            '<div class="stroke-text stroke-filled stroke-behind"><span>OOO</span></div>',
+          ],
+          { worker },
+        );
+        try {
+          const hollow = await f.book._snapshot(0);
+          assert(colorCount(hollow, red) > 800, "text stroke disappeared");
+          assert(
+            colorCount(hollow, blue) === 0,
+            "transparent text fill was lost",
+          );
+          const front = await f.book._snapshot(1),
+            behind = await f.book._snapshot(2);
+          assert(
+            colorCount(front, blue) > 500,
+            "currentColor text fill was lost",
+          );
+          assert(
+            colorCount(behind, red) > 800,
+            "stroke-first outline disappeared",
+          );
+          assert(
+            colorCount(behind, red) < colorCount(front, red) * 0.85,
+            "paint-order did not place the stroke behind the fill",
+          );
+          assert(
+            colorCount(behind, blue) > colorCount(front, blue) * 1.15,
+            "paint-order changed the fill incorrectly",
+          );
+        } finally {
+          f.close();
+        }
+      },
+    );
+    await check(
+      `CSS SVG strokes preserve color, width, caps, joins and dashes (worker=${worker})`,
+      async () => {
+        const f = await fixture(
+          [
+            '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><g class="stroke-vector"><rect x="40" y="40" width="120" height="80"/><line x1="40" y1="180" x2="240" y2="180"/><polyline points="50,300 100,250 150,300"/></g></svg>',
+          ],
+          { worker },
+        );
+        try {
+          const canvas = await f.book._snapshot(0);
+          assert(
+            red(pixel(canvas, 36, 80)),
+            "SVG stroke width/color disappeared",
+          );
+          assert(blue(pixel(canvas, 100, 80)), "SVG CSS fill disappeared");
+          assert(red(pixel(canvas, 34, 180)), "round line cap disappeared");
+          assert(
+            red(pixel(canvas, 54, 180)),
+            "dash offset shifted the visible dash",
+          );
+          assert(
+            !red(pixel(canvas, 75, 180)),
+            "dash gap or offset disappeared",
+          );
+          assert(red(pixel(canvas, 96, 180)), "next dash disappeared");
+          assert(red(pixel(canvas, 100, 247)), "rounded join disappeared");
+          assert(!red(pixel(canvas, 100, 243)), "round join became a miter");
+        } finally {
+          f.close();
+        }
+      },
+    );
+    await check(
+      `CSS borders retain different sides and offset outlines (worker=${worker})`,
+      async () => {
+        const f = await fixture(['<div class="stroke-border"></div>'], {
+          worker,
+        });
+        try {
+          const canvas = await f.book._snapshot(0);
+          assert(
+            red(pixel(canvas, 100, 45)) && red(pixel(canvas, 45, 100)),
+            "top/left borders disappeared",
+          );
+          assert(
+            blue(pixel(canvas, 195, 100)) && blue(pixel(canvas, 100, 155)),
+            "right/bottom borders disappeared",
+          );
+          const green = pixel(canvas, 32, 100);
+          assert(
+            green[0] < 20 && green[1] > 110 && green[1] < 150 && green[2] < 20,
+            "offset outline disappeared",
+          );
+          assert(
+            pixel(canvas, 37, 100)
+              .slice(0, 3)
+              .every((v) => v > 240),
+            "outline offset gap disappeared",
+          );
+        } finally {
+          f.close();
+        }
+      },
+    );
+  }
+  strokeStyles.remove();
   await check(
     "real worker encoding preserves font/image pixels and reports preparation stages",
     async () => {

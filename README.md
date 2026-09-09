@@ -2,9 +2,11 @@
 
 A small, editable page-curl library for ordinary HTML. A continuous WebGL sheet bends during a turn; native HTML returns when the page lands. The plain JavaScript core has no runtime dependencies or required build step. An optional **Vue 3 component** keeps your page content reactive.
 
-**New in v0.4.0:** optional encoding workers and loading progress for `prepare()`, automatic preloading, and page turns. [JavaScript and Vue usage →](#preparation-workers-and-loading-progress)
+**Fixed in v0.4.1:** CSS text outlines, SVG strokes, per-side borders and outlines now survive page turns. [Stroke styling →](#css-strokes-and-outlines)
 
-Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 62 KB of formatted, readable source, or 17 KB gzipped. Photographs and example layouts are separate from the library.
+**Since v0.4.0:** optional encoding workers and loading progress for `prepare()`, automatic preloading, and page turns. [JavaScript and Vue usage →](#preparation-workers-and-loading-progress)
+
+Use **`paper-curl.js` + `paper-curl.css`**. Together they are about 63 KB of formatted, readable source, or 17 KB gzipped. Photographs and example layouts are separate from the library.
 
 ## Start here
 
@@ -67,7 +69,7 @@ With `showCover: true`, the first page is a centered front cover. Use an even nu
 Install from this GitHub repository (this project has not been published to npm):
 
 ```sh
-npm install github:martial/paper-curl#v0.4.0
+npm install github:martial/paper-curl#v0.4.1
 ```
 
 Vue is an optional peer dependency; use this component in a Vue 3.3+ app:
@@ -344,6 +346,23 @@ In Vue, `@ready` means the instance has mounted, not that its assets have finish
 
 The repeatable [performance benchmark](tests/browser/PERFORMANCE.md) separates time before the first curl frame from JavaScript drawing time. The optional encoding worker moves only the stages described above off the main thread; DOM layout and rasterization still need the browser document.
 
+## CSS strokes and outlines
+
+CSS text strokes are captured with their computed width, color and fill, including inherited styles, `currentColor`, and CSS variables. `paint-order` is preserved so a stroke drawn behind the text stays behind it during a turn. This works in the plain JS and Vue versions, with or without the encoding worker.
+
+```css
+.page h2 {
+  color: #245c66;
+  -webkit-text-stroke: 1.25px currentColor;
+  -webkit-text-fill-color: transparent; /* hollow lettering */
+  paint-order: stroke fill;
+}
+```
+
+For filled lettering with an outline, set `-webkit-text-fill-color` to your fill color. Inline SVG shapes also retain CSS `fill`, `stroke`, stroke width/opacity, dash patterns and offsets, line caps/joins, and `vector-effect`. Borders keep each side's own style, and CSS `outline`/`outline-offset` are captured too. Use these on real page elements; generated `::before`/`::after` artwork remains a capture limitation.
+
+The Vue demo includes an **Outlined headings** checkbox. When changing styles in plain JS after preparation, call `book.refresh([pageIndex])` to replace the cached texture. Vue observes class/style changes inside pages automatically; changes to an external stylesheet need an explicit refresh.
+
 ## Images and browser support
 
 Page textures use native browser HTML-to-SVG rasterization. Remote `<img>`, responsive `srcset`/`<picture>` sources, lazy images, CSS backgrounds, and SVG `<image>` assets are embedded before a turn. Image servers must allow CORS for capture. An image being visible in HTML does not imply its server permits canvas capture. If a server blocks access, the library emits an actionable error and completes navigation using native pages, with no blank curl layer. Serve such assets from your own origin or use embedded data URLs.
@@ -386,7 +405,7 @@ npm run test:fixtures
 npm run dev:vue
 ```
 
-Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite checks a real worker, a deliberately CSP-blocked worker fallback, progress phases, pending-job cleanup, several Google Fonts, variable weights, italics, extended characters, programmatic fonts, and an intentionally stalled unrelated font. It compares captured glyphs with native canvas text, checks that text edits reuse embedded faces, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. Font tests need internet access. Expected CSP, CORS and slow-font 404 errors belong to deliberate failure fixtures.
+Open `/tests.html` on the Vite URL and click **Run browser checks**. The second server on port 8771 provides repeatable CORS-allowed and CORS-blocked remote images. The suite checks CSS text strokes, transparent/inherited text fills, paint order, SVG stroke dashes/caps/joins, different border sides, and offset outlines with workers enabled and disabled. It also checks a real worker, a deliberately CSP-blocked worker fallback, progress phases, pending-job cleanup, several Google Fonts, variable weights, italics, extended characters, programmatic fonts, and an intentionally stalled unrelated font. It compares captured glyphs with native canvas text, checks that text edits reuse embedded faces, inspects both sides of the WebGL curl, and performs repeated full navigation plus rapid reversals. Font tests need internet access. Expected CSP, CORS and slow-font 404 errors belong to deliberate failure fixtures.
 
 ## License
 

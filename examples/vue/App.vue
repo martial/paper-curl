@@ -7,6 +7,7 @@ const book = ref(null);
 const page = ref(0);
 const title = ref("A slower kind of story.");
 const typography = ref("Playfair Display");
+const outlined = ref(false);
 const fontFamilies = [
   "Playfair Display",
   "Cormorant Garamond",
@@ -112,7 +113,7 @@ function removePage() {
             v-for="(sheet, index) in pages"
             :key="sheet.id"
             class="page"
-            :class="sheet.type"
+            :class="[sheet.type, { outlined }]"
             :style="{
               '--heading-font': `'${typography === 'Mixed' ? fontFamilies[index % fontFamilies.length] : typography}'`,
             }"
@@ -209,6 +210,9 @@ function removePage() {
             </option>
           </select>
         </label>
+        <label class="worker-toggle"
+          ><input v-model="outlined" type="checkbox" /> Outlined headings</label
+        >
         <label>Cover title<input v-model="title" /></label
         ><label
           >Curl <span>{{ curl.toFixed(2) }}</span
@@ -296,6 +300,11 @@ function removePage() {
 </template>
 
 <style>
+.page.outlined h2 {
+  -webkit-text-stroke: 1.25px currentColor;
+  -webkit-text-fill-color: transparent;
+  paint-order: stroke fill;
+}
 :root {
   font-family: "DM Sans", sans-serif;
   color: #273d39;

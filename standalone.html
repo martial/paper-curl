@@ -2660,12 +2660,23 @@ That remote photograph is not part of the Apache-licensed library files.
           this._pageProgress(index, record, "layout");
           // Only visual computed properties: no inherited custom-property payloads or dependencies.
           const properties =
-            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border border-radius background-color background-image background-attachment background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
+            "display position top right bottom left box-sizing width height min-width min-height max-width max-height margin padding border-top border-right border-bottom border-left border-radius outline outline-offset background-color background-image background-attachment background-size background-position background-repeat background-origin background-clip color font-family font-size font-weight font-style font-variant font-stretch font-kerning font-feature-settings font-variation-settings font-optical-sizing font-synthesis line-height letter-spacing word-spacing text-align text-decoration text-transform text-indent text-shadow -webkit-text-stroke-width -webkit-text-stroke-color -webkit-text-fill-color paint-order white-space overflow overflow-wrap word-break vertical-align float clear opacity box-shadow transform transform-origin object-fit object-position filter mix-blend-mode isolation flex flex-direction flex-wrap align-items align-self justify-content gap row-gap column-gap grid-template-columns grid-template-rows grid-auto-flow place-items order list-style z-index".split(
               " ",
             );
+          const svgProperties = (
+            "fill fill-opacity fill-rule stroke stroke-width stroke-opacity " +
+            "stroke-linecap stroke-linejoin stroke-miterlimit stroke-dasharray " +
+            "stroke-dashoffset vector-effect"
+          ).split(" ");
           const styles = nodes.map((node) => {
             const computed = getComputedStyle(node);
-            return properties.map((property) => [
+            // Resolve inherited strokes and CSS variables while the clone is
+            // still in the document; its stylesheet rules will not travel with it.
+            const visualProperties =
+              node.namespaceURI === "http://www.w3.org/2000/svg"
+                ? properties.concat(svgProperties)
+                : properties;
+            return visualProperties.map((property) => [
               property,
               computed.getPropertyValue(property),
             ]);
